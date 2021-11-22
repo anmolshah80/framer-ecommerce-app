@@ -1,0 +1,96 @@
+.login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 140px;
+}
+
+.login__container {
+  width: 400px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+
+.login > .login__container > h1 {
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.login > .login__container > p {
+  margin-top: 10px;
+}
+
+.login > .login__container > .container__text {
+  text-align: center;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup__text {
+  padding: 10px 0px;
+  font-weight: 500;
+}
+
+.signup__text > a {
+  text-decoration: none;
+  color: #07f;
+}
+
+.signup__text > a:hover {
+  text-decoration: underline;
+}
+
+.login__container > form > h4 {
+  margin-bottom: 5px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.login__container > form > input {
+  height: 30px;
+  margin-bottom: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 3px 7px;
+  outline: none;
+  font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border: 2px solid #07f;
+}
+
+.login__container > form > a {
+  text-decoration: none;
+  text-align: right;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #07f;
+}
+
+.login__container > form > a:hover {
+  text-decoration: underline;
+}
+
+.login__container > form > button {
+  height: 30px;
+  cursor: pointer;
+  background-color: #192029;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+}
+
+.login__button:hover {
+  background-color: #131921;
+}

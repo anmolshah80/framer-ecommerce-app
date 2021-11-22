@@ -1,0 +1,113 @@
+.register {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.register__container {
+  width: 400px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+
+.register > .register__container > h1 {
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.register > .register__container > p {
+  margin-top: 10px;
+}
+
+.register > .register__container > .container__text {
+  text-align: center;
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register__text {
+  padding: 10px 0px;
+  font-weight: 500;
+}
+
+.login__text > a {
+  text-decoration: none;
+  color: #07f;
+}
+
+.login__text > a:hover {
+  text-decoration: underline;
+}
+
+.register__container > form > h4 {
+  margin-bottom: 5px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.register__container > form > input {
+  height: 30px;
+  margin-bottom: 10px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 3px 7px;
+  outline: none;
+  font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border: 2px solid #07f;
+}
+
+.register__container > form > a {
+  text-decoration: none;
+  text-align: right;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #07f;
+}
+
+.register__container > form > a:hover {
+  text-decoration: underline;
+}
+
+.register__container > form > button {
+  height: 30px;
+  cursor: pointer;
+  background-color: #192029;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+}
+
+.register__button:hover {
+  background-color: #131921;
+}
+
+span,
+ul {
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 14px;
+  color: gray;
+}
+
+ul {
+  margin-left: -10px;
+}
+
+ul > li {
+  list-style-type: square;
+}

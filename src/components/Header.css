@@ -1,0 +1,24 @@
+.navigation__main {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-flow: row nowrap;
+  color: #ffffff;
+}
+
+.navigation__logo {
+  display: inline-flex;
+  width: auto;
+  height: 100%;
+  flex: none;
+  outline: none;
+  place-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.logo {
+  width: 14px;
+  height: 21px;
+  margin: right;
+}
