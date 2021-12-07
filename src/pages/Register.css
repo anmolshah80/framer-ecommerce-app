@@ -40,8 +40,9 @@
   font-weight: 500;
 }
 
-.login__text > a {
+.login__text > .login__link {
   text-decoration: none;
+  /* font-size: 16px; */
   color: #07f;
 }
 
@@ -71,24 +72,13 @@ input[type="password"]:focus {
   border: 2px solid #07f;
 }
 
-.register__container > form > a {
-  text-decoration: none;
-  text-align: right;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: #07f;
-}
-
-.register__container > form > a:hover {
-  text-decoration: underline;
-}
-
 .register__container > form > button {
   height: 30px;
   cursor: pointer;
   background-color: #192029;
   color: #fff;
   border: none;
+  border-radius: 3px;
   font-size: 16px;
 }
 

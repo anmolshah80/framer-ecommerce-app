@@ -16,7 +16,7 @@ function Login() {
           <h1>Welcome to Framer</h1>
           <p className="signup__text">
             Don't have an account?&nbsp;
-            <a href="#" className="signup__link">
+            <a href="/register" className="signup__link">
               Sign up
             </a>
           </p>

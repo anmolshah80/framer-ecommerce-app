@@ -17,7 +17,7 @@ function Register() {
           <h1>Create Account</h1>
           <p className="login__text">
             Already have an account?&nbsp;
-            <a href="#" className="login__link">
+            <a href="/login" className="login__link">
               Sign in
             </a>
           </p>
