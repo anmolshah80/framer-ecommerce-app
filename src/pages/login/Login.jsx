@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { login } from "../../authContext/ApiCalls";
+import { AuthContext } from "../../authContext/AuthContext";
 import "./Login.css";
 
 function Login() {
+  const [username, setusername] = useState("");
+  const [password, setPassword] = useState("");
+  const { isFetching, dispatch } = useContext(AuthContext);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    login({ username, password }, dispatch);
+  };
+
   return (
     <div className="login">
       <div className="login__container">
@@ -24,11 +35,25 @@ function Login() {
 
         <form className="login__form">
           <h4>Username</h4>
-          <input type="text" />
+          <input
+            type="text"
+            required
+            onChange={(e) => setusername(e.target.value)}
+          />
           <h4>Password</h4>
-          <input type="password" />
-          <a href="#">Forgot Password?</a>
-          <button className="login__button">Sign in</button>
+          <input
+            type="password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <a href="/forgot-password">Forgot Password?</a>
+          <button
+            className="login__button"
+            onClick={handleLogin}
+            disabled={isFetching}
+          >
+            Sign in
+          </button>
         </form>
       </div>
     </div>

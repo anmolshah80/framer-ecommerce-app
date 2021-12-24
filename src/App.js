@@ -1,19 +1,21 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
-import Home from "./pages/Home";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
+import Home from "./pages/home/Home";
+import Register from "./pages/register/Register";
+import Login from "./pages/login/Login";
 import SellerDashboard from "./pages/SellerDashboard";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "./authContext/AuthContext";
 
 function App() {
-  // to be updated later
-  const user = true;
+  const { user } = useContext(AuthContext);
 
   return (
     <Router>
@@ -27,6 +29,8 @@ function App() {
           path="/login"
           element={!user ? <Login /> : <Navigate to="/" />}
         />
+
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {user && (
           <>

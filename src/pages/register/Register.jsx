@@ -1,8 +1,34 @@
-import React from "react";
-import Header from "../components/Header";
+import React, { useRef, useState } from "react";
+// import Header from "../../components/Header";
 import "./Register.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Register() {
+export default function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const usernameRef = useRef();
+
+  const handleRegistration = async () => {
+    setEmail(emailRef.current.value);
+    setPassword(passwordRef.current.value);
+    setUsername(usernameRef.current.value);
+
+    try {
+      await axios.post("auth/register", { email, username, password });
+      navigate("/login");
+      console.log("user registered!");
+    } catch (err) {
+      console.log("user not registered!");
+      console.log(err);
+    }
+  };
+
   return (
     <div className="register">
       <div className="register__container">
@@ -25,11 +51,11 @@ function Register() {
 
         <form className="register__form">
           <h4>Username</h4>
-          <input type="text" />
+          <input type="text" ref={usernameRef} />
           <h4>Email</h4>
-          <input type="email" />
+          <input type="email" ref={emailRef} />
           <h4>Password</h4>
-          <input type="password" />
+          <input type="password" ref={passwordRef} />
           <span>Password must:</span>
           <ul>
             <li>Be atleast 8 characters long</li>
@@ -40,11 +66,11 @@ function Register() {
           </ul>
           <h4>Confirm Password</h4>
           <input type="password" />
-          <button className="register__button">Sign up</button>
+          <button className="register__button" onClick={handleRegistration}>
+            Sign up
+          </button>
         </form>
       </div>
     </div>
   );
 }
-
-export default Register;
