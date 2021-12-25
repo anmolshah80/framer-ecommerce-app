@@ -5,22 +5,29 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
+  const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const usernameRef = useRef();
 
-  const handleRegistration = async () => {
+  const handleRegistration = async (e) => {
+    e.preventDefault();
+    setUsername(usernameRef.current.value);
     setEmail(emailRef.current.value);
     setPassword(passwordRef.current.value);
-    setUsername(usernameRef.current.value);
+
+    // testing purposes only
+    // console.log("set credentials: ");
+    // console.log(usernameRef.current.value);
+    // console.log(email);
+    // console.log(password);
 
     try {
-      await axios.post("auth/register", { email, username, password });
+      await axios.post("auth/register", { username, email, password });
       navigate("/login");
       console.log("user registered!");
     } catch (err) {
@@ -51,11 +58,11 @@ export default function Register() {
 
         <form className="register__form">
           <h4>Username</h4>
-          <input type="text" ref={usernameRef} />
+          <input required type="username" ref={usernameRef} />
           <h4>Email</h4>
-          <input type="email" ref={emailRef} />
+          <input required type="email" ref={emailRef} />
           <h4>Password</h4>
-          <input type="password" ref={passwordRef} />
+          <input required type="password" ref={passwordRef} />
           <span>Password must:</span>
           <ul>
             <li>Be atleast 8 characters long</li>
@@ -65,8 +72,12 @@ export default function Register() {
             <li>Contain atleast one special character [@, #, $, %]</li>
           </ul>
           <h4>Confirm Password</h4>
-          <input type="password" />
-          <button className="register__button" onClick={handleRegistration}>
+          <input required type="password" />
+          <button
+            type="button"
+            className="register__button"
+            onClick={handleRegistration}
+          >
             Sign up
           </button>
         </form>
