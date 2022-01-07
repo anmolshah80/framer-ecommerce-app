@@ -1,3 +1,15 @@
 * {
   margin: 0;
 }
+
+:root {
+  --bg: #242526;
+  --bg-accent: #484a4d;
+  --navy-blue: #374754;
+  --text-color: #dadce1;
+  --nav-size: 60px;
+  --border: 1px solid #474a4d;
+  --navy-border: 2px solid #374754;
+  --border-radius: 8px;
+  --speed: 500ms;
+}

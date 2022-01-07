@@ -5,6 +5,7 @@ import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
 import SellerDashboard from "./pages/SellerDashboard";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import ProductDescription from "./pages/productDescription/ProductDescription";
 import {
   BrowserRouter as Router,
   Routes,
@@ -35,6 +36,7 @@ function App() {
         {user && (
           <>
             <Route path="/dashboard" element={<SellerDashboard />} />
+            <Route path="/product/:id" element={<ProductDescription />} />
           </>
         )}
       </Routes>

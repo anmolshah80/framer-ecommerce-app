@@ -36,12 +36,14 @@ function Login() {
         <form className="login__form">
           <h4>Username</h4>
           <input
+            className="form__input"
             type="text"
             required
             onChange={(e) => setusername(e.target.value)}
           />
           <h4>Password</h4>
           <input
+            className="form__input"
             type="password"
             required
             onChange={(e) => setPassword(e.target.value)}

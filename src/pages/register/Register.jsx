@@ -14,6 +14,11 @@ export default function Register() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
+  const usernameErrorMessage =
+    "Username should be between 3 and 25 characters.";
+  const passwordErrorMessage =
+    "Password should be at least 8 characters long and include at least 1 uppercase character, 1 lowercase character, 1 numeric character, and 1 special character in [@, #, $, %]";
+
   const handleRegistration = async (e) => {
     e.preventDefault();
     setUsername(usernameRef.current.value);
@@ -58,7 +63,8 @@ export default function Register() {
 
         <form className="register__form">
           <h4>Username</h4>
-          <input required type="username" ref={usernameRef} />
+          <input required type="text" ref={usernameRef} />
+          {/* <span>{usernameErrorMessage}</span> */}
           <h4>Email</h4>
           <input required type="email" ref={emailRef} />
           <h4>Password</h4>
@@ -74,7 +80,7 @@ export default function Register() {
           <h4>Confirm Password</h4>
           <input required type="password" />
           <button
-            type="button"
+            // type="submit"
             className="register__button"
             onClick={handleRegistration}
           >

@@ -1,0 +1,66 @@
+.side__panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 20px;
+  height: 100vh;
+  max-width: 400px;
+  background-color: rgb(251, 251, 255);
+  color: var(--navy-blue);
+  /* background-color: red; */
+}
+
+.side__panel > h3 {
+  margin: 30px 0px 0px 20px;
+}
+
+.categories__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox__wrapper {
+  margin: 15px 0px 0px 45px;
+}
+
+.checkbox__wrapper > input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.input__box {
+  display: flex;
+  flex-direction: row;
+  margin: 10px;
+}
+
+.input__box > .price__rangeIcon {
+  margin-top: 10px;
+}
+
+.input__box > input[type="text"] {
+  max-width: 120px;
+  margin: 10px;
+  padding: 10px;
+  border: var(--navy-border);
+  border-radius: 3px;
+}
+
+.submit__button {
+  width: 14%;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  margin-left: calc(50% - 7%);
+  margin-right: calc(50% - 7%);
+  padding: 10px;
+  height: 48px;
+  background-color: var(--bg);
+  color: white;
+  border: var(--navy-border);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit__button:hover {
+  background-color: var(--navy-blue);
+}
