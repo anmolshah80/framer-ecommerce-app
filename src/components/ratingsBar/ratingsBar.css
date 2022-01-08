@@ -1,0 +1,34 @@
+.ratings__bar {
+  width: 140px;
+  /* padding: 10px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ratings__bar > .star__widget > input {
+  display: none;
+}
+
+.star__widget > label {
+  font-size: 15px;
+  color: #444;
+  padding-right: 10px;
+  float: right;
+  transition: all 0.2s ease;
+}
+
+input:not(:checked) ~ label:hover,
+input:not(:checked) ~ label:hover ~ label {
+  color: #fd4;
+}
+
+input:checked ~ label {
+  color: #fd4;
+}
+
+/* input#rate-5:checked ~ label {
+  color: #fe7;
+  text-shadow: 0 0 20px #952;
+} */

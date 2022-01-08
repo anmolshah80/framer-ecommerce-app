@@ -12,6 +12,8 @@ import {
   ShoppingCart,
   Search,
 } from "@mui/icons-material";
+import avatar from "../../avatar";
+import { Link } from "react-router-dom";
 // import { AuthContext } from "../../context/authContext/AuthContext";
 
 export default function Topbar() {
@@ -55,11 +57,14 @@ export default function Topbar() {
           <div className="topbarIconContainer">
             <Settings />
           </div> */}
-          <img
-            src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
-            alt="Avatar profile"
-            className="topAvatar"
-          />
+          <Link to="/user-profile">
+            <img
+              // src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
+              src={avatar}
+              alt="Avatar profile"
+              className="topAvatar"
+            />
+          </Link>
 
           {/* dropdown icon for logout */}
           <Navbar>

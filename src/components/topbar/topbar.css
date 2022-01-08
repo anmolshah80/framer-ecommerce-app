@@ -97,11 +97,12 @@
   cursor: pointer;
   margin-right: 10px;
   color: #555;
+  transition: filter 300ms;
 }
 
-/* .topRight > .topbarIconContainer > .shoppingCartIcon:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-} */
+.topbarIconContainer > .shoppingCartIcon:hover {
+  filter: brightness(0.4);
+}
 
 .topIconBadge {
   width: 15px;
@@ -119,11 +120,20 @@
 }
 
 .topAvatar {
-  width: 50px;
-  height: 42px;
-  margin-top: -5px;
+  /* width: 38px;
+  height: 38px; */
+  --button-size: calc(var(--nav-size) * 0.6);
+  width: var(--button-size);
+  height: var(--button-size);
+  margin-right: 5px;
   border-radius: 50%;
   cursor: pointer;
+  object-fit: contain;
+  transition: filter 300ms;
+}
+
+.topAvatar:hover {
+  filter: brightness(0.8);
 }
 
 .navbar > ul {
@@ -163,7 +173,7 @@ a {
   background-color: var(--bg-accent);
   border-radius: 50%;
   padding: 5px;
-  margin: 2px 7px 2px 2px;
+  margin: 0px 7px 2px 2px;
   display: flex;
   align-items: center;
   justify-content: center;
