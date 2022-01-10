@@ -43,6 +43,8 @@ span {
 .previous__page > span:hover {
   text-decoration: underline;
   cursor: pointer;
+  margin-left: -5px;
+  transition: 300ms ease;
 }
 
 .product__descLeft > img {

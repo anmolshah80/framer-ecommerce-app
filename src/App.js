@@ -6,6 +6,7 @@ import Login from "./pages/login/Login";
 import SellerDashboard from "./pages/SellerDashboard";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ProductDescription from "./pages/productDescription/ProductDescription";
+import OrderSummary from "./pages/orderSummary/OrderSummary";
 import {
   BrowserRouter as Router,
   Routes,
@@ -37,6 +38,7 @@ function App() {
           <>
             <Route path="/dashboard" element={<SellerDashboard />} />
             <Route path="/product/:id" element={<ProductDescription />} />
+            <Route path="/order-summary" element={<OrderSummary />} />
           </>
         )}
       </Routes>

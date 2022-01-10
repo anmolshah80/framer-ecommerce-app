@@ -2,6 +2,7 @@ import React from "react";
 import "./productDescription.css";
 import Topbar from "../../components/topbar/Topbar";
 import RatingsBar from "../../components/ratingsBar/RatingsBar";
+import OrderSummary from "../orderSummary/OrderSummary";
 import StaticData from "../../StaticData";
 import { ArrowBackIosNew, Tag, Info } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -110,7 +111,9 @@ export default function ProductDescription() {
               <span>Total cost:</span>
               <h3>$1199.00</h3>
             </div>
-            <button className="add__toCartButton">Add to Cart</button>
+            <Link to="/order-summary">
+              <button className="add__toCartButton">Add to Cart</button>
+            </Link>
           </div>
         </div>
       </div>
