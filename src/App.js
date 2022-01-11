@@ -7,6 +7,8 @@ import SellerDashboard from "./pages/SellerDashboard";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ProductDescription from "./pages/productDescription/ProductDescription";
 import OrderSummary from "./pages/orderSummary/OrderSummary";
+import UserProfile from "./pages/userProfile/UserProfile";
+import EditProfile from "./pages/editProfile/EditProfile";
 import {
   BrowserRouter as Router,
   Routes,
@@ -39,6 +41,8 @@ function App() {
             <Route path="/dashboard" element={<SellerDashboard />} />
             <Route path="/product/:id" element={<ProductDescription />} />
             <Route path="/order-summary" element={<OrderSummary />} />
+            <Route path="/user-profile" element={<UserProfile />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
           </>
         )}
       </Routes>

@@ -6,8 +6,8 @@
   height: 100vh;
   max-width: 400px;
   background-color: rgb(251, 251, 255);
+  /* background-color: rgba(0, 0, 0, 0.035); */
   color: var(--navy-blue);
-  /* background-color: red; */
 }
 
 .side__panel > h3 {

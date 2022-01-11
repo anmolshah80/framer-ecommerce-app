@@ -1,0 +1,94 @@
+.edit__profile {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.breadcrumb__linking {
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.dashboard__link,
+.user__profileLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.breadcrumb__linking > .arrow__forwardIcon {
+  font-size: 14px;
+  font-weight: 900;
+  margin-top: 3px;
+}
+
+.dashboard__link:hover,
+.user__profileLink:hover {
+  text-decoration: underline;
+}
+
+.edit__profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit__profile > h2 {
+  font-weight: 600;
+  color: var(--navy-blue);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid lightgray;
+}
+
+.edit__profileForm {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 20px 0px;
+}
+
+.edit__profileForm > .form__label {
+  color: var(--navy-blue) !important;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.edit__profileForm > .form__input {
+  width: 500px;
+  height: 25px;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+
+.form__input:focus,
+.form__input:active {
+  border: none !important;
+}
+
+.edit__profileForm > .input__typeFile {
+  border: none;
+  cursor: pointer;
+}
+
+.edit__profileButton {
+  width: 508px;
+  color: white;
+  padding: 7px;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 4px;
+  background-color: var(--bg);
+  cursor: pointer;
+}
+
+.edit__profileButton:hover {
+  background-color: var(--navy-blue);
+}
