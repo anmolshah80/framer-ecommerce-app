@@ -1,0 +1,176 @@
+.delete__account {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.delete__accountBreadcrumbLinks {
+  display: flex;
+  flex-direction: row;
+  width: 220px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.dashboard__link,
+.user__profileLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.delete__accountBreadcrumbLinks > .arrow__forwardIcon {
+  font-size: 14px;
+  font-weight: 900;
+  margin-top: 3px;
+}
+
+.dashboard__link:hover,
+.user__profileLink:hover {
+  text-decoration: underline;
+}
+
+.delete__accountContainerWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.delete__accountContainer {
+  /* padding: 20px; */
+  width: 530px;
+  border: 2px solid lightgray;
+  border-radius: 4px;
+}
+
+.delete__accountContainer > h3 {
+  font-weight: 600;
+  padding: 20px 15px;
+  /* margin-bottom: 20px; */
+}
+
+.delete__accountWarning {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 18px;
+  border-top: 2px solid #721c24;
+  border-bottom: 2px solid #721c24;
+  /* color: #721c24; */
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.delete__accountWarning > .warning__icon {
+  font-size: 22px;
+  font-weight: 600;
+  color: #842029;
+  margin-right: 15px;
+}
+
+.delete__accountWarning > .warning__text {
+  font-size: 16px;
+  color: #842029;
+  font-weight: 600;
+  margin-bottom: 0px;
+}
+
+.deletion__detailsWrapper {
+  padding: 20px 20px 15px;
+}
+
+.deletion__details {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 10px;
+}
+
+.deletion__details > .deletion__detailsText {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.deletion__detailsText > .change__accountSettings {
+  margin-left: 5px;
+  color: var(--navy-blue);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.deletion__detailsText > .change__accountSettings:hover {
+  text-decoration: underline;
+}
+
+.account__deletionForm {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.account__username {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy-blue) !important;
+  margin-bottom: 10px;
+}
+
+.email__addressInput {
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.confirmation__label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy-blue) !important;
+  margin-bottom: 10px;
+}
+
+.confirmation__label > .italisize {
+  font-style: italic;
+  font-weight: 500;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.confirm__deletion {
+  padding: 10px;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.email__addressInput:focus,
+.email__addressInput:active,
+.confirm__deletion:focus,
+.confirm__deletion:active {
+  border: none !important;
+}
+
+.delete__accountButton {
+  padding: 10px;
+  color: white;
+  background-color: var(--bg);
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete__accountButton:hover {
+  background-color: var(--navy-blue);
+}

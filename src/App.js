@@ -9,6 +9,8 @@ import ProductDescription from "./pages/productDescription/ProductDescription";
 import OrderSummary from "./pages/orderSummary/OrderSummary";
 import UserProfile from "./pages/userProfile/UserProfile";
 import EditProfile from "./pages/editProfile/EditProfile";
+import ChangePassword from "./pages/changePassword/ChangePassword";
+import DeleteAccount from "./pages/deleteAccount/DeleteAccount";
 import {
   BrowserRouter as Router,
   Routes,
@@ -43,6 +45,8 @@ function App() {
             <Route path="/order-summary" element={<OrderSummary />} />
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/delete-account" element={<DeleteAccount />} />
           </>
         )}
       </Routes>

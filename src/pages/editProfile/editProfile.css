@@ -40,15 +40,26 @@
 .edit__profile > h2 {
   font-weight: 600;
   color: var(--navy-blue);
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding-bottom: 10px;
   border-bottom: 2px solid lightgray;
+}
+
+.edit__profileFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit__profileForm {
   display: flex;
   flex-direction: column;
-  margin: 0px 20px 0px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 2px solid lightgray;
+  border-radius: 4px;
+  padding: 20px;
 }
 
 .edit__profileForm > .form__label {

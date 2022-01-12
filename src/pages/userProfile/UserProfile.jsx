@@ -21,10 +21,10 @@ export default function UserProfile() {
           <Link to="/edit-profile">
             <button className="action__buttons">Edit Profile</button>
           </Link>
-          <Link to="/delete-profile">
+          <Link to="/delete-account">
             <button className="action__buttons">Delete</button>
           </Link>
-          <Link to="change-password">
+          <Link to="/change-password">
             <button className="action__buttons">Change Password</button>
           </Link>
         </div>
