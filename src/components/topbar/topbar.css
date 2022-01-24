@@ -55,7 +55,7 @@
 }
 
 .topbarSearchInput {
-  height: 10px;
+  height: 9px;
   padding: 10px;
   width: 100%;
   border: 2px solid var(--navy-blue);
@@ -65,9 +65,10 @@
   border-bottom-right-radius: 0px;
 }
 
-.topbarSearch > .topbarSearchInput:focus {
-  /* border: 2px solid #484a4d !important; */
-  border: none;
+.topbarSearch > .topbarSearchInput:focus,
+.topbarSearch > .topbarSearchInput:active {
+  /* border: 2px solid #07f !important; */
+  border: none !important;
 }
 
 .topbarSearchIcon {

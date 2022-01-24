@@ -2,11 +2,13 @@ import React from "react";
 import Topbar from "../../components/topbar/Topbar";
 import "./orderSummary.css";
 import { Tag, Remove, Add, Clear } from "@mui/icons-material";
+import AlertMessage from "../../components/alertMessages/AlertMessage";
 
 export default function OrderSummary() {
   return (
-    <>
+    <React.Fragment>
       <Topbar />
+      <AlertMessage />
       <div className="order__summary">
         <h1>Order Summary</h1>
         <div className="product__headingWrapper">
@@ -53,6 +55,6 @@ export default function OrderSummary() {
           </button>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }

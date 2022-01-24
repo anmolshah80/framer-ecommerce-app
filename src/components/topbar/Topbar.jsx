@@ -43,9 +43,11 @@ export default function Topbar() {
           <Search className="topbarSearchIcon" />
         </div>
         <div className="topRight">
-          <div className="topbarIconContainer">
-            <ShoppingCart className="shoppingCartIcon" />
-          </div>
+          <Link to="/checkout">
+            <div className="topbarIconContainer">
+              <ShoppingCart className="shoppingCartIcon" />
+            </div>
+          </Link>
           {/* <div className="topbarIconContainer">
             <NotificationsNone />
             <span className="topIconBadge">2</span>

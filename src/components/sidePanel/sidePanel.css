@@ -2,7 +2,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  margin: 20px;
+  margin: 20px 0px 20px 20px;
   height: 100vh;
   max-width: 400px;
   background-color: rgb(251, 251, 255);
@@ -30,38 +30,45 @@
 }
 
 .checkbox__wrapper > label {
+  color: var(--navy-blue) !important;
   font-weight: 500;
 }
 
-.input__box {
+.sort__byPriceRange > .input__box {
   display: flex;
   flex-direction: row;
   margin: 10px;
 }
 
 .input__box > .price__rangeIcon {
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .input__box > input[type="text"] {
   max-width: 120px;
   margin: 10px;
-  padding: 10px;
+  padding: 12px;
   border: var(--navy-border);
   border-radius: 3px;
 }
 
+.input__box > input[type="text"]:active,
+.input__box > input[type="text"]:focus {
+  border: none !important;
+}
+
 .submit__button {
-  width: 14%;
-  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
   margin-bottom: 15px;
-  margin-left: calc(50% - 7%);
-  margin-right: calc(50% - 7%);
-  padding: 10px;
+  margin-left: 162px;
+  padding: 15px;
   height: 48px;
   background-color: var(--bg);
   color: white;
-  border: var(--navy-border);
+  border: none;
   border-radius: 5px;
   cursor: pointer;
 }

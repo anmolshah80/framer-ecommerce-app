@@ -1,0 +1,35 @@
+.alert__message {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  margin: 20px;
+}
+
+.alert__messageContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.035);
+  border-radius: 4px;
+  padding: 10px;
+  background-color: var(--bg-green);
+  color: var(--text-green);
+}
+
+.alert__messageContainer > .alert__messageText {
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.alert__messageContainer > .icon__clear {
+  font-size: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.icon__clear:hover {
+  background-color: rgba(0, 0, 0, 0.035);
+  border-radius: 50%;
+}

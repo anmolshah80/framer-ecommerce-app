@@ -49,13 +49,13 @@
   text-decoration: underline;
 }
 
-.login__container > form > h4 {
+.login__form > h4 {
   margin-bottom: 5px;
   font-weight: 500;
   text-align: left;
 }
 
-.login__container > form > input {
+.login__form > .form__input {
   height: 30px;
   margin-bottom: 10px;
   border: 1px solid lightgrey;
@@ -70,11 +70,12 @@ input[type="password"]:focus {
   border: 2px solid #07f;
 } */
 
-.login__container > .login__form > .form__input:focus {
-  border: 2px solid #07f;
+.login__form > .form__input:active,
+.login__form > .form__input:focus {
+  border: 2px solid #07f !important;
 }
 
-.login__container > form > a {
+.login__form > a {
   text-decoration: none;
   text-align: right;
   font-weight: 500;
@@ -82,11 +83,11 @@ input[type="password"]:focus {
   color: #07f;
 }
 
-.login__container > form > a:hover {
+.login__form > a:hover {
   text-decoration: underline;
 }
 
-.login__container > form > button {
+.login__form > .login__button {
   height: 30px;
   cursor: pointer;
   background-color: #192029;
@@ -97,5 +98,5 @@ input[type="password"]:focus {
 }
 
 .login__button:hover {
-  background-color: #131921;
+  background-color: var(--navy-blue);
 }

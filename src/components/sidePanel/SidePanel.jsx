@@ -16,7 +16,7 @@ export default function SidePanel() {
           <label for="smartphone">Smartphone</label>
         </div>
         <div className="checkbox__wrapper">
-          <input type="checkbox" id="oneplus" name="pc" />
+          <input type="checkbox" id="pc" name="pc" />
           <label for="pc">Personal Computer</label>
         </div>
         <div className="checkbox__wrapper">
@@ -40,14 +40,16 @@ export default function SidePanel() {
         </div>
       </div>
       <h3>Price</h3>
-      <div className="input__box">
-        <input type="text" placeholder="Min" />
-        <Minimize className="price__rangeIcon" />
-        <input type="text" placeholder="Max" />
-      </div>
-      <button className="submit__button">
-        <PlayArrow className="submit__icon" />
-      </button>
+      <form className="sort__byPriceRange">
+        <div className="input__box">
+          <input required type="text" placeholder="Min" />
+          <Minimize className="price__rangeIcon" />
+          <input required type="text" placeholder="Max" />
+        </div>
+        <button className="submit__button">
+          <PlayArrow className="submit__icon" />
+        </button>
+      </form>
     </div>
   );
 }

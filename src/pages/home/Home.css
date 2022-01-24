@@ -1,17 +1,23 @@
 .home {
   display: flex;
   flex: 4;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: row;
   max-width: 1520px;
   /* align-items: center; */
 }
 
+/* .side__panel {
+  display: flex;
+  flex: 1;
+} */
+
 .product__containerWrapper {
-  flex: 3;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+  /* overflow: hidden; */
 }
 
 .product__container {

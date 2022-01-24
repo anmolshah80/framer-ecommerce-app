@@ -251,12 +251,34 @@ span {
   align-items: center;
 }
 
-.quantity__selector > input[type="text"] {
+/* .quantity__selector > input[type="text"] {
   padding: 10px;
   margin-top: 10px;
   width: 14vw;
   height: 3vh;
   text-align: center;
+} */
+
+.quantity__selector > .select__productQuantity {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy-blue);
+  border: var(--navy-border);
+  border-radius: 5px;
+  padding: 8px;
+  margin-top: 10px;
+  /* width: 12vw;
+  height: 6vh; */
+  text-align: center;
+}
+
+.select__productQuantity:focus {
+  border-color: #0071e3;
+}
+
+.select__productQuantity:focus:not(button) {
+  box-shadow: 0 0 0 4px rgb(0 125 250 / 60%);
+  outline: none;
 }
 
 .sub__totalWrapper {

@@ -15,10 +15,12 @@
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 
   min-height: 380px;
-  width: 40vw;
+  /* width: 40vw; */
+  width: 21vw;
   margin: 20px;
   background: white;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .product:hover {

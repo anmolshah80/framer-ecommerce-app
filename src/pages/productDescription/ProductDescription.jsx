@@ -2,16 +2,28 @@ import React from "react";
 import "./productDescription.css";
 import Topbar from "../../components/topbar/Topbar";
 import RatingsBar from "../../components/ratingsBar/RatingsBar";
+import Rating from "react-rating";
 import OrderSummary from "../orderSummary/OrderSummary";
 import StaticData from "../../StaticData";
 import { ArrowBackIosNew, Tag, Info } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function ProductDescription() {
-  //   const productID = product.params.id;
+  const product_id = useParams();
+
+  const product = StaticData.find((product) => product.id == product_id.id);
+
+  const desc_regex = /[.]+/;
+
+  // const product_desc = product.description
+  //   .split(desc_regex)
+  //   .filter(Boolean)
+  //   .map((s) => s.trim());
+
+  // console.log(product_desc);
 
   return (
-    <>
+    <React.Fragment>
       <Topbar />
       <div className="product__description">
         <div className="product__descLeft">
@@ -19,27 +31,26 @@ export default function ProductDescription() {
             <div className="previous__page">
               <ArrowBackIosNew className="icon" />
               <span>Go back to previous page</span>
-              {/* <h1>Product ID: {productID}</h1> */}
+              {/* <h1>Product ID: {product_id.id}</h1>
+              <h1>Product Name: {product.title}</h1> */}
             </div>
           </Link>
-          <img
-            src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-12-11-select-202104_FMT_WHH?wid=2000&hei=2000&fmt=jpeg&qlt=80&.v=1617067383000"
-            alt="Ipad product shots"
-          />
+          <img src={product.image} alt={product.alt} />
         </div>
 
         <div className="product__information">
-          <h2>Ipad Pro 11-inch</h2>
+          <h2>{product.title}</h2>
           <div className="product__costInfo">
             <div className="product__ratingBar">
               <span>Rating:</span>
               <span className="rating__bar">
                 <RatingsBar />
+                {/* <Rating /> */}
               </span>
             </div>
             <div className="product__priceInfo">
               <span>Cost:</span>
-              <span className="item__cost">$1199.00</span>
+              <span className="item__cost">${product.price}</span>
             </div>
           </div>
 
@@ -56,7 +67,7 @@ export default function ProductDescription() {
           <div className="product__details">
             <h3>Product Details </h3>
             <ul>
-              <li>
+              {/* <li>
                 The ultimate iPad experience. Now with breakthrough M1
                 performance, a breathtaking XDR display, and blazing‑fast 5G
                 wireless. Buckle up.
@@ -78,7 +89,14 @@ export default function ProductDescription() {
                 Ultra Wide camera with a 12MP sensor and a 122‑degree field of
                 view, making it perfect for FaceTime and the new Center Stage
                 feature.
-              </li>
+              </li> */}
+
+              {product.description
+                .split(desc_regex)
+                .filter(Boolean)
+                .map((str) => {
+                  return <li>{str.trim()}</li>;
+                })}
             </ul>
           </div>
         </div>
@@ -105,11 +123,18 @@ export default function ProductDescription() {
           <div className="sub__totalSection">
             <span>Quantity</span>
             <div className="quantity__selector">
-              <input type="text" placeholder="2" />
+              {/* <input type="text" placeholder="2" /> */}
+              <select className="select__productQuantity">
+                {[...Array(product.countInStock).keys()].map((x, i) => {
+                  if (i + 1 < 11) {
+                    return <option value={i + 1}>{i + 1}</option>;
+                  }
+                })}
+              </select>
             </div>
             <div className="sub__totalWrapper">
               <span>Total cost:</span>
-              <h3>$1199.00</h3>
+              <h3>${product.price}</h3>
             </div>
             <Link to="/order-summary">
               <button className="add__toCartButton">Add to Cart</button>
@@ -117,6 +142,6 @@ export default function ProductDescription() {
           </div>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }

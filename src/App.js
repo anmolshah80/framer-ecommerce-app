@@ -11,6 +11,7 @@ import UserProfile from "./pages/userProfile/UserProfile";
 import EditProfile from "./pages/editProfile/EditProfile";
 import ChangePassword from "./pages/changePassword/ChangePassword";
 import DeleteAccount from "./pages/deleteAccount/DeleteAccount";
+import Checkout from "./pages/checkout/Checkout";
 import {
   BrowserRouter as Router,
   Routes,
@@ -47,6 +48,7 @@ function App() {
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/delete-account" element={<DeleteAccount />} />
+            <Route path="/checkout" element={<Checkout />} />
           </>
         )}
       </Routes>

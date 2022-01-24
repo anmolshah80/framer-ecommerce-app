@@ -4,14 +4,14 @@ import Topbar from "../../components/topbar/Topbar";
 import Product from "../../components/product/Product";
 import SidePanel from "../../components/sidePanel/SidePanel";
 import StaticData from "../../StaticData";
-import "./Home.css";
+import "./home.css";
 
 function Home() {
   return (
-    <>
+    <React.Fragment>
       <Topbar />
       <div className="home">
-        <SidePanel />
+        <SidePanel className="side__panel" />
         <div className="product__containerWrapper">
           <div className="product__container">
             {StaticData.slice(0, 3).map((product) => {
@@ -82,7 +82,7 @@ function Home() {
           </div>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }
 

@@ -7,10 +7,14 @@
   --bg-accent: #484a4d;
   --navy-blue: #374754;
   --medium: #252f3d;
+  --text-green: #0c7145;
+  --bg-green: #f2faf7;
   --text-color: #dadce1;
   --nav-size: 60px;
   --border: 1px solid #474a4d;
   --navy-border: 2px solid #374754;
   --border-radius: 8px;
+  --box-shadow-focus-light: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  --box-shadow-focus-dark: 0 0 0 0.25rem rgb(49 132 253 / 50%);
   --speed: 500ms;
 }
