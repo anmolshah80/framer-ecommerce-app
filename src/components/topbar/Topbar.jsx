@@ -14,6 +14,7 @@ import {
 } from "@mui/icons-material";
 import avatar from "../../avatar";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 // import { AuthContext } from "../../context/authContext/AuthContext";
 
 export default function Topbar() {
@@ -22,6 +23,10 @@ export default function Topbar() {
   // const handleLogout = () => {
   //   logout({ username }, dispatch);
   // }
+
+  const cartReducer = useSelector((state) => state.cartReducer);
+
+  const { cartItems } = cartReducer;
 
   return (
     <div className="topbar">
@@ -43,9 +48,10 @@ export default function Topbar() {
           <Search className="topbarSearchIcon" />
         </div>
         <div className="topRight">
-          <Link to="/checkout">
+          <Link to="/cart">
             <div className="topbarIconContainer">
               <ShoppingCart className="shoppingCartIcon" />
+              <span className="items__inCart">{cartItems.length}</span>
             </div>
           </Link>
           {/* <div className="topbarIconContainer">

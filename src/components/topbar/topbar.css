@@ -101,16 +101,21 @@
 
 .topbarIconContainer {
   /* position: relative; */
-  --button-size: calc(var(--nav-size) * 0.1);
-  /* width: var(--button-size);
-  height: var(--button-size); */
-  padding: var(--button-size);
+  --button-size: calc(var(--nav-size) * 0.7);
+  width: 38px;
+  height: 38px;
+  display: flex;
+  flex-direction: row;
+  /* padding: 6px; */
   cursor: pointer;
   margin-right: 15px;
   color: #555;
   transition: filter 300ms;
   background-color: rgba(0, 0, 0, 0.035);
   border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  object-fit: contain;
 }
 
 .topbarIconContainer:hover {
@@ -118,28 +123,19 @@
 }
 
 .topbarIconContainer > .shoppingCartIcon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 20px;
 }
 
 .topbarIconContainer > .shoppingCartIcon:hover {
   filter: brightness(0.4);
 }
 
-.topIconBadge {
-  width: 15px;
-  height: 15px;
-  position: absolute;
-  top: -5px;
-  right: 0px;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
+.topbarIconContainer > .items__inCart {
+  margin-top: -10px;
+  color: #555;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .topAvatar {

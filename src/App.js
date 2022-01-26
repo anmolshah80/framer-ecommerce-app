@@ -6,12 +6,12 @@ import Login from "./pages/login/Login";
 import SellerDashboard from "./pages/SellerDashboard";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ProductDescription from "./pages/productDescription/ProductDescription";
-import OrderSummary from "./pages/orderSummary/OrderSummary";
+import OrderSummary from "./pages/cart/Cart";
 import UserProfile from "./pages/userProfile/UserProfile";
 import EditProfile from "./pages/editProfile/EditProfile";
 import ChangePassword from "./pages/changePassword/ChangePassword";
 import DeleteAccount from "./pages/deleteAccount/DeleteAccount";
-import Checkout from "./pages/checkout/Checkout";
+import Cart from "./pages/cart/Cart";
 import {
   BrowserRouter as Router,
   Routes,
@@ -48,7 +48,7 @@ function App() {
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/delete-account" element={<DeleteAccount />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/cart" element={<Cart />} />
           </>
         )}
       </Routes>
