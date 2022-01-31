@@ -19,6 +19,17 @@ export default function Skeleton({ type }) {
     </div>
   );
 
+  // topbar skeleton loading css locally available in Topbar component
+  // const TopbarSkeleton = () => {
+  //   <div className="topbar__skeleton">
+  //     <div className="topbar__skeletonIcons"></div>
+  //     <div className="avatar__skeletonIcon"></div>
+  //     <div className="topbar__skeletonIcons"></div>
+  //   </div>;
+  // };
+
   if (type === "product_card")
     return Array(counter).fill(<ProductCardSkeleton />);
+
+  // if (type === "topbar") return <TopbarSkeleton />;
 }

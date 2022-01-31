@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 // import { AuthContext } from "../../authContext/AuthContext";
 // import { logoutUser } from "../../authContext/ApiCalls";
 import { logoutUser } from "../../actions/userActions";
-// import { useNavigate } from "react-router-dom";
 
 export default function Topbar() {
   // const { isFetching, dispatch } = useContext(AuthContext);
@@ -32,6 +31,12 @@ export default function Topbar() {
   //   // logoutUser({ username }, dispatch);
   //   console.log("username", username);
   // };
+
+  const getAllProductsState = useSelector(
+    (state) => state.getAllProductsReducer
+  );
+
+  const { loading, products, error } = getAllProductsState;
 
   const cartReducer = useSelector((state) => state.cartReducer);
 
@@ -58,14 +63,22 @@ export default function Topbar() {
           <input type="text" className="topbarSearchInput" />
           <Search className="topbarSearchIcon" />
         </div>
-        <div className="topRight">
-          <Link to="/cart">
-            <div className="topbarIconContainer">
-              <ShoppingCart className="shoppingCartIcon" />
-              <span className="items__inCart">{cartItems.length}</span>
-            </div>
-          </Link>
-          {/* <div className="topbarIconContainer">
+
+        {loading ? (
+          <div className="topbar__skeleton">
+            <div className="topbar__skeletonIcons"></div>
+            <div className="avatar__skeletonIcon"></div>
+            <div className="topbar__skeletonIcons"></div>
+          </div>
+        ) : (
+          <div className="topRight">
+            <Link to="/cart">
+              <div className="topbarIconContainer">
+                <ShoppingCart className="shoppingCartIcon" />
+                <span className="items__inCart">{cartItems.length}</span>
+              </div>
+            </Link>
+            {/* <div className="topbarIconContainer">
             <NotificationsNone />
             <span className="topIconBadge">2</span>
           </div>
@@ -76,24 +89,25 @@ export default function Topbar() {
           <div className="topbarIconContainer">
             <Settings />
           </div> */}
-          {currentUser && (
-            <Link to="/user-profile">
-              <img
-                // src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
-                src={avatar}
-                alt="Avatar profile"
-                className="topAvatar"
-              />
-            </Link>
-          )}
+            {currentUser && (
+              <Link to="/user-profile">
+                <img
+                  // src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
+                  src={avatar}
+                  alt="Avatar profile"
+                  className="topAvatar"
+                />
+              </Link>
+            )}
 
-          {/* dropdown icon for logout */}
-          <Navbar>
-            <NavItem icon={<ArrowDropDownCircle />}>
-              <DropdownMenu />
-            </NavItem>
-          </Navbar>
-        </div>
+            {/* dropdown icon for logout */}
+            <Navbar>
+              <NavItem icon={<ArrowDropDownCircle />}>
+                <DropdownMenu />
+              </NavItem>
+            </Navbar>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -66,3 +66,28 @@
   height: 18px;
   border-radius: 0.125rem;
 }
+
+/* topbar skeleton loading css */
+/* .topbar__skeleton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  animation: skeleton 1s ease infinite alternate;
+}
+
+.topbar__skeletonIcons {
+  margin-right: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--navy-blue);
+}
+
+.avatar__skeletonIcon {
+  width: 38px;
+  height: 38px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-color: var(--navy-blue);
+} */
