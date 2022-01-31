@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./topbar.css";
 // import {
 //   NotificationsNone,
@@ -9,24 +9,35 @@ import "./topbar.css";
 import {
   ArrowDropDownCircle,
   Logout,
+  Login,
   ShoppingCart,
   Search,
+  ShoppingCartCheckout,
+  HowToReg,
 } from "@mui/icons-material";
 import avatar from "../../avatar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { AuthContext } from "../../context/authContext/AuthContext";
+// import { AuthContext } from "../../authContext/AuthContext";
+// import { logoutUser } from "../../authContext/ApiCalls";
+import { logoutUser } from "../../actions/userActions";
+// import { useNavigate } from "react-router-dom";
 
 export default function Topbar() {
   // const { isFetching, dispatch } = useContext(AuthContext);
 
-  // const handleLogout = () => {
-  //   logout({ username }, dispatch);
-  // }
+  // const handleLogout = (e) => {
+  //   // e.prevenDefault();
+  //   const username = localStorage.getItem("user");
+  //   // logoutUser({ username }, dispatch);
+  //   console.log("username", username);
+  // };
 
   const cartReducer = useSelector((state) => state.cartReducer);
 
   const { cartItems } = cartReducer;
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div className="topbar">
@@ -65,14 +76,16 @@ export default function Topbar() {
           <div className="topbarIconContainer">
             <Settings />
           </div> */}
-          <Link to="/user-profile">
-            <img
-              // src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
-              src={avatar}
-              alt="Avatar profile"
-              className="topAvatar"
-            />
-          </Link>
+          {currentUser && (
+            <Link to="/user-profile">
+              <img
+                // src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
+                src={avatar}
+                alt="Avatar profile"
+                className="topAvatar"
+              />
+            </Link>
+          )}
 
           {/* dropdown icon for logout */}
           <Navbar>
@@ -89,15 +102,92 @@ export default function Topbar() {
 function DropdownMenu() {
   function DropdownItem(props) {
     return (
-      <a href="#" className="menu-item">
-        <span className="icon-button">{props.leftIcon}</span>
-        {props.children}
-      </a>
+      <React.Fragment>
+        {props.handleRequest ? (
+          <div className="menu-item" onClick={props.handleRequest}>
+            <span className="icon-button">{props.leftIcon}</span>
+            {props.children}
+          </div>
+        ) : (
+          <a
+            href={props.handleRedirect}
+            className="menu-item"
+            onClick={props.handleRequest}
+          >
+            <span className="icon-button">{props.leftIcon}</span>
+            {props.children}
+          </a>
+        )}
+      </React.Fragment>
     );
   }
+
+  // logout
+  const dispatch = useDispatch();
+
+  // const navigate = useNavigate();
+
+  // const { isFetching, dispatch } = useContext(AuthContext);
+
+  // const handleLogout = (e) => {
+  //   // e.prevenDefault();
+  //   const username = JSON.parse(localStorage.getItem("user")).username;
+  //   logoutUser({ username }, dispatch);
+  //   console.log("username", username);
+  //   navigate("/");
+  // };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    window.location.reload();
+  };
+
+  // const handleLogin = () => {
+  //   navigate("/login");
+  // };
+
+  // const handleSignup = () => {
+  //   navigate("/register");
+  // };
+
+  // const handleOrders = () => {
+  //   navigate("/orders");
+  // };
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div className="dropdown">
-      <DropdownItem leftIcon={<Logout />}> Logout</DropdownItem>
+      {currentUser ? (
+        <React.Fragment>
+          <DropdownItem
+            leftIcon={<ShoppingCartCheckout />}
+            handleRedirect="/orders"
+          >
+            {" "}
+            Orders{" "}
+          </DropdownItem>
+          <DropdownItem
+            leftIcon={<Logout />}
+            handleRedirect=""
+            handleRequest={handleLogout}
+          >
+            {" "}
+            Logout{" "}
+          </DropdownItem>
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <DropdownItem leftIcon={<Login />} handleRedirect="/login">
+            {" "}
+            Login{" "}
+          </DropdownItem>
+          <DropdownItem leftIcon={<HowToReg />} handleRedirect="/register">
+            {" "}
+            Register{" "}
+          </DropdownItem>
+        </React.Fragment>
+      )}
     </div>
   );
 }

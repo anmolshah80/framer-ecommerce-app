@@ -33,7 +33,7 @@ function Login() {
           </p>
         </div>
 
-        <form className="login__form">
+        <form className="login__form" onSubmit={handleLogin}>
           <h4>Username</h4>
           <input
             className="form__input"
@@ -49,11 +49,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <a href="/forgot-password">Forgot Password?</a>
-          <button
-            className="login__button"
-            onClick={handleLogin}
-            disabled={isFetching}
-          >
+          <button className="login__button" type="submit" disabled={isFetching}>
             Sign in
           </button>
         </form>

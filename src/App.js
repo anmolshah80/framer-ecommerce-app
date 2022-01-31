@@ -24,10 +24,14 @@ import { AuthContext } from "./authContext/AuthContext";
 function App() {
   const { user } = useContext(AuthContext);
 
+  console.log("user: ", user);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
+        {/* <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} /> */}
+        <Route path="/" element={<Home />} />
+
         <Route
           path="/register"
           element={!user ? <Register /> : <Navigate to="/" />}

@@ -1,28 +1,18 @@
 .home {
   display: flex;
-  flex: 4;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-direction: row;
-  max-width: 1520px;
-  /* align-items: center; */
+  align-items: flex-start;
 }
-
-/* .side__panel {
-  display: flex;
-  flex: 1;
-} */
 
 .product__containerWrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  /* overflow: hidden; */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.product__container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
+/* .product__container {
+  justify-content: center;
+  align-items: flex-start;
+} */

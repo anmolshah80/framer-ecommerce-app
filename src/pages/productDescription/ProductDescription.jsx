@@ -138,7 +138,7 @@ export default function ProductDescription() {
               </div>
               <div className="sub__totalWrapper">
                 <span>Total cost:</span>
-                <h3>${product.price}</h3>
+                <h3>${quantity * product.price}</h3>
               </div>
               <Link to="/cart">
                 <button

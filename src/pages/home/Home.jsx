@@ -8,6 +8,7 @@ import SidePanel from "../../components/sidePanel/SidePanel";
 import { useDispatch, useSelector } from "react-redux";
 import "./home.css";
 import { getAllProducts } from "../../actions/productActions";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 function Home() {
   const getAllProductsState = useSelector(
@@ -27,34 +28,8 @@ function Home() {
       <Topbar />
       <div className="home">
         <SidePanel className="side__panel" />
-        <div className="product__containerWrapper">
+        <div className="product__containerWrapper product__container">
           {/* <div className="product__container">
-            {StaticData.slice(0, 3).map((product) => {
-              return <Product product={product} key={product.id} />;
-            })}
-          </div>
-
-          <div className="product__container">
-            {StaticData.slice(3, 6).map((product) => {
-              return <Product product={product} key={product.id} />;
-            })}
-          </div> */}
-
-          {/* <div className="product__container">
-            {products.length &&
-              products.slice(0, 3).map((product) => {
-                return <Product product={product} key={product._id} />;
-              })}
-          </div> */}
-
-          {/* <div className="product__container">
-            {products.length &&
-              products.slice(3, 6).map((product) => {
-                return <Product product={product} key={product._id} />;
-              })}
-          </div> */}
-
-          <div className="product__container">
             {loading ? (
               <h1>Loading...</h1>
             ) : error ? (
@@ -76,7 +51,18 @@ function Home() {
                 return <Product product={product} key={product._id} />;
               })
             )}
-          </div>
+          </div> */}
+
+          {loading ? (
+            <Skeleton type="product_card" />
+          ) : error ? (
+            <h1>Something went wrong. Please try again.</h1>
+          ) : (
+            products.map((product) => {
+              return <Product product={product} key={product._id} />;
+            })
+            // <Skeleton type="product_card" />
+          )}
         </div>
       </div>
     </React.Fragment>

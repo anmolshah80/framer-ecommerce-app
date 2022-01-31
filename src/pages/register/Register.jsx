@@ -1,18 +1,19 @@
-import React, { useRef, useState } from "react";
-// import Header from "../../components/Header";
+import React, { useState } from "react";
 import "./Register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
+// import { registerUser } from "../../actions/userActions";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const navigate = useNavigate();
 
-  const usernameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  // const dispatch = useDispatch();
 
   const usernameErrorMessage =
     "Username should be between 3 and 25 characters.";
@@ -21,25 +22,36 @@ export default function Register() {
 
   const handleRegistration = async (e) => {
     e.preventDefault();
-    setUsername(usernameRef.current.value);
-    setEmail(emailRef.current.value);
-    setPassword(passwordRef.current.value);
 
-    // testing purposes only
-    // console.log("set credentials: ");
-    // console.log(usernameRef.current.value);
-    // console.log(email);
-    // console.log(password);
-
-    try {
-      await axios.post("auth/register", { username, email, password });
-      navigate("/login");
-      console.log("user registered!");
-    } catch (err) {
-      console.log("user not registered!");
-      console.log(err);
+    if (password == confirmPassword) {
+      try {
+        await axios.post("auth/register", { username, email, password });
+        navigate("/login");
+        console.log("user registered!");
+      } catch (err) {
+        console.log("user not registered!");
+        console.log(err);
+      }
+    } else {
+      alert("Passwords do not match.");
     }
   };
+
+  // const handleRegistration = (e) => {
+  //   e.preventDefault();
+
+  //   const user = {
+  //     username: username,
+  //     email: email,
+  //     password: password,
+  //   };
+
+  //   if (password == confirmPassword) {
+  //     dispatch(registerUser());
+  //   } else {
+  //     alert("Passwords do not match.");
+  //   }
+  // };
 
   return (
     <div className="register">
@@ -61,14 +73,36 @@ export default function Register() {
           </p>
         </div>
 
-        <form className="register__form">
+        <form className="register__form" onSubmit={handleRegistration}>
           <h4>Username</h4>
-          <input required type="text" ref={usernameRef} />
-          {/* <span>{usernameErrorMessage}</span> */}
+
+          <input
+            required
+            type="text"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+
           <h4>Email</h4>
-          <input required type="email" ref={emailRef} />
+          <input
+            required
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
           <h4>Password</h4>
-          <input required type="password" ref={passwordRef} />
+          <input
+            required
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
           <span>Password must:</span>
           <ul>
             <li>Be atleast 8 characters long</li>
@@ -78,12 +112,15 @@ export default function Register() {
             <li>Contain atleast one special character [@, #, $, %]</li>
           </ul>
           <h4>Confirm Password</h4>
-          <input required type="password" />
-          <button
-            // type="submit"
-            className="register__button"
-            onClick={handleRegistration}
-          >
+          <input
+            required
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+            }}
+          />
+          <button type="submit" className="register__button">
             Sign up
           </button>
         </form>

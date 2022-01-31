@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginFailure, loginStart, loginSuccess } from "./AuthActions";
+import { loginFailure, loginStart, loginSuccess, logout } from "./AuthActions";
 
 export const login = async (user, dispatch) => {
   dispatch(loginStart());
@@ -11,12 +11,12 @@ export const login = async (user, dispatch) => {
   }
 };
 
-// export const logout = async (user, dispatch) => {
-//   dispatch(logoutStart());
-//   try {
-//     const res = await axios.post("auth/logout", user);
-//     dispatch(logoutStart(res.data));
-//   } catch (err) {
-//     dispatch(console.log("User not logged out!"));
-//   }
-// };
+export const logoutUser = async (user, dispatch) => {
+  dispatch(logout());
+  try {
+    const res = await axios.post("auth/logout", user);
+    dispatch(logout(res.data));
+  } catch (err) {
+    dispatch(console.log("User not logged out!"));
+  }
+};
