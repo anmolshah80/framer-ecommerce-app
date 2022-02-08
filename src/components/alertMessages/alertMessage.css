@@ -1,12 +1,13 @@
-.alert__message {
+.alert__success,
+.alert__danger {
   /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; */
-  margin: 20px;
+  margin: 20px 0px 20px;
 }
 
-.alert__messageContainer {
+.alert__successMessageContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -18,12 +19,26 @@
   color: var(--text-green);
 }
 
-.alert__messageContainer > .alert__messageText {
-  margin-left: 10px;
-  font-weight: 600;
+.alert__dangerMessageContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 10px;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
 
-.alert__messageContainer > .icon__clear {
+.alert__successMessageText,
+.alert__dangerMessageText {
+  margin-left: 10px;
+  font-weight: 500;
+}
+
+.icon__clear {
   font-size: 20px;
   margin-right: 10px;
   cursor: pointer;

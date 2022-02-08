@@ -25,7 +25,7 @@ function Home() {
 
   return (
     <React.Fragment>
-      <Topbar />
+      <Topbar loading={loading} />
       <div className="home">
         <SidePanel className="side__panel" />
         <div className="product__containerWrapper product__container">
@@ -56,12 +56,14 @@ function Home() {
           {loading ? (
             <Skeleton type="product_card" />
           ) : error ? (
-            <h1>Something went wrong. Please try again.</h1>
+            <Skeleton
+              type="custom_effect"
+              message="Something went wrong. Please try again."
+            />
           ) : (
-            products.map((product) => {
+            products?.map((product) => {
               return <Product product={product} key={product._id} />;
             })
-            // <Skeleton type="product_card" />
           )}
         </div>
       </div>

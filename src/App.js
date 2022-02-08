@@ -12,6 +12,7 @@ import EditProfile from "./pages/editProfile/EditProfile";
 import ChangePassword from "./pages/changePassword/ChangePassword";
 import DeleteAccount from "./pages/deleteAccount/DeleteAccount";
 import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/checkout/Checkout";
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,18 +21,24 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./authContext/AuthContext";
+import PaymentCanceled from "./pages/paymentCanceled/PaymentCanceled";
 
 function App() {
   const { user } = useContext(AuthContext);
 
-  console.log("user: ", user);
+  // console.log("user: ", user);
 
   return (
     <Router>
       <Routes>
         {/* <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} /> */}
         <Route path="/" element={<Home />} />
-
+        <Route path="/product/:id" element={<ProductDescription />} />
+        <Route path="/cart" element={<Cart />} />
+        {/* for testing purposes only*/}
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-summary" element={<OrderSummary />} />
+        <Route path="/payment-canceled" element={<PaymentCanceled />} />
         <Route
           path="/register"
           element={!user ? <Register /> : <Navigate to="/" />}
@@ -40,19 +47,16 @@ function App() {
           path="/login"
           element={!user ? <Login /> : <Navigate to="/" />}
         />
-
         <Route path="/forgot-password" element={<ForgotPassword />} />
-
         {user && (
           <>
             <Route path="/dashboard" element={<SellerDashboard />} />
-            <Route path="/product/:id" element={<ProductDescription />} />
-            <Route path="/order-summary" element={<OrderSummary />} />
+            {/* <Route path="/order-summary" element={<OrderSummary />} /> */}
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/delete-account" element={<DeleteAccount />} />
-            <Route path="/cart" element={<Cart />} />
+            {/* <Route path="/checkout" element={<Checkout />} /> */}
           </>
         )}
       </Routes>

@@ -1,11 +1,12 @@
 import React from "react";
 import Topbar from "../../components/topbar/Topbar";
 import "./cart.css";
-import { Tag, Remove, Add, Clear } from "@mui/icons-material";
+import { Clear } from "@mui/icons-material";
 import AlertMessage from "../../components/alertMessages/AlertMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
+// import Checkout from "../checkout/Checkout";
 
 export default function Cart() {
   const cartReducerState = useSelector((state) => state.cartReducer);
@@ -19,12 +20,36 @@ export default function Cart() {
     0.0
   );
 
+  const localCartItems = JSON.parse(localStorage.getItem("cartItems"));
+
+  const handleCheckout = () => {
+    fetch("http://localhost:8800/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: localCartItems,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return res.json().then((e) => Promise.reject(e));
+      })
+      .then(({ url }) => {
+        window.location = url;
+      })
+      .catch((e) => {
+        console.error(e.error);
+      });
+  };
+
   return (
     <React.Fragment>
       <Topbar />
-      <AlertMessage />
       <div className="cart">
         <h1>Review your cart</h1>
+        <AlertMessage type="alert_danger" />
         <div className="product__headingWrapper">
           {/* <Tag className="tag__icon" /> */}
           <span className="tag__icon">#</span>
@@ -81,9 +106,15 @@ export default function Cart() {
               Continue Shopping
             </button>
           </Link>
-          <button className="proceed__toCheckoutButton">
+          {/* <Link to="/checkout"> */}
+          <button
+            className="proceed__toCheckoutButton"
+            onClick={handleCheckout}
+          >
             Proceed to Checkout
           </button>
+          {/* </Link> */}
+          {/* <Checkout subTotal={grandTotal} /> */}
         </div>
       </div>
     </React.Fragment>

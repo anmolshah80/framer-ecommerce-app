@@ -68,7 +68,7 @@
 }
 
 /* topbar skeleton loading css */
-/* .topbar__skeleton {
+.topbar__skeleton {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -90,4 +90,55 @@
   margin-right: 10px;
   border-radius: 50%;
   background-color: var(--navy-blue);
-} */
+}
+
+.circular__loadingEffect {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.custom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.balls {
+  display: flex;
+  margin-left: 7px;
+}
+
+.ball {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--navy-blue);
+  margin-right: 10px;
+  animation: ball 0.5s ease infinite alternate;
+}
+
+.ball2 {
+  animation-delay: 0.1s;
+}
+
+.ball3 {
+  animation-delay: 0.2s;
+}
+
+@keyframes ball {
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+.custom__text {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--navy-blue);
+}

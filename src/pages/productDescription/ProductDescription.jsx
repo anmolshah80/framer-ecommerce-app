@@ -5,11 +5,12 @@ import RatingsBar from "../../components/ratingsBar/RatingsBar";
 // import Rating from "react-rating";
 // import OrderSummary from "../orderSummary/OrderSummary";
 // import StaticData from "../../StaticData";
-import { ArrowBackIosNew, Tag, Info } from "@mui/icons-material";
+import { ArrowBackIosNew, Info } from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 export default function ProductDescription() {
   const product_id = useParams();
@@ -42,12 +43,15 @@ export default function ProductDescription() {
 
   return (
     <React.Fragment>
-      <Topbar />
+      <Topbar loading={loading} />
 
       {loading ? (
-        <h1>Loading...</h1>
+        <Skeleton type="circular_effect" />
       ) : error ? (
-        <h1>Could not load product description page. Please try again.</h1>
+        <Skeleton
+          type="custom_effect"
+          message="Could not load product description page. Please try again."
+        />
       ) : (
         <div className="product__description">
           <div className="product__descLeft">

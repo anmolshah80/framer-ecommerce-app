@@ -35,6 +35,21 @@
   flex-direction: column;
 }
 
+.signup__errorMessage {
+  font-size: 14px;
+  padding: 3px;
+  color: red;
+  display: none;
+}
+
+input:invalid[focused="true"] {
+  border: 2px solid #f00;
+}
+
+input:invalid[focused="true"] ~ .signup__errorMessage {
+  display: block;
+}
+
 .register__text {
   padding: 10px 0px;
   font-weight: 500;

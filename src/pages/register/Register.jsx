@@ -2,30 +2,42 @@ import React, { useState } from "react";
 import "./Register.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { registerUser } from "../../actions/userActions";
 
-export default function Register() {
+export default function Register(props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const [focused, setFocused] = useState(false);
+
+  const { errorMessage } = props;
+
   const navigate = useNavigate();
 
-  // const dispatch = useDispatch();
+  // const password_regex = new RegExp(
+  //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,29}$/
+  // );
 
-  const usernameErrorMessage =
-    "Username should be between 3 and 25 characters.";
-  const passwordErrorMessage =
-    "Password should be at least 8 characters long and include at least 1 uppercase character, 1 lowercase character, 1 numeric character, and 1 special character in [@, #, $, %]";
+  // const regex_exp = new RegExp(
+  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*()?]){7,29}$/
+  // );
+
+  const handleFocus = (e) => {
+    setFocused(true);
+  };
 
   const handleRegistration = async (e) => {
     e.preventDefault();
 
     if (password == confirmPassword) {
       try {
-        await axios.post("auth/register", { username, email, password });
+        await axios.post("auth/register", {
+          username,
+          email,
+          password,
+          confirmPassword,
+        });
         navigate("/login");
         console.log("user registered!");
       } catch (err) {
@@ -36,22 +48,6 @@ export default function Register() {
       alert("Passwords do not match.");
     }
   };
-
-  // const handleRegistration = (e) => {
-  //   e.preventDefault();
-
-  //   const user = {
-  //     username: username,
-  //     email: email,
-  //     password: password,
-  //   };
-
-  //   if (password == confirmPassword) {
-  //     dispatch(registerUser());
-  //   } else {
-  //     alert("Passwords do not match.");
-  //   }
-  // };
 
   return (
     <div className="register">
@@ -75,15 +71,22 @@ export default function Register() {
 
         <form className="register__form" onSubmit={handleRegistration}>
           <h4>Username</h4>
-
           <input
             required
             type="text"
+            pattern="^[A-Za-z0-9]{8,20}$"
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            onBlur={handleFocus}
+            focused={focused.toString()}
           />
+          <span className="signup__errorMessage">
+            {errorMessage
+              ? errorMessage
+              : "Username should be 8-20 characters long and should not include any special characters"}
+          </span>
 
           <h4>Email</h4>
           <input
@@ -93,16 +96,31 @@ export default function Register() {
             onChange={(e) => {
               setEmail(e.target.value);
             }}
+            onBlur={handleFocus}
+            focused={focused.toString()}
           />
+          <span className="signup__errorMessage">
+            {errorMessage ? errorMessage : "Input email address is invalid"}
+          </span>
+
           <h4>Password</h4>
           <input
             required
             type="password"
+            pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,29}$"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
+            onBlur={handleFocus}
+            focused={focused.toString()}
           />
+          <span className="signup__errorMessage">
+            {errorMessage
+              ? errorMessage
+              : "Password must be 8-30 characters long and must contain an uppercase, a lowercase, a number and a special character and should not start with a special character"}
+          </span>
+
           <span>Password must:</span>
           <ul>
             <li>Be atleast 8 characters long</li>
@@ -115,11 +133,19 @@ export default function Register() {
           <input
             required
             type="password"
+            pattern={password}
             value={confirmPassword}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
+            onBlur={handleFocus}
+            focused={focused.toString()}
           />
+          <span className="signup__errorMessage">
+            {errorMessage
+              ? errorMessage
+              : "Password and confirm password should match"}
+          </span>
           <button type="submit" className="register__button">
             Sign up
           </button>

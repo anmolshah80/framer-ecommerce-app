@@ -16,6 +16,11 @@ export const addToCart = (product, quantity) => (dispatch, getState) => {
   );
 };
 
-export const removeFromCart = (item) => (dispatch) => {
+export const removeFromCart = (item) => (dispatch, getState) => {
   dispatch({ type: "REMOVE_FROM_CART", payload: item });
+
+  localStorage.setItem(
+    "cartItems",
+    JSON.stringify(getState().cartReducer.cartItems)
+  );
 };

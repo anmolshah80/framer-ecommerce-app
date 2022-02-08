@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./topbar.css";
 // import {
 //   NotificationsNone,
@@ -18,31 +18,26 @@ import {
 import avatar from "../../avatar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { AuthContext } from "../../authContext/AuthContext";
-// import { logoutUser } from "../../authContext/ApiCalls";
 import { logoutUser } from "../../actions/userActions";
+import Skeleton from "../skeleton/Skeleton";
+import { filterProducts } from "../../actions/productActions";
 
-export default function Topbar() {
-  // const { isFetching, dispatch } = useContext(AuthContext);
-
-  // const handleLogout = (e) => {
-  //   // e.prevenDefault();
-  //   const username = localStorage.getItem("user");
-  //   // logoutUser({ username }, dispatch);
-  //   console.log("username", username);
-  // };
-
-  const getAllProductsState = useSelector(
-    (state) => state.getAllProductsReducer
-  );
-
-  const { loading, products, error } = getAllProductsState;
-
+export default function Topbar({ loading }) {
   const cartReducer = useSelector((state) => state.cartReducer);
 
   const { cartItems } = cartReducer;
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleSearchQuery = () => {
+    if (searchQuery !== "") {
+      dispatch(filterProducts(searchQuery, "all", "all", 0, 100));
+    }
+  };
 
   return (
     <div className="topbar">
@@ -60,16 +55,17 @@ export default function Topbar() {
           </a>
         </div>
         <div className="topbarSearch">
-          <input type="text" className="topbarSearchInput" />
-          <Search className="topbarSearchIcon" />
+          <input
+            type="text"
+            className="topbarSearchInput"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <Search className="topbarSearchIcon" onClick={handleSearchQuery} />
         </div>
 
         {loading ? (
-          <div className="topbar__skeleton">
-            <div className="topbar__skeletonIcons"></div>
-            <div className="avatar__skeletonIcon"></div>
-            <div className="topbar__skeletonIcons"></div>
-          </div>
+          <Skeleton type="topbar" />
         ) : (
           <div className="topRight">
             <Link to="/cart">
