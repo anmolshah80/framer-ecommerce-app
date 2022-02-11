@@ -6,7 +6,7 @@ import AlertMessage from "../../components/alertMessages/AlertMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
-// import Checkout from "../checkout/Checkout";
+import Checkout from "../checkout/Checkout";
 
 export default function Cart() {
   const cartReducerState = useSelector((state) => state.cartReducer);
@@ -21,6 +21,7 @@ export default function Cart() {
   );
 
   const localCartItems = JSON.parse(localStorage.getItem("cartItems"));
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const handleCheckout = () => {
     fetch("http://localhost:8800/create-checkout-session", {
@@ -30,6 +31,7 @@ export default function Cart() {
       },
       body: JSON.stringify({
         items: localCartItems,
+        user: currentUser,
       }),
     })
       .then((res) => {
@@ -114,7 +116,7 @@ export default function Cart() {
             Proceed to Checkout
           </button>
           {/* </Link> */}
-          {/* <Checkout subTotal={grandTotal} /> */}
+          <Checkout subTotal={grandTotal} />
         </div>
       </div>
     </React.Fragment>
