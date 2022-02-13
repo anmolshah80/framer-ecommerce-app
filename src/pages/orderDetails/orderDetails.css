@@ -1,0 +1,14 @@
+.orders {
+  margin: 20px;
+}
+
+.heading__wrapper {
+  margin-bottom: 20px;
+  color: var(--navy-blue);
+  font-weight: 600;
+}
+
+/* .table__container {
+  width: 60vw;
+  height: 60vw;
+} */

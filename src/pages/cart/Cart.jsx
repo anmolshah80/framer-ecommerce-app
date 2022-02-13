@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
 import Checkout from "../checkout/Checkout";
+// import { placeOrderViaCheckoutSession } from "../../actions/orderActions";
 
 export default function Cart() {
   const cartReducerState = useSelector((state) => state.cartReducer);
@@ -24,6 +25,9 @@ export default function Cart() {
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const handleCheckout = () => {
+    // dispatch(placeOrderViaCheckoutSession(grandTotal));
+    // fetch("/create-checkout-session", {
+
     fetch("http://localhost:8800/create-checkout-session", {
       method: "POST",
       headers: {
@@ -32,14 +36,17 @@ export default function Cart() {
       body: JSON.stringify({
         items: localCartItems,
         user: currentUser,
+        subTotal: grandTotal,
       }),
     })
       .then((res) => {
         if (res.ok) return res.json();
         return res.json().then((e) => Promise.reject(e));
       })
-      .then(({ url }) => {
+      .then(({ url, id, session }) => {
         window.location = url;
+        // console.log("session id: ", id);
+        // console.log("session: ", session);
       })
       .catch((e) => {
         console.error(e.error);

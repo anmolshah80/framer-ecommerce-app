@@ -7,7 +7,11 @@ import { cartReducer } from "./reducers/cartReducer";
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import { placeOrderReducer } from "./reducers/orderReducer";
+import {
+  placeOrderReducer,
+  getOrdersByUserIDReducer,
+  getOrderDescByIDReducer,
+} from "./reducers/orderReducer";
 
 const finalReducer = combineReducers({
   getAllProductsReducer: getAllProductsReducer,
@@ -15,6 +19,8 @@ const finalReducer = combineReducers({
   cartReducer: cartReducer,
   // registerNewUserReducer: registerNewUserReducer,
   placeOrderReducer: placeOrderReducer,
+  getOrdersByUserIDReducer: getOrdersByUserIDReducer,
+  getOrderDescByIDReducer: getOrderDescByIDReducer,
 });
 
 // load cart items from localStorage and if no item is found initialize an empty array

@@ -13,6 +13,9 @@ import ChangePassword from "./pages/changePassword/ChangePassword";
 import DeleteAccount from "./pages/deleteAccount/DeleteAccount";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
+import PaymentCanceled from "./pages/paymentCanceled/PaymentCanceled";
+import Orders from "./pages/orders/Orders";
+import OrderDetails from "./pages/orderDetails/OrderDetails";
 import {
   BrowserRouter as Router,
   Routes,
@@ -21,7 +24,6 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "./authContext/AuthContext";
-import PaymentCanceled from "./pages/paymentCanceled/PaymentCanceled";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -39,6 +41,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-summary" element={<OrderSummary />} />
         <Route path="/payment-canceled" element={<PaymentCanceled />} />
+
         <Route
           path="/register"
           element={!user ? <Register /> : <Navigate to="/" />}
@@ -57,6 +60,8 @@ function App() {
             <Route path="/change-password" element={<ChangePassword />} />
             <Route path="/delete-account" element={<DeleteAccount />} />
             {/* <Route path="/checkout" element={<Checkout />} /> */}
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order-details/:order_id" element={<OrderDetails />} />
           </>
         )}
       </Routes>
