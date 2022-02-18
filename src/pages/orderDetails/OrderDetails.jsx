@@ -27,34 +27,17 @@ export default function Orders() {
     dispatch(getOrderDescByID(orderID.order_id));
   }, [dispatch]);
 
-  const TAX_RATE = 0.07;
-
-  function ccyFormat(num) {
-    return `${num.toFixed(2)}`;
+  function formatPrice(num) {
+    return `${Number(num).toFixed(2)}`;
   }
 
-  function priceRow(qty, unit) {
-    return qty * unit;
+  function formatDate(date) {
+    return `${date.substring(0, 10)}`;
   }
 
-  function createRow(desc, qty, unit) {
-    const price = priceRow(qty, unit);
-    return { desc, qty, unit, price };
-  }
-
-  function subtotal(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-  }
-
-  const rows = [
-    createRow("Paperclips (Box)", 100, 1.15),
-    createRow("Paper (Case)", 10, 45.99),
-    createRow("Waste Basket", 2, 17.99),
-  ];
-
-  const invoiceSubtotal = subtotal(rows);
-  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
-  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+  const Button = ({ type }) => {
+    return <button className={"status " + type}>{type}</button>;
+  };
 
   return (
     <React.Fragment>
@@ -64,58 +47,157 @@ export default function Orders() {
         {error && (
           <Skeleton
             type="custom_effect"
-            message="Something went wrong. Could not fetch the order description for the requested order."
+            message="Something went wrong. Could not fetch order description for the requested order."
           />
         )}
         {loading && <Skeleton type="circular_effect" />}
         {order_desc && (
-          <TableContainer component={Paper} className="table__container">
-            <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center" colSpan={3}>
-                    Product Details
-                  </TableCell>
-                  <TableCell align="right">Price</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Items</TableCell>
-                  <TableCell align="right">Qty.</TableCell>
-                  <TableCell align="right">Unit</TableCell>
-                  <TableCell align="right">Total Sum</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.desc}>
-                    <TableCell>{row.desc}</TableCell>
-                    <TableCell align="right">{row.qty}</TableCell>
-                    <TableCell align="right">{row.unit}</TableCell>
-                    <TableCell align="right">{ccyFormat(row.price)}</TableCell>
+          <React.Fragment>
+            <TableContainer component={Paper}>
+              <Table
+                sx={{ minWidth: 700 }}
+                aria-label="spanning table"
+                className="products__table"
+              >
+                <TableHead>
+                  <TableRow className="table__headingWrapper">
+                    <TableCell
+                      className="heading__wordWrap"
+                      align="center"
+                      colSpan={2}
+                    >
+                      Product Details
+                    </TableCell>
+                    <TableCell
+                      className="heading__wordWrap"
+                      align="right"
+                      colSpan={2}
+                    >
+                      Price
+                    </TableCell>
                   </TableRow>
-                ))}
+                  <TableRow className="table__headingWrapper table__mainRowWrapper">
+                    <TableCell className="column__wordWrap">Items</TableCell>
+                    <TableCell className="column__wordWrap" align="center">
+                      Qty.
+                    </TableCell>
+                    <TableCell className="column__wordWrap" align="right">
+                      Unit ($)
+                    </TableCell>
+                    <TableCell className="column__wordWrap" align="right">
+                      Total Sum ($)
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {order_desc.orderItems.map((orderItem) => (
+                    <TableRow
+                      key={orderItem._id}
+                      className="table__headingWrapper"
+                    >
+                      <TableCell className="column__dataWrap">
+                        {orderItem.title}
+                      </TableCell>
+                      <TableCell className="column__dataWrap" align="center">
+                        {orderItem.quantity}
+                      </TableCell>
+                      <TableCell className="column__dataWrap" align="right">
+                        {formatPrice(orderItem.price)}
+                      </TableCell>
+                      <TableCell className="column__dataWrap" align="right">
+                        {formatPrice(orderItem.quantity * orderItem.price)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
 
-                <TableRow>
-                  <TableCell rowSpan={3} />
-                  <TableCell colSpan={2}>Subtotal</TableCell>
-                  <TableCell align="right">
-                    {ccyFormat(invoiceSubtotal)}
-                  </TableCell>
-                </TableRow>
-                {/* <TableRow>
-                <TableCell>Tax</TableCell>
-                <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-                  0
-                )} %`}</TableCell>
-                <TableCell align="right">{ccyFormat(invoiceTaxes)}</TableCell>
-              </TableRow> */}
-                {/* <TableRow>
-                <TableCell colSpan={2}>Total</TableCell>
-                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
-              </TableRow> */}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                  <TableRow className="table__headingWrapper">
+                    <TableCell rowSpan={3} />
+                    <TableCell className="subtotal__wordWrap" colSpan={2}>
+                      Subtotal
+                    </TableCell>
+                    <TableCell align="right" className="sub__totalCell">
+                      ${formatPrice(order_desc.orderAmount)}
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            <div className="order__descriptionContainer">
+              <div className="order__descriptionSubContainer">
+                <div className="order__description">
+                  <h2 className="order__descriptionHeader">
+                    Order Description
+                  </h2>
+                  <div className="order__id">
+                    <span className="order__idHeader">OrderID:</span>
+                    <span className="order__idData">{order_desc._id}</span>
+                  </div>
+                  <div className="total__amount">
+                    <span className="order__amountHeader">Total amount:</span>
+                    <span className="order__amountData">
+                      ${formatPrice(order_desc.orderAmount)}
+                    </span>
+                  </div>
+                  <div className="order__date">
+                    <span className="order__dateHeader">Order date:</span>
+                    <span className="order__dateData">
+                      {formatDate(order_desc.createdAt)}
+                    </span>
+                  </div>
+                  <div className="transaction__id">
+                    <span className="order__transactionHeader">
+                      TransactionID:
+                    </span>
+                    <span className="order__transactionData">
+                      {order_desc.transactionID}
+                    </span>
+                  </div>
+                  <div className="order__status">
+                    <span className="order__statusHeader">Order Status:</span>
+                    <span className="order__statusData">
+                      {order_desc.isDelivered === true ? (
+                        <Button type="Delivered" />
+                      ) : (
+                        <Button type="Processing" />
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="shipping__details">
+                  <h2 className="shipping__detailsHeader">Shipping Details</h2>
+                  <div className="shipping__email">
+                    <span className="shipping__emailHeader">
+                      Email address:
+                    </span>
+                    <span className="shipping__emailData">
+                      {order_desc.email}
+                    </span>
+                  </div>
+                  <div className="shipping__address">
+                    <span className="shipping__addressHeader">Address:</span>
+                    <span className="shipping__addressData">
+                      {order_desc.shippingAddress.address}
+                    </span>
+                  </div>
+                  <div className="shipping__city">
+                    <span className="shipping__cityHeader">City:</span>
+                    <span className="shipping__cityData">
+                      {order_desc.shippingAddress.city}
+                      {", "}
+                      {order_desc.shippingAddress.country}
+                    </span>
+                  </div>
+                  <div className="shipping__postalCode">
+                    <span className="shipping__postalHeader">Postal Code:</span>
+                    <span className="shipping__postalData">
+                      {order_desc.shippingAddress.postalCode}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </React.Fragment>
         )}
       </div>
     </React.Fragment>

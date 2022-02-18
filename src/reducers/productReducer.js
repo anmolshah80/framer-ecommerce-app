@@ -45,3 +45,24 @@ export const getProductByIdReducer = (state = { product: {} }, action) => {
       return state;
   }
 };
+
+export const addProductReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "ADD_PRODUCTREVIEW_REQUEST":
+      return {
+        loading: true,
+      };
+    case "ADD_PRODUCTREVIEW_SUCCESS":
+      return {
+        loading: false,
+        success: true,
+      };
+    case "ADD_PRODUCTREVIEW_FAILED":
+      return {
+        loading: false,
+        error: true,
+      };
+    default:
+      return state;
+  }
+};

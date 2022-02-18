@@ -89,3 +89,19 @@ export const filterProducts =
         dispatch({ type: "GET_PRODUCTS_FAILED" });
       });
   };
+
+export const addProductReview = (review, product_id) => (dispatch) => {
+  dispatch({ type: "ADD_PRODUCTREVIEW_REQUEST" });
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
+  axios
+    .post("/products/add-review", { review, product_id, currentUser })
+    .then((res) => {
+      console.log(res);
+      dispatch({ type: "ADD_PRODUCTREVIEW_SUCCESS" });
+    })
+    .catch((err) => {
+      dispatch({ type: "ADD_PRODUCTREVIEW_FAILED" });
+    });
+};

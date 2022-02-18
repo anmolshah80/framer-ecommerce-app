@@ -41,7 +41,7 @@ export default function Orders() {
     {
       id: "isDelivered",
       label: "Status",
-      width: 140,
+      minWidth: 140,
       align: "center",
     },
   ];
@@ -72,76 +72,87 @@ export default function Orders() {
     }
   }, [dispatch]);
 
-  const handleOrderDetails = (order_id) => {
-    navigate(`/order-details/${order_id}`);
-  };
+  // const handleOrderDetails = (order_id) => {
+  //   navigate(`/order-details/${order_id}`);
+  // };
 
   return (
     <React.Fragment>
       <Topbar />
       <div className="orders">
         <h1 className="heading__wrapper">Find your order</h1>
-        <Paper className="paper__container">
-          <TableContainer className="table__container" sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead className="table__head">
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              {loading && <Skeleton type="circular_effect" />}
-              {error && (
-                <Skeleton
-                  type="custom_effect"
-                  message="Something went wrong. Please try again later."
-                />
-              )}
-              <TableBody>
-                {orders &&
-                  orders.map((order) => {
-                    return (
-                      // <Link to="/order-details:order_id">
-                      <TableRow
-                        className="table__row"
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        onClick={() =>
-                          navigate(`/order-details/${order["_id"]}`)
-                        }
+        {error && (
+          <Skeleton
+            type="custom_effect"
+            message="Something went wrong. Please try again later."
+          />
+        )}
+        {loading ? (
+          <Skeleton type="circular_effect" />
+        ) : (
+          <Paper className="paper__container">
+            <TableContainer
+              className="table__container"
+              sx={{ maxHeight: 440 }}
+            >
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead className="table__head">
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
                       >
-                        {columns.slice(0, orders.length).map((column) => {
-                          return (
-                            <TableCell align={column.align}>
-                              {column.format
-                                ? column.format(order[column.id])
-                                : order[column.id]}
-                            </TableCell>
-                          );
-                        })}
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
 
-                        <TableCell align="center">
-                          {order["isDelivered"] === true ? (
-                            <Button type="Delivered" />
-                          ) : (
-                            <Button type="Pending" />
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+                <TableBody>
+                  {orders &&
+                    orders.map((order) => {
+                      return (
+                        // <Link to="/order-details:order_id">
+                        <TableRow
+                          className="table__row"
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          onClick={() =>
+                            navigate(`/order-details/${order["_id"]}`)
+                          }
+                          key={order._id}
+                        >
+                          {columns.slice(0, 4).map((column) => {
+                            return (
+                              <TableCell
+                                align={column.align}
+                                key={order[column.id]}
+                              >
+                                {column.format
+                                  ? column.format(order[column.id])
+                                  : order[column.id]}
+                              </TableCell>
+                            );
+                          })}
+
+                          <TableCell align="center" key={order["isDelivered"]}>
+                            {order["isDelivered"] === true ? (
+                              <Button type="Delivered" />
+                            ) : (
+                              <Button type="Processing" />
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        )}
       </div>
     </React.Fragment>
   );

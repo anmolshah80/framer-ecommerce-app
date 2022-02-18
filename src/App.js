@@ -16,6 +16,7 @@ import Checkout from "./pages/checkout/Checkout";
 import PaymentCanceled from "./pages/paymentCanceled/PaymentCanceled";
 import Orders from "./pages/orders/Orders";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
+import Reviews from "./components/reviews/Reviews";
 import {
   BrowserRouter as Router,
   Routes,
@@ -41,6 +42,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-summary" element={<OrderSummary />} />
         <Route path="/payment-canceled" element={<PaymentCanceled />} />
+        <Route path="/reviews" element={<Reviews />} />
 
         <Route
           path="/register"

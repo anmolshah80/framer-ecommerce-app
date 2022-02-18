@@ -1,3 +1,7 @@
+* {
+  font-family: "Urbanist", sans-serif !important;
+}
+
 .orders {
   margin: 20px;
 }
@@ -8,7 +12,264 @@
   font-weight: 600;
 }
 
-/* .table__container {
-  width: 60vw;
-  height: 60vw;
-} */
+.products__table {
+  color: var(--navy-blue) !important;
+}
+
+.table__mainRowWrapper {
+  background-color: var(--text-color);
+}
+
+.table__headingWrapper > .heading__wordWrap,
+.table__headingWrapper > .column__wordWrap {
+  color: var(--navy-blue);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.table__headingWrapper > .column__dataWrap {
+  color: var(--navy-blue);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.table__headingWrapper > .subtotal__wordWrap,
+.table__headingWrapper > .sub__totalCell {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--navy-blue);
+}
+
+.order__descriptionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.order__descriptionSubContainer {
+  width: 1050px;
+  display: flex;
+  justify-content: center;
+}
+
+.order__description {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0/0.1), 0 8px 10px -6px rgb(0 0 0/0.1);
+  width: 50vw;
+  margin: 20px 10px 20px;
+  padding: 10px;
+}
+
+.order__description > .order__descriptionHeader {
+  margin-bottom: 15px;
+}
+
+.order__description > .order__id {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.order__id > .order__idHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.order__id > .order__idData {
+  color: var(--navy-blue);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.order__description > .total__amount {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.total__amount > .order__amountHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.total__amount > .order__amountData {
+  color: var(--navy-blue);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.order__description > .order__date {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.order__date > .order__dateHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.order__date > .order__dateData {
+  color: var(--navy-blue);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.order__description > .transaction__id {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.transaction__id > .order__transactionHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.transaction__id > .order__transactionData {
+  color: var(--navy-blue);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.order__description > .order__status {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.order__status > .order__statusHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.order__status > .order__statusData {
+  color: var(--navy-blue);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.shipping__details {
+  width: 50vw;
+  margin: 20px 10px 20px;
+  padding: 10px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0/0.1), 0 8px 10px -6px rgb(0 0 0/0.1);
+}
+
+.shipping__details > .shipping__detailsHeader {
+  margin-bottom: 15px;
+}
+
+.shipping__details > .shipping__email {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.shipping__email > .shipping__emailHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__email > .shipping__emailData {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__details > .shipping__address {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.shipping__address > .shipping__addressHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__address > .shipping__addressData {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__details > .shipping__city {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.shipping__city > .shipping__cityHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__city > .shipping__cityData {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__details > .shipping__postalCode {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+}
+
+.shipping__postalCode > .shipping__postalHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.shipping__postalCode > .shipping__postalData {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.status {
+  padding: 5px 7px;
+  border: none;
+  border-radius: 10px;
+}
+
+.status.Delivered {
+  color: #3bb077;
+  background-color: #e5faf2;
+}
+
+.status.Declined {
+  color: #d95087;
+  background-color: #fff0f1;
+}
+
+.status.Processing {
+  color: #2a7ade;
+  background-color: #ebf1fe;
+}

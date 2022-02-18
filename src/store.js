@@ -1,6 +1,7 @@
 import {
   getAllProductsReducer,
   getProductByIdReducer,
+  addProductReviewReducer,
 } from "./reducers/productReducer";
 import { cartReducer } from "./reducers/cartReducer";
 // import { registerNewUserReducer } from "./reducers/userReducer";
@@ -21,6 +22,7 @@ const finalReducer = combineReducers({
   placeOrderReducer: placeOrderReducer,
   getOrdersByUserIDReducer: getOrdersByUserIDReducer,
   getOrderDescByIDReducer: getOrderDescByIDReducer,
+  addProductReviewReducer: addProductReviewReducer,
 });
 
 // load cart items from localStorage and if no item is found initialize an empty array

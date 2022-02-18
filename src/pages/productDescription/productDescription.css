@@ -13,6 +13,10 @@ span {
   justify-content: space-between;
   align-items: center;
   margin: 20px;
+  height: 100vh;
+  padding-bottom: 20px;
+  /* margin-bottom: 250px; */
+  border-bottom: 2px solid lightgray;
 }
 
 .product__descLeft {
@@ -80,7 +84,9 @@ span {
 .product__ratingBar {
   display: flex;
   flex-direction: row;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* margin-bottom: 10px; */
 }
 
 .product__ratingBar > span {
@@ -90,6 +96,7 @@ span {
 }
 
 .product__ratingBar > .rating__bar {
+  color: #faaf00 !important;
   margin-top: 2px;
 }
 

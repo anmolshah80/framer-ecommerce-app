@@ -1,0 +1,175 @@
+.reviews {
+  margin: 10px 40px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.customer__reviewContainer {
+  width: 500px;
+}
+
+.customer__reviewsText {
+  font-weight: 600;
+  color: var(--navy-blue);
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.ratings__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 160px;
+}
+
+.ratings__info > .customer__rating {
+  color: var(--star-rating) !important;
+  font-size: 30px !important;
+}
+
+.ratings__info > .ratings__customer {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: -7px;
+}
+
+.total__reviews {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--medium);
+  margin-bottom: 20px;
+}
+
+.progress__bar {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0px 20px;
+}
+
+.progress__bar > .progress__barOneWrapper,
+.progress__bar > .progress__barTwoWrapper,
+.progress__bar > .progress__barThreeWrapper,
+.progress__bar > .progress__barFourWrapper,
+.progress__bar > .progress__barFiveWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 380px;
+  margin-bottom: 2px;
+}
+
+.progress__barOneWrapper > .progress__barOne,
+.progress__barTwoWrapper > .progress__barTwo,
+.progress__barThreeWrapper > .progress__barThree,
+.progress__barFourWrapper > .progress__barFour,
+.progress__barFiveWrapper > .progress__barFive {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 260px;
+  height: 18px;
+  background-color: var(--text-color);
+  border-radius: 5px;
+}
+
+.progress_barStar {
+  width: 40px;
+}
+
+.progress__barStats {
+  width: 40px;
+}
+
+.reviews__container {
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+}
+
+.review__wordWrap {
+  font-weight: 600;
+  /* margin-bottom: 10px; */
+  padding-bottom: 10px;
+  color: var(--navy-blue);
+  border-bottom: 1px solid lightgray;
+}
+
+.user__ratings {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.review__username {
+  font-weight: 600;
+}
+
+.rating__username {
+  font-size: 20px !important;
+  color: var(--star-rating) !important;
+}
+
+.review__dateContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-items: center; */
+}
+
+.review__date {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.verified__badge {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.verified__icon {
+  font-size: 20px;
+  color: var(--text-green);
+}
+
+.verified__purchaseText {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0px !important;
+  color: var(--text-green);
+}
+
+.user__reviews {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.review__deleteContainer {
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+
+.delete__icon {
+  font-size: 20px;
+  color: #ee4545;
+}
+
+.review__delete {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ee4545;
+  margin-bottom: 0px !important;
+}
