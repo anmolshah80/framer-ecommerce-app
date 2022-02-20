@@ -28,10 +28,20 @@
 }
 
 .rating__requireWarning {
-  /* display: none; */
-  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
   padding: 3px;
-  color: red;
+  color: #dd2d3c;
+}
+
+.rating__WarningIcon {
+  font-size: 14px;
+  color: #dd2d3c;
+  margin-right: 5px;
 }
 
 .review__textSection {

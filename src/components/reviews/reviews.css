@@ -76,6 +76,22 @@
   border-radius: 5px;
 }
 
+.left {
+  /* width: 230px; */
+  height: 18px;
+  background: var(--star-rating);
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.right {
+  height: 18px;
+  /* width: 30px; */
+  background: var(--text-color);
+  float: right;
+  border-radius: 5px;
+}
+
 .progress_barStar {
   width: 40px;
 }
@@ -118,7 +134,8 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /* align-items: center; */
+  align-items: center;
+  margin-top: -8px;
 }
 
 .review__date {
@@ -149,6 +166,7 @@
 .user__reviews {
   font-size: 15px;
   font-weight: 500;
+  margin-top: 5px;
   margin-bottom: 10px;
   text-align: justify;
 }

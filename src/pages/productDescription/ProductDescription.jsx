@@ -11,12 +11,11 @@ import { ArrowBackIosNew, Info } from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/productActions";
-import { getOrdersByUserID } from "../../actions/orderActions";
+// import { getOrdersByUserID } from "../../actions/orderActions";
 import { addToCart } from "../../actions/cartActions";
 import Skeleton from "../../components/skeleton/Skeleton";
 import Reviews from "../../components/reviews/Reviews";
 import AddReview from "../../components/reviews/AddReview";
-import { useNavigate } from "react-router-dom";
 
 export default function ProductDescription() {
   const product_id = useParams();

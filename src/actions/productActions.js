@@ -100,6 +100,7 @@ export const addProductReview = (review, product_id) => (dispatch) => {
     .then((res) => {
       console.log(res);
       dispatch({ type: "ADD_PRODUCTREVIEW_SUCCESS" });
+      alert("Your review submitted successfully!");
     })
     .catch((err) => {
       dispatch({ type: "ADD_PRODUCTREVIEW_FAILED" });

@@ -4,6 +4,7 @@ import Rating from "@mui/material/Rating";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductReview } from "../../actions/productActions";
+import { WarningAmber } from "@mui/icons-material";
 
 export default function AddReview({ product }) {
   const [ratingValue, setRatingValue] = useState(0);
@@ -59,10 +60,12 @@ export default function AddReview({ product }) {
           />
         </div>
         {isRatingZero && (
-          <span className="rating__requireWarning">Rating is required</span>
+          <span className="rating__requireWarning">
+            <WarningAmber className="rating__WarningIcon" /> Rating is required
+          </span>
         )}
         <div className="review__textSection">
-          <span className="limit__textLength">Max. 200 characters</span>
+          <span className="limit__textLength">Max. 400 characters</span>
           <textarea
             id="story"
             name="story"
@@ -71,7 +74,7 @@ export default function AddReview({ product }) {
             className="product__reviewUser"
             placeholder="Add a review..."
             minLength={10}
-            maxLength={200}
+            maxLength={400}
             value={userReview}
             onChange={(e) => {
               setUserReview(e.target.value);
