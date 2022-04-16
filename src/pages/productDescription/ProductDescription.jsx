@@ -7,7 +7,12 @@ import Topbar from "../../components/topbar/Topbar";
 import Rating from "@mui/material/Rating";
 // import OrderSummary from "../orderSummary/OrderSummary";
 // import StaticData from "../../StaticData";
-import { ArrowBackIosNew, Info } from "@mui/icons-material";
+import {
+  ArrowBackIosNew,
+  Info,
+  KeyboardArrowUp,
+  KeyboardArrowDown,
+} from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/productActions";
@@ -16,8 +21,35 @@ import { addToCart } from "../../actions/cartActions";
 import Skeleton from "../../components/skeleton/Skeleton";
 import Reviews from "../../components/reviews/Reviews";
 import AddReview from "../../components/reviews/AddReview";
+import useCollapse from "react-collapsed";
 
 export default function ProductDescription() {
+  function CollapsibleSection(props) {
+    const config = {
+      defaultExpanded: props.defaultExpanded || false,
+      collapsedHeight: props.collapsedHeight || 0,
+    };
+
+    const { getCollapseProps, getToggleProps, isExpanded } =
+      useCollapse(config);
+
+    return (
+      <div className="collapsible">
+        <div className="header" {...getToggleProps()}>
+          <p className="title">{isExpanded ? "Show less" : "Show more"}</p>
+          <p className="icon">
+            {isExpanded ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
+          </p>
+        </div>
+        <div {...getCollapseProps()}>
+          <div className="content" isexpanded={isExpanded.toString()}>
+            {props.children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const product_id = useParams();
 
   // const product = StaticData.find((product) => product.id == product_id.id);
@@ -101,19 +133,6 @@ export default function ProductDescription() {
                 <div className="product__ratingBar">
                   <span>Rating:</span>
                   <span className="rating__bar">
-                    {/* <RatingsBar defaultValue={product.rating} /> */}
-                    {/* <Rating /> */}
-                    {/* <ReactStars
-                    count={5}
-                    value={product.rating}
-                    size={28}
-                    isHalf={true}
-                    emptyIcon={<i className="far fa-star"></i>}
-                    halfIcon={<i className="fa fa-star-half-alt"></i>}
-                    fullIcon={<i className="fa fa-star"></i>}
-                    activeColor="#fd4"
-                    edit={false}
-                  /> */}
                     <Rating
                       name="half-rating-read"
                       defaultValue={product.rating}
@@ -142,14 +161,52 @@ export default function ProductDescription() {
 
               <div className="product__details">
                 <h3>Product Details </h3>
-                <ul>
+                {/* <ul>
                   {String(product.description)
                     .split(desc_regex)
                     .filter(Boolean)
                     .map((str, index) => {
                       return <li key={index}>{str.trim()}</li>;
                     })}
+                </ul> */}
+
+                <ul>
+                  {String(product.description)
+                    .substring(0, 510)
+                    .split(desc_regex)
+                    .map((str, index) => {
+                      return (
+                        <li className="product__descList" key={index}>
+                          {str.trim()}
+                        </li>
+                      );
+                    })}
                 </ul>
+
+                <CollapsibleSection>
+                  <ul className="product__descListContainer">
+                    {String(product.description)
+                      .substring(511)
+                      .split(desc_regex)
+                      .map((str, index) => {
+                        return (
+                          <li
+                            // className="product__descListInCollapsible"
+                            style={{
+                              marginLeft: "-20px",
+                              listStyleType: "circle",
+                              marginBottom: "10px",
+                              fontSize: "15px",
+                              fontWeight: "500",
+                            }}
+                            key={index}
+                          >
+                            {str.trim()}
+                          </li>
+                        );
+                      })}
+                  </ul>
+                </CollapsibleSection>
               </div>
             </div>
 
@@ -160,22 +217,25 @@ export default function ProductDescription() {
               </div>
               <div className="user__address">
                 <h4>Bagmati, Kathmandu</h4>
-                <h4>Metro 22 - Newroad Area, Newroad</h4>
+                <h4>Newroad Area, Newroad</h4>
                 <h4>Home Delivery</h4>
-                <h4>Cash on Delivery Available</h4>
+                <h4>
+                  {product.price > 500
+                    ? "Cash on Delivery Not Available"
+                    : "Cash on Delivery Available"}
+                </h4>
                 <div className="returns__wordWrap">
                   <span>Returns & Warranty</span>
                   <Info className="info__icon" />
                 </div>
               </div>
               <div className="warranty__info">
-                <h4>7 Days Returns</h4>
+                <h4>7 Days Return</h4>
                 <h4>Warranty not available</h4>
               </div>
               <div className="sub__totalSection">
                 <span>Quantity</span>
                 <div className="quantity__selector">
-                  {/* <input type="text" placeholder="2" /> */}
                   <select
                     className="select__productQuantity"
                     value={quantity}
@@ -185,7 +245,11 @@ export default function ProductDescription() {
                   >
                     {[...Array(product.countInStock).keys()].map((x, i) => {
                       if (i + 1 < 11) {
-                        return <option value={i + 1}>{i + 1}</option>;
+                        return (
+                          <option key={i} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        );
                       }
                     })}
                   </select>
@@ -205,8 +269,10 @@ export default function ProductDescription() {
               </div>
             </div>
           </div>
-          <AddReview product={product} />
-          <Reviews product={product} />
+          {localStorage.getItem("user") !== "null" && (
+            <AddReview product={product} />
+          )}
+          <Reviews product={product} key={1} />
         </>
       )}
     </React.Fragment>

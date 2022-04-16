@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import "./topbar.css";
-// import {
-//   NotificationsNone,
-//   Language,
-//   Settings,
-//   ArrowDropDown,
-// } from "@material-ui/icons";
 import {
   ArrowDropDownCircle,
   Logout,
@@ -15,7 +9,6 @@ import {
   ShoppingCartCheckout,
   HowToReg,
 } from "@mui/icons-material";
-import avatar from "../../avatar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../actions/userActions";
@@ -74,22 +67,10 @@ export default function Topbar({ loading }) {
                 <span className="items__inCart">{cartItems.length}</span>
               </div>
             </Link>
-            {/* <div className="topbarIconContainer">
-            <NotificationsNone />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topbarIconContainer">
-            <Language />
-            <span className="topIconBadge">En</span>
-          </div>
-          <div className="topbarIconContainer">
-            <Settings />
-          </div> */}
             {currentUser && (
               <Link to="/user-profile">
                 <img
-                  // src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/5146d1dbf9146c4d12a7249e72065a58.png"
-                  src={avatar}
+                  src={currentUser.profileAvatar}
                   alt="Avatar profile"
                   className="topAvatar"
                 />
@@ -135,34 +116,10 @@ function DropdownMenu() {
   // logout
   const dispatch = useDispatch();
 
-  // const navigate = useNavigate();
-
-  // const { isFetching, dispatch } = useContext(AuthContext);
-
-  // const handleLogout = (e) => {
-  //   // e.prevenDefault();
-  //   const username = JSON.parse(localStorage.getItem("user")).username;
-  //   logoutUser({ username }, dispatch);
-  //   console.log("username", username);
-  //   navigate("/");
-  // };
-
   const handleLogout = () => {
     dispatch(logoutUser());
     window.location.reload();
   };
-
-  // const handleLogin = () => {
-  //   navigate("/login");
-  // };
-
-  // const handleSignup = () => {
-  //   navigate("/register");
-  // };
-
-  // const handleOrders = () => {
-  //   navigate("/orders");
-  // };
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 

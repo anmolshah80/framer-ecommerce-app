@@ -154,16 +154,8 @@ span {
   font-weight: 600;
 }
 
-.product__details > ul > li {
+.product__details > ul > .product__descList {
   margin-left: -15px;
-}
-
-.product__details > ul > .hashtag__icon {
-  margin-right: 10px;
-  transform: rotate(15deg);
-}
-
-.product__details > ul > li {
   list-style-type: circle;
   margin-bottom: 10px;
   font-size: 15px;
@@ -323,4 +315,39 @@ span {
 
 .add__toCartButton:hover {
   background-color: var(--navy-blue);
+}
+
+.collapsible > .content {
+  padding: 6px;
+  font-size: 14px;
+}
+
+.content[isExpanded="true"] ~ .collapsible {
+  margin-bottom: 250px;
+}
+
+.collapsible > .header {
+  width: 110px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collapsible > .header > .title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy-blue);
+}
+
+.collapsible > .header > .icon {
+  color: var(--navy-blue);
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.preferences label {
+  display: block;
+  padding-bottom: 4px;
 }

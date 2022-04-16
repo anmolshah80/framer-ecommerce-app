@@ -1,13 +1,20 @@
 import React from "react";
 import Topbar from "../../components/topbar/Topbar";
 import "./cart.css";
+import { useState } from "react";
 import { Clear } from "@mui/icons-material";
-import AlertMessage from "../../components/alertMessages/AlertMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
 import Checkout from "../checkout/Checkout";
+import { useNavigate } from "react-router-dom";
 // import { placeOrderViaCheckoutSession } from "../../actions/orderActions";
+import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import CloseIcon from "@mui/icons-material/Close";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 export default function Cart() {
   const cartReducerState = useSelector((state) => state.cartReducer);
@@ -24,33 +31,53 @@ export default function Cart() {
   const localCartItems = JSON.parse(localStorage.getItem("cartItems"));
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
+  const navigate = useNavigate();
+
+  const [open, setOpen] = useState(true);
+
+  const orderState = useSelector((state) => state.placeOrderReducer);
+
+  const { loading, success, error } = orderState;
+
+  success &&
+    setTimeout(() => {
+      localStorage.removeItem("cartItems");
+      console.log("cartItems deleted from local storage");
+      navigate("/orders");
+      window.location.reload();
+    }, 3000);
+
   const handleCheckout = () => {
     // dispatch(placeOrderViaCheckoutSession(grandTotal));
     // fetch("/create-checkout-session", {
 
-    fetch("http://localhost:8800/create-checkout-session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        items: localCartItems,
-        user: currentUser,
-        subTotal: grandTotal,
-      }),
-    })
-      .then((res) => {
-        if (res.ok) return res.json();
-        return res.json().then((e) => Promise.reject(e));
+    if (currentUser) {
+      fetch("http://localhost:8800/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: localCartItems,
+          user: currentUser,
+          subTotal: grandTotal,
+        }),
       })
-      .then(({ url, id, session }) => {
-        window.location = url;
-        // console.log("session id: ", id);
-        // console.log("session: ", session);
-      })
-      .catch((e) => {
-        console.error(e.error);
-      });
+        .then((res) => {
+          if (res.ok) return res.json();
+          return res.json().then((e) => Promise.reject(e));
+        })
+        .then(({ url, id, session }) => {
+          window.location = url;
+          // console.log("session id: ", id);
+          // console.log("session: ", session);
+        })
+        .catch((e) => {
+          console.error(e.error);
+        });
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -58,7 +85,58 @@ export default function Cart() {
       <Topbar />
       <div className="cart">
         <h1>Review your cart</h1>
-        <AlertMessage type="alert_danger" />
+
+        {loading ? (
+          <Skeleton type="custom_effect" />
+        ) : success ? (
+          <Box sx={{ width: "100%", mt: 2 }}>
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2, mr: 0 }}
+              >
+                Your order has been placed successfully.
+              </Alert>
+            </Collapse>
+          </Box>
+        ) : (
+          error && (
+            <Box sx={{ width: "100%", mt: 2 }}>
+              <Collapse in={open}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2, mr: 0 }}
+                >
+                  There was an error while placing your order.
+                </Alert>
+              </Collapse>
+            </Box>
+          )
+        )}
+
         <div className="product__headingWrapper">
           {/* <Tag className="tag__icon" /> */}
           <span className="tag__icon">#</span>
@@ -116,14 +194,24 @@ export default function Cart() {
             </button>
           </Link>
           {/* <Link to="/checkout"> */}
-          <button
-            className="proceed__toCheckoutButton"
-            onClick={handleCheckout}
-          >
-            Proceed to Checkout
-          </button>
-          {/* </Link> */}
-          <Checkout subTotal={grandTotal} />
+          {currentUser ? (
+            cartItems?.length > 0 && (
+              // <button
+              //   className="proceed__toCheckoutButton"
+              //   onClick={handleCheckout}
+              // >
+              //   Proceed to Checkout
+              // </button>
+              <Checkout subTotal={grandTotal} />
+            )
+          ) : (
+            <button
+              className="proceed__toCheckoutButton"
+              onClick={handleCheckout}
+            >
+              Login to Checkout
+            </button>
+          )}
         </div>
       </div>
     </React.Fragment>

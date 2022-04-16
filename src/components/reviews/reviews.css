@@ -172,7 +172,6 @@
 }
 
 .review__deleteContainer {
-  width: 40px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

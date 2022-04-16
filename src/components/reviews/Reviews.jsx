@@ -133,40 +133,43 @@ export default function Reviews({ product }) {
           <div className="progress__barOneWrapper">
             <span className="progress_barStar">5 Star</span>
             <div className="progress__barOne">
-              <div class="left" style={{ width: barFiveLeftWidth }}></div>
-              <div class="right" style={{ width: barFiveRightWidth }}></div>
+              <div className="left" style={{ width: barFiveLeftWidth }}></div>
+              <div className="right" style={{ width: barFiveRightWidth }}></div>
             </div>
             <span className="progress__barStats">{barFivePercentage}%</span>
           </div>
           <div className="progress__barTwoWrapper">
             <span className="progress_barStar">4 Star</span>
             <div className="progress__barTwo">
-              <div class="left" style={{ width: barFourLeftWidth }}></div>
-              <div class="right" style={{ width: barFourRightWidth }}></div>
+              <div className="left" style={{ width: barFourLeftWidth }}></div>
+              <div className="right" style={{ width: barFourRightWidth }}></div>
             </div>
             <span className="progress__barStats">{barFourPercentage}%</span>
           </div>
           <div className="progress__barThreeWrapper">
             <span className="progress_barStar">3 Star</span>
             <div className="progress__barThree">
-              <div class="left" style={{ width: barThreeLeftWidth }}></div>
-              <div class="right" style={{ width: barThreeRightWidth }}></div>
+              <div className="left" style={{ width: barThreeLeftWidth }}></div>
+              <div
+                className="right"
+                style={{ width: barThreeRightWidth }}
+              ></div>
             </div>
             <span className="progress__barStats">{barThreePercentage}%</span>
           </div>
           <div className="progress__barFourWrapper">
             <span className="progress_barStar">2 Star</span>
             <div className="progress__barFour">
-              <div class="left" style={{ width: barTwoLeftWidth }}></div>
-              <div class="right" style={{ width: barTwoRightWidth }}></div>
+              <div className="left" style={{ width: barTwoLeftWidth }}></div>
+              <div className="right" style={{ width: barTwoRightWidth }}></div>
             </div>
             <span className="progress__barStats">{barTwoPercentage}%</span>
           </div>
           <div className="progress__barFiveWrapper">
             <span className="progress_barStar">1 Star</span>
             <div className="progress__barFive">
-              <div class="left" style={{ width: barOneLeftWidth }}></div>
-              <div class="right" style={{ width: barOneRightWidth }}></div>
+              <div className="left" style={{ width: barOneLeftWidth }}></div>
+              <div className="right" style={{ width: barOneRightWidth }}></div>
             </div>
             <span className="progress__barStats">{barOnePercentage}%</span>
           </div>
@@ -202,7 +205,8 @@ export default function Reviews({ product }) {
                     </div>
                   </div>
                   <p className="user__reviews">{review.review}</p>
-                  {currentUser._id == review.userid && (
+
+                  {currentUser && currentUser._id == review.userid && (
                     <Link to="/delete-review">
                       <div className="review__deleteContainer">
                         <Delete className="delete__icon" />

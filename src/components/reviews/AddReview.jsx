@@ -5,11 +5,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductReview } from "../../actions/productActions";
 import { WarningAmber } from "@mui/icons-material";
+// import { useNavigate } from "react-router-dom";
 
 export default function AddReview({ product }) {
   const [ratingValue, setRatingValue] = useState(0);
   const [userReview, setUserReview] = useState("");
   const [isRatingZero, setIsRatingZero] = useState(false);
+
+  // const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -54,7 +57,7 @@ export default function AddReview({ product }) {
             value={ratingValue}
             precision={0.5}
             size="large"
-            onChange={(event, newValue) => {
+            onChange={(e, newValue) => {
               setRatingValue(newValue);
             }}
           />

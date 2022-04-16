@@ -2,12 +2,12 @@ import React from "react";
 import "./alertMessage.css";
 import { Clear } from "@mui/icons-material";
 
-export default function AlertMessage({ type }) {
+export default function AlertMessage({ type, message }) {
   const AlertSuccess = () => (
     <div className="alert__success">
       <div className="alert__successMessageContainer">
         <h4 className="alert__successMessageText">
-          An item was added to your cart.
+          {message ? message : "An item was added to your cart."}
         </h4>
         <Clear className="icon__clear" />
       </div>

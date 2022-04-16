@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getOrdersByUserID } from "../../actions/orderActions";
@@ -39,9 +39,9 @@ export default function Orders() {
       align: "center",
     },
     {
-      id: "isDelivered",
-      label: "Status",
-      minWidth: 140,
+      id: "orderStatus",
+      label: "Order Status",
+      minWidth: 160,
       align: "center",
     },
   ];
@@ -57,12 +57,6 @@ export default function Orders() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-
-  //   if (localStorage.getItem("user")) {
-  //     dispatch(getOrdersByUserID());
-  //   } else {
-  //     navigate("/login");
-  //   }
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
@@ -112,7 +106,7 @@ export default function Orders() {
 
                 <TableBody>
                   {orders &&
-                    orders.map((order) => {
+                    orders.map((order, index) => {
                       return (
                         // <Link to="/order-details:order_id">
                         <TableRow
@@ -138,11 +132,13 @@ export default function Orders() {
                             );
                           })}
 
-                          <TableCell align="center" key={order["isDelivered"]}>
-                            {order["isDelivered"] === true ? (
+                          <TableCell align="center" key={index}>
+                            {order.orderStatus === "delivered" ? (
                               <Button type="Delivered" />
-                            ) : (
+                            ) : order.orderStatus === "processing" ? (
                               <Button type="Processing" />
+                            ) : (
+                              <Button type="Canceled" />
                             )}
                           </TableCell>
                         </TableRow>

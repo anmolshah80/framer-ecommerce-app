@@ -1,28 +1,46 @@
+import { combineReducers, createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 import {
   getAllProductsReducer,
   getProductByIdReducer,
   addProductReviewReducer,
 } from "./reducers/productReducer";
 import { cartReducer } from "./reducers/cartReducer";
-// import { registerNewUserReducer } from "./reducers/userReducer";
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk";
+import {
+  registerNewUserReducer,
+  loginUserReducer,
+  logoutUserReducer,
+  deleteUserReducer,
+  getUserProfileByIdReducer,
+  getUserByIdReducer,
+  updateProfileReducer,
+  changePasswordReducer,
+} from "./reducers/userReducer";
 import {
   placeOrderReducer,
   getOrdersByUserIDReducer,
   getOrderDescByIDReducer,
 } from "./reducers/orderReducer";
+import { userProfileUpdateReducer } from "./reducers/userProfileReducer";
 
 const finalReducer = combineReducers({
   getAllProductsReducer: getAllProductsReducer,
   getProductByIdReducer: getProductByIdReducer,
   cartReducer: cartReducer,
-  // registerNewUserReducer: registerNewUserReducer,
+  registerNewUserReducer: registerNewUserReducer,
+  loginUserReducer: loginUserReducer,
+  logoutUserReducer: logoutUserReducer,
+  deleteUserReducer: deleteUserReducer,
+  getUserProfileByIdReducer: getUserProfileByIdReducer,
+  getUserByIdReducer: getUserByIdReducer,
+  updateProfileReducer: updateProfileReducer,
+  changePasswordReducer: changePasswordReducer,
   placeOrderReducer: placeOrderReducer,
   getOrdersByUserIDReducer: getOrdersByUserIDReducer,
   getOrderDescByIDReducer: getOrderDescByIDReducer,
   addProductReviewReducer: addProductReviewReducer,
+  userProfileUpdateReducer: userProfileUpdateReducer,
 });
 
 // load cart items from localStorage and if no item is found initialize an empty array
@@ -31,9 +49,12 @@ const cartItems = localStorage.getItem("cartItems")
   : [];
 
 // get the currently logged-in user
-// const currentUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+const currentUser = localStorage.getItem("user")
+  ? JSON.parse(localStorage.getItem("user"))
+  : null;
 
 const initialState = {
+  loginUserReducer: { currentUser: currentUser },
   cartReducer: { cartItems: cartItems },
 };
 

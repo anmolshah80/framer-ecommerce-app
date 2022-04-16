@@ -30,6 +30,16 @@
   text-align: center;
 }
 
+.register__alertBox {
+  margin-top: 12px;
+}
+
+.css-1r09u2q-MuiPaper-root-MuiAlert-root,
+.css-vi01ot-MuiPaper-root-MuiAlert-root {
+  margin-right: 0px;
+  margin-bottom: 12px;
+}
+
 .register__form {
   display: flex;
   flex-direction: column;
@@ -42,11 +52,36 @@
   display: none;
 }
 
-input:invalid[focused="true"] {
+input:invalid[focusedusername="true"] {
   border: 2px solid #f00;
 }
 
-input:invalid[focused="true"] ~ .signup__errorMessage {
+input:invalid[focusedusername="true"] ~ .signup__errorMessageUsername {
+  display: block;
+}
+
+input:invalid[focusedemail="true"] {
+  border: 2px solid #f00;
+}
+
+input:invalid[focusedemail="true"] ~ .signup__errorMessageEmail {
+  display: block;
+}
+
+input:invalid[focusedpassword="true"] {
+  border: 2px solid #f00;
+}
+
+input:invalid[focusedpassword="true"] ~ .signup__errorMessagePassword {
+  display: block;
+}
+
+input:invalid[focusedconfirmpassword="true"] {
+  border: 2px solid #f00;
+}
+
+input:invalid[focusedconfirmpassword="true"]
+  ~ .signup__errorMessageConfirmPassword {
   display: block;
 }
 

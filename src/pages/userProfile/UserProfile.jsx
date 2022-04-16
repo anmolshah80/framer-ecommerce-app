@@ -2,10 +2,27 @@ import React from "react";
 import "./userProfile.css";
 import { ArrowForwardIos } from "@mui/icons-material";
 import Topbar from "../../components/topbar/Topbar";
-import avatar from "../../avatar";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserProfileById } from "../../actions/userActions";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 export default function UserProfile() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const dispatch = useDispatch();
+
+  const userProfileState = useSelector(
+    (state) => state.getUserProfileByIdReducer
+  );
+
+  const { user_profile, loading, error } = userProfileState;
+
+  useEffect(() => {
+    dispatch(getUserProfileById(user._id));
+  }, []);
+
   return (
     <React.Fragment>
       <Topbar />
@@ -18,7 +35,7 @@ export default function UserProfile() {
           <span>Profile</span>
         </div>
         <div className="profile__actionButtons">
-          <Link to="/edit-profile">
+          <Link to={`/edit-profile/${user._id}`}>
             <button className="action__buttons">Edit Profile</button>
           </Link>
           <Link to="/delete-account">
@@ -29,43 +46,75 @@ export default function UserProfile() {
           </Link>
         </div>
         <h2>User Profile</h2>
-        <div className="profile">
-          <img
-            src={avatar}
-            alt="user profile avatar"
-            className="user__avatar"
-          />
 
-          <div className="user__info">
-            <div className="user__shortInfo">
-              <h3>Suhana</h3>
-              <span>suhana_pokhrel@gmail.com</span>
+        {loading ? (
+          <Skeleton type="circular_effect" />
+        ) : error ? (
+          <Skeleton
+            type="custom_effect"
+            message="Something went wrong while fetching your profile detials."
+          />
+        ) : (
+          user_profile?.profileDetails && (
+            <div className="profile">
+              <img
+                src={user.profileAvatar}
+                alt={`${user.username} profile avatar`}
+                className="user__avatar"
+              />
+
+              <div className="user__info">
+                <div className="user__shortInfo">
+                  <h3>{user.username}</h3>
+                  <span>{user.email}</span>
+                </div>
+                <span>Personal Details</span>
+                <div className="user__information">
+                  <div className="full__name">
+                    <p className="header__wordWrap">Full Name </p>
+                    <p className="header__valueWrap">
+                      {user_profile.profileDetails.fullName === ""
+                        ? "N/A"
+                        : user_profile.profileDetails.fullName}
+                    </p>
+                  </div>
+                  <div className="phone__number">
+                    <p className="header__wordWrap">Phone</p>
+                    <p className="header__valueWrap">
+                      {user_profile.profileDetails.phone === 0
+                        ? "N/A"
+                        : user_profile.profileDetails.phone}
+                    </p>
+                  </div>
+                  <div className="address">
+                    <p className="header__wordWrap">Address</p>
+                    <p className="header__valueWrap">
+                      {user_profile.profileDetails.address === ""
+                        ? "N/A"
+                        : user_profile.profileDetails.address}
+                    </p>
+                  </div>
+                  <div className="city">
+                    <p className="header__wordWrap">City</p>
+                    <p className="header__valueWrap">
+                      {user_profile.profileDetails.city === ""
+                        ? "N/A"
+                        : user_profile.profileDetails.city}
+                    </p>
+                  </div>
+                  <div className="country">
+                    <p className="header__wordWrap">Country</p>
+                    <p className="header__valueWrap">
+                      {user_profile.profileDetails.country === ""
+                        ? "N/A"
+                        : user_profile.profileDetails.country}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <span>Personal Details</span>
-            <div className="user__information">
-              <div className="full__name">
-                <p className="header__wordWrap">Full Name </p>
-                <p className="header__valueWrap">Suhana Pokhrel</p>
-              </div>
-              <div className="phone__number">
-                <p className="header__wordWrap">Phone</p>
-                <p className="header__valueWrap">9818367219</p>
-              </div>
-              <div className="address">
-                <p className="header__wordWrap">Address</p>
-                <p className="header__valueWrap">Naxal, Kathmandu</p>
-              </div>
-              <div className="city">
-                <p className="header__wordWrap">City</p>
-                <p className="header__valueWrap">Kathmandu</p>
-              </div>
-              <div className="country">
-                <p className="header__wordWrap">Country</p>
-                <p className="header__valueWrap">Nepal</p>
-              </div>
-            </div>
-          </div>
-        </div>
+          )
+        )}
       </div>
     </React.Fragment>
   );

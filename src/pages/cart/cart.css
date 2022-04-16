@@ -22,6 +22,7 @@
   color: var(--navy-blue);
   padding: 10px;
   overflow: hidden;
+  border-radius: 2px;
 }
 
 .product__headingWrapper > span {

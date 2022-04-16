@@ -12,6 +12,17 @@
   align-items: flex-start;
 }
 
+/* MuiPagination-ul is classname for the ul elements
+used in MUI Pagination API */
+.MuiPagination-ul > li {
+  list-style-type: none !important;
+}
+
+.pagination__stack {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
 /* .product__container {
   justify-content: center;
   align-items: flex-start;

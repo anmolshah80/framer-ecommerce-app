@@ -8,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOrderDescByID } from "../../actions/orderActions";
@@ -156,10 +156,12 @@ export default function Orders() {
                   <div className="order__status">
                     <span className="order__statusHeader">Order Status:</span>
                     <span className="order__statusData">
-                      {order_desc.isDelivered === true ? (
+                      {order_desc.orderStatus === "delivered" ? (
                         <Button type="Delivered" />
-                      ) : (
+                      ) : order_desc.orderStatus === "processing" ? (
                         <Button type="Processing" />
+                      ) : (
+                        <Button type="Canceled" />
                       )}
                     </span>
                   </div>

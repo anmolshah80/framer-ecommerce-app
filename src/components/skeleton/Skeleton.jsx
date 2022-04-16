@@ -3,7 +3,7 @@ import "./skeleton.css";
 import { CircularProgress } from "@mui/material";
 
 export default function Skeleton({ type, message }) {
-  const counter = 8;
+  const counter = 6;
 
   const ProductCardSkeleton = () => (
     <div className="card__skeletonWrapper">

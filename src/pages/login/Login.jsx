@@ -1,17 +1,49 @@
-import React, { useState, useContext } from "react";
-import { login } from "../../authContext/ApiCalls";
-import { AuthContext } from "../../authContext/AuthContext";
-import "./Login.css";
+import React from "react";
+import "./login.css";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../actions/userActions";
+import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import CloseIcon from "@mui/icons-material/Close";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 function Login() {
-  const [username, setusername] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isFetching, dispatch } = useContext(AuthContext);
+
+  const [open, setOpen] = useState(true);
+
+  const [focusedUsernameField, setFocusedUsernameField] = useState(false);
+  const [focusedPasswordField, setFocusedPasswordField] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const loginUserState = useSelector((state) => state.loginUserReducer);
+
+  const { loading, success, error } = loginUserState;
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login({ username, password }, dispatch);
+
+    const user = {
+      username: username,
+      password: password,
+    };
+
+    dispatch(loginUser(user));
+    setOpen(true);
   };
+
+  success &&
+    setTimeout(() => {
+      navigate("/");
+      window.location.reload();
+    }, 3000);
 
   return (
     <div className="login">
@@ -33,23 +65,97 @@ function Login() {
           </p>
         </div>
 
+        {loading ? (
+          <Skeleton type="custom_effect" />
+        ) : success ? (
+          <Box sx={{ width: "100%", mt: 2 }}>
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2, mr: 0 }}
+              >
+                Authenticated as `{username}`
+              </Alert>
+            </Collapse>
+          </Box>
+        ) : (
+          error && (
+            <Box sx={{ width: "100%", mt: 2 }}>
+              <Collapse in={open}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2, mr: 0 }}
+                >
+                  {error}
+                </Alert>
+              </Collapse>
+            </Box>
+          )
+        )}
+
         <form className="login__form" onSubmit={handleLogin}>
           <h4>Username</h4>
           <input
-            className="form__input"
             type="text"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
             required
-            onChange={(e) => setusername(e.target.value)}
+            pattern="^[A-Za-z0-9]{8,20}$"
+            onBlur={() => {
+              setFocusedUsernameField(true);
+            }}
+            focusedusername={focusedUsernameField.toString()}
           />
+          <span className="login__errorMessage login__errorMessageUsername">
+            Username should be 8-20 characters long and should not include any
+            special characters
+          </span>
           <h4>Password</h4>
           <input
-            className="form__input"
             type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             required
-            onChange={(e) => setPassword(e.target.value)}
+            pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,29}$"
+            onBlur={() => {
+              setFocusedPasswordField(true);
+            }}
+            focusedpassword={focusedPasswordField.toString()}
           />
+          <span className="login__errorMessage login__errorMessagePassword">
+            Password must be 8-30 characters long and must contain an uppercase,
+            a lowercase, a number and a special character and should not start
+            with a special character
+          </span>
           <a href="/forgot-password">Forgot Password?</a>
-          <button className="login__button" type="submit" disabled={isFetching}>
+          <button className="login__button" type="submit" disabled={loading}>
             Sign in
           </button>
         </form>

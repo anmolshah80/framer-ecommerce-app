@@ -1,53 +1,73 @@
-import React, { useState } from "react";
-import "./Register.css";
-import axios from "axios";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import "./register.css";
+import avatar from "../../avatar";
+import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import Collapse from "@mui/material/Collapse";
+import CloseIcon from "@mui/icons-material/Close";
+import Skeleton from "../../components/skeleton/Skeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState, useLayoutEffect } from "react";
+import { registerNewUser } from "../../actions/userActions";
 
-export default function Register(props) {
-  const [username, setUsername] = useState("");
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [focused, setFocused] = useState(false);
+  const [open, setOpen] = useState(true);
 
-  const { errorMessage } = props;
+  const [errorMessage, setErrorMessage] = useState("null");
+
+  const [focusedUsernameField, setFocusedUsernameField] = useState(false);
+  const [focusedEmailField, setFocusedEmailField] = useState(false);
+  const [focusedPasswordField, setFocusedPasswordField] = useState(false);
+  const [focusedConfirmPasswordField, setFocusedConfirmPasswordField] =
+    useState(false);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  // const password_regex = new RegExp(
-  //   /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,29}$/
-  // );
+  const userRegistrationState = useSelector(
+    (state) => state.registerNewUserReducer
+  );
 
-  // const regex_exp = new RegExp(
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-+_!@#$%^&*()?]){7,29}$/
-  // );
+  const { loading, success, error } = userRegistrationState;
 
-  const handleFocus = (e) => {
-    setFocused(true);
-  };
+  useLayoutEffect(() => {
+    errorMessage === "null" && sessionStorage.setItem("errorMessage", null);
+  }, []);
 
-  const handleRegistration = async (e) => {
+  const handleRegistration = (e) => {
     e.preventDefault();
 
-    if (password == confirmPassword) {
-      try {
-        await axios.post("auth/register", {
-          username,
-          email,
-          password,
-          confirmPassword,
-        });
-        navigate("/login");
-        console.log("user registered!");
-      } catch (err) {
-        console.log("user not registered!");
-        console.log(err);
-      }
-    } else {
-      alert("Passwords do not match.");
+    const user = {
+      username: username,
+      email: email,
+      password: password,
+      avatar: avatar,
+    };
+
+    if (password === confirmPassword) {
+      dispatch(registerNewUser(user));
+      setErrorMessage(sessionStorage.getItem("errorMessage"));
+      setOpen(true);
     }
   };
+
+  success &&
+    setTimeout(() => {
+      sessionStorage.setItem("errorMessage", "null");
+      navigate("/login");
+    }, 4000);
+
+  useEffect(() => {
+    setErrorMessage(sessionStorage.getItem("errorMessage"));
+  });
 
   return (
     <div className="register">
@@ -69,56 +89,115 @@ export default function Register(props) {
           </p>
         </div>
 
+        {loading ? (
+          <Skeleton type="custom_effect" />
+        ) : success ? (
+          <Box sx={{ width: "100%" }} className="register__alertBox">
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2, mr: 0 }}
+              >
+                Your account has been created successfully.
+              </Alert>
+            </Collapse>
+          </Box>
+        ) : (
+          (error || errorMessage !== "null") && (
+            <Box sx={{ width: "100%" }} className="register__alertBox">
+              <Collapse in={open}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOpen(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2, mr: 0 }}
+                >
+                  {errorMessage
+                    ? errorMessage
+                    : error &&
+                      "There was an error while creating your account."}
+                </Alert>
+              </Collapse>
+            </Box>
+          )
+        )}
+
         <form className="register__form" onSubmit={handleRegistration}>
           <h4>Username</h4>
           <input
-            required
             type="text"
+            required
             pattern="^[A-Za-z0-9]{8,20}$"
             value={username}
             onChange={(e) => {
               setUsername(e.target.value);
             }}
-            onBlur={handleFocus}
-            focused={focused.toString()}
+            onBlur={() => {
+              setFocusedUsernameField(true);
+            }}
+            focusedusername={focusedUsernameField.toString()}
           />
-          <span className="signup__errorMessage">
-            {errorMessage
-              ? errorMessage
-              : "Username should be 8-20 characters long and should not include any special characters"}
+          <span className="signup__errorMessage signup__errorMessageUsername">
+            Username should be 8-20 characters long and should not include any
+            special characters
           </span>
 
           <h4>Email</h4>
           <input
-            required
             type="email"
+            required
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
-            onBlur={handleFocus}
-            focused={focused.toString()}
+            onBlur={() => {
+              setFocusedEmailField(true);
+            }}
+            focusedemail={focusedEmailField.toString()}
           />
-          <span className="signup__errorMessage">
-            {errorMessage ? errorMessage : "Input email address is invalid"}
+          <span className="signup__errorMessage signup__errorMessageEmail">
+            Input email address is invalid
           </span>
 
           <h4>Password</h4>
           <input
-            required
             type="password"
+            required
             pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,29}$"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            onBlur={handleFocus}
-            focused={focused.toString()}
+            onBlur={() => {
+              setFocusedPasswordField(true);
+            }}
+            focusedpassword={focusedPasswordField.toString()}
           />
-          <span className="signup__errorMessage">
-            {errorMessage
-              ? errorMessage
-              : "Password must be 8-30 characters long and must contain an uppercase, a lowercase, a number and a special character and should not start with a special character"}
+          <span className="signup__errorMessage signup__errorMessagePassword">
+            Password must be 8-30 characters long and must contain an uppercase,
+            a lowercase, a number and a special character and should not start
+            with a special character
           </span>
 
           <span>Password must:</span>
@@ -131,22 +210,23 @@ export default function Register(props) {
           </ul>
           <h4>Confirm Password</h4>
           <input
-            required
             type="password"
+            required
             pattern={password}
             value={confirmPassword}
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
-            onBlur={handleFocus}
-            focused={focused.toString()}
+            onBlur={() => {
+              setFocusedConfirmPasswordField(true);
+            }}
+            focusedconfirmpassword={focusedConfirmPasswordField.toString()}
           />
-          <span className="signup__errorMessage">
-            {errorMessage
-              ? errorMessage
-              : "Password and confirm password should match"}
+          <span className="signup__errorMessage signup__errorMessageConfirmPassword">
+            Password and confirm password should match
           </span>
-          <button type="submit" className="register__button">
+
+          <button className="register__button" type="submit">
             Sign up
           </button>
         </form>
@@ -154,3 +234,5 @@ export default function Register(props) {
     </div>
   );
 }
+
+export default Register;

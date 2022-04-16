@@ -50,21 +50,27 @@ export const filterProducts =
         // filteredProducts = res.data;
 
         if (searchQuery) {
+          searchQuery = searchQuery.toLowerCase();
           filteredProducts = res.data.filter((product) => {
-            return product.title.toLowerCase().includes(searchQuery);
+            return (
+              product.title.toLowerCase().includes(searchQuery) ||
+              product.category.toLowerCase().includes(searchQuery) ||
+              product.brand.toLowerCase().includes(searchQuery)
+            );
           });
         }
 
         if (parseInt(sortByPriceMin) > 0 && parseInt(sortByPriceMax) > 0) {
-          // console.log("typeof(sortByPriceMin): ", typeof sortByPriceMin);
-          // console.log("typeof(sortByPriceMax): ", typeof sortByPriceMax);
-
-          filteredProducts = res.data.sort((a, b) => {
-            return a.price - b.price;
+          filteredProducts = res.data.filter((product) => {
+            return (
+              Math.floor(product.price) >= Math.floor(sortByPriceMin) &&
+              Math.floor(product.price) <= Math.floor(sortByPriceMax)
+            );
           });
         }
 
         if (sortByCategory !== "all") {
+          sortByCategory = sortByCategory.toLowerCase();
           filteredProducts = res.data.filter((product) => {
             return product.category.toLowerCase().includes(sortByCategory);
           });
@@ -100,7 +106,8 @@ export const addProductReview = (review, product_id) => (dispatch) => {
     .then((res) => {
       console.log(res);
       dispatch({ type: "ADD_PRODUCTREVIEW_SUCCESS" });
-      alert("Your review submitted successfully!");
+      alert("Your review has been submitted successfully!");
+      window.location.reload();
     })
     .catch((err) => {
       dispatch({ type: "ADD_PRODUCTREVIEW_FAILED" });
