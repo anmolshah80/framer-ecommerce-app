@@ -3,19 +3,35 @@ import "./reviews.css";
 import Rating from "@mui/material/Rating";
 import { Bookmark, Delete } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Reviews({ product }) {
   // allow the logged-in users to delete their reviews only
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const currentUserState = useSelector((state) => state.loginUserReducer);
+
+  const { currentUser } = currentUserState;
+
+  const handleReviewDeletion = () => {};
 
   const formatRating = (rating) => {
     return `${Number(rating).toFixed(1)}`;
   };
 
+  const formatPercentage = (percentage) => {
+    if (Number(percentage) % 1 != 0) {
+      return `${Number(percentage).toFixed(1)}`;
+    } else {
+      return percentage;
+    }
+  };
+
   const formatReviewDate = (date) => {
     const slicedDate = date.slice(0, 10).toString();
-    const formattedDate = new Date(slicedDate);
-    return `${formattedDate.toString().slice(4, 16)}`;
+    let formattedDate = new Date(slicedDate);
+    formattedDate = formattedDate.toString();
+    formattedDate =
+      formattedDate.substring(4, 9) + "," + formattedDate.substring(10, 15);
+    return `${formattedDate}`;
   };
 
   // compute the width of rating bar based on the number and type of ratings
@@ -136,7 +152,9 @@ export default function Reviews({ product }) {
               <div className="left" style={{ width: barFiveLeftWidth }}></div>
               <div className="right" style={{ width: barFiveRightWidth }}></div>
             </div>
-            <span className="progress__barStats">{barFivePercentage}%</span>
+            <span className="progress__barStats">
+              {formatPercentage(barFivePercentage)}%
+            </span>
           </div>
           <div className="progress__barTwoWrapper">
             <span className="progress_barStar">4 Star</span>
@@ -144,7 +162,9 @@ export default function Reviews({ product }) {
               <div className="left" style={{ width: barFourLeftWidth }}></div>
               <div className="right" style={{ width: barFourRightWidth }}></div>
             </div>
-            <span className="progress__barStats">{barFourPercentage}%</span>
+            <span className="progress__barStats">
+              {formatPercentage(barFourPercentage)}%
+            </span>
           </div>
           <div className="progress__barThreeWrapper">
             <span className="progress_barStar">3 Star</span>
@@ -155,7 +175,9 @@ export default function Reviews({ product }) {
                 style={{ width: barThreeRightWidth }}
               ></div>
             </div>
-            <span className="progress__barStats">{barThreePercentage}%</span>
+            <span className="progress__barStats">
+              {formatPercentage(barThreePercentage)}%
+            </span>
           </div>
           <div className="progress__barFourWrapper">
             <span className="progress_barStar">2 Star</span>
@@ -163,7 +185,9 @@ export default function Reviews({ product }) {
               <div className="left" style={{ width: barTwoLeftWidth }}></div>
               <div className="right" style={{ width: barTwoRightWidth }}></div>
             </div>
-            <span className="progress__barStats">{barTwoPercentage}%</span>
+            <span className="progress__barStats">
+              {formatPercentage(barTwoPercentage)}%
+            </span>
           </div>
           <div className="progress__barFiveWrapper">
             <span className="progress_barStar">1 Star</span>
@@ -171,14 +195,16 @@ export default function Reviews({ product }) {
               <div className="left" style={{ width: barOneLeftWidth }}></div>
               <div className="right" style={{ width: barOneRightWidth }}></div>
             </div>
-            <span className="progress__barStats">{barOnePercentage}%</span>
+            <span className="progress__barStats">
+              {formatPercentage(barOnePercentage)}%
+            </span>
           </div>
         </div>
       </div>
       <div className="reviews__container">
         <h3 className="review__wordWrap">All reviews and ratings</h3>
 
-        {product.reviews?.map((review) => {
+        {product.reviews?.map((review, index) => {
           return (
             <React.Fragment>
               {review.review != "" && (
@@ -204,10 +230,12 @@ export default function Reviews({ product }) {
                       </span>
                     </div>
                   </div>
-                  <p className="user__reviews">{review.review}</p>
+                  <p className="user__reviews" key={index}>
+                    {review.review}
+                  </p>
 
-                  {currentUser && currentUser._id == review.userid && (
-                    <Link to="/delete-review">
+                  {currentUser !== null && currentUser._id == review.userid && (
+                    <Link to={`/delete-review/${product._id}`}>
                       <div className="review__deleteContainer">
                         <Delete className="delete__icon" />
                         <span className="review__delete">Delete</span>

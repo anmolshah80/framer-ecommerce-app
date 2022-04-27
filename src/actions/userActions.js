@@ -137,3 +137,18 @@ export const changePassword = (userId, updatedPassword) => (dispatch) => {
       dispatch({ type: "CHANGE_PASSWORD_FAILED", payload: err });
     });
 };
+
+// user action to delete the customer account along with
+// all the orders placed by the customer
+export const deleteUserAccount = (user_id) => (dispatch) => {
+  dispatch({ type: "DELETE_USER_REQUEST" });
+
+  axios
+    .post("/auth/delete-account", { user_id })
+    .then((res) => {
+      dispatch({ type: "DELETE_USER_SUCCESS", payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: "DELETE_USER_FAILED", payload: err });
+    });
+};

@@ -322,9 +322,10 @@ span {
   font-size: 14px;
 }
 
-.content[isExpanded="true"] ~ .collapsible {
-  margin-bottom: 250px;
-}
+/* .content[isexpanded="true"] {
+  padding-bottom: 200px;
+  border-bottom: 4px solid red;
+} */
 
 .collapsible > .header {
   width: 110px;

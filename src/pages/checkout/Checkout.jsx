@@ -1,9 +1,9 @@
 import React from "react";
 import "./checkout.css";
 import StripeCheckout from "react-stripe-checkout";
-// const stripe = require("stripe");
 import { useDispatch, useSelector } from "react-redux";
 import { placeOrder } from "../../actions/orderActions";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout({ subTotal }) {
   const STRIPE_PUBLISHABLE_KEY =
@@ -13,52 +13,56 @@ export default function Checkout({ subTotal }) {
 
   const orderState = useSelector((state) => state.placeOrderReducer);
 
-  const { loading, success, error } = orderState;
+  const { error } = orderState;
+
+  const currentUserState = useSelector((state) => state.loginUserReducer);
+
+  const { currentUser } = currentUserState;
 
   const tokenHandler = (token) => {
     dispatch(placeOrder(token, subTotal));
     console.log(token);
   };
 
+  const navigate = useNavigate();
+
+  const handlePaymentCancellation = () => {
+    if (error) {
+      setTimeout(() => {
+        navigate("/payment-canceled");
+        window.location.reload();
+      }, 3000);
+    }
+  };
+
   const validateLoginStatus = () => {
-    if (localStorage.getItem("user") === "null") {
+    if (currentUser === null) {
       window.location.href = "/login";
+    } else {
+      window.location.href = "/cart";
     }
   };
 
   return (
     <div className="checkout">
-      {/* {loading && <Skeleton type="circular_effect" />}
-
-      {success && (
-        <Skeleton
-          type="custom_effect"
-          message="Your order has been placed successfully"
-        />
-      )}
-
-      {error && (
-        <Skeleton
-          type="custom_effect"
-          message="Something went wrong while placing your order"
-        />
-      )} */}
       <StripeCheckout
         token={tokenHandler}
         amount={subTotal * 100}
         shippingAddress
         billingAddress
+        email={currentUser.email}
+        name={currentUser.username}
         currency="USD"
         stripeKey={STRIPE_PUBLISHABLE_KEY}
+        allowRememberMe
+        closed={handlePaymentCancellation}
       >
-        {localStorage.getItem("user") === "null" ? (
+        {currentUser === null ? (
           <button className="checkout__button" onClick={validateLoginStatus}>
             Login to Checkout
           </button>
         ) : (
-          <button className="checkout__button" onClick={validateLoginStatus}>
-            Proceed to Checkout
-          </button>
+          <button className="checkout__button">Proceed to Checkout</button>
         )}
       </StripeCheckout>
     </div>

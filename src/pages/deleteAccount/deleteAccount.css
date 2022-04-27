@@ -50,7 +50,6 @@
 .delete__accountContainer > h3 {
   font-weight: 600;
   padding: 20px 15px;
-  /* margin-bottom: 20px; */
 }
 
 .delete__accountWarning {
@@ -61,7 +60,6 @@
   padding: 18px;
   border-top: 2px solid #721c24;
   border-bottom: 2px solid #721c24;
-  /* color: #721c24; */
   background-color: #f8d7da;
   border-color: #f5c6cb;
 }
@@ -127,9 +125,30 @@
 
 .email__addressInput {
   padding: 10px;
-  border: 1px solid lightgray;
+  border: 2px solid lightgray;
   border-radius: 4px;
   margin-bottom: 20px;
+  outline: none;
+}
+
+.email__addressInput:focus {
+  outline: 2px solid #07f !important;
+}
+
+.delete__accountErrorMessage {
+  font-size: 14px;
+  padding: 3px;
+  color: red;
+  display: none;
+}
+
+input:invalid[focusedconfirmation="true"] {
+  border: 2px solid #f00;
+  margin-bottom: 5px;
+}
+
+input:invalid[focusedconfirmation="true"] ~ .delete__accountErrorConfirmation {
+  display: block;
 }
 
 .confirmation__label {
@@ -151,6 +170,11 @@
   border: 1px solid lightgray;
   border-radius: 4px;
   margin-bottom: 20px;
+  outline: none;
+}
+
+.confirm__deletion:focus {
+  outline: 2px solid #07f !important;
 }
 
 .email__addressInput:focus,

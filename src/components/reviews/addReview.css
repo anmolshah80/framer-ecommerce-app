@@ -68,6 +68,11 @@
   font-size: 14px;
 }
 
+.review__textSection > .product__reviewUser:focus {
+  outline: none !important;
+  border: 2px solid #07f;
+}
+
 .submit__buttonWrapper {
   width: 550px;
   display: flex;

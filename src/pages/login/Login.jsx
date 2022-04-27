@@ -154,7 +154,7 @@ function Login() {
             a lowercase, a number and a special character and should not start
             with a special character
           </span>
-          <a href="/forgot-password">Forgot Password?</a>
+          {/* <a href="/forgot-password">Forgot Password?</a> */}
           <button className="login__button" type="submit" disabled={loading}>
             Sign in
           </button>

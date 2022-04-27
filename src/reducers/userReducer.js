@@ -222,3 +222,30 @@ export const changePasswordReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const deleteUserAccountReducer = (state = {}, action) => {
+  switch (action.type) {
+    case "DELETE_USER_REQUEST":
+      return {
+        ...state,
+        deleteAccountLoading: true,
+      };
+
+    case "DELETE_USER_SUCCESS":
+      return {
+        ...state,
+        deleteAccountLoading: false,
+        deleteAccountSuccess: true,
+      };
+
+    case "DELETERUSER_FAILED":
+      return {
+        ...state,
+        deleteAccountLoading: false,
+        deleteAccountError: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};

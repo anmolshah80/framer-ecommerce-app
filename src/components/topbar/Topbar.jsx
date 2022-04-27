@@ -28,7 +28,7 @@ export default function Topbar({ loading }) {
 
   const handleSearchQuery = () => {
     if (searchQuery !== "") {
-      dispatch(filterProducts(searchQuery, "all", "all", 0, 100));
+      dispatch(filterProducts(searchQuery, "", "", 0, 0));
     }
   };
 

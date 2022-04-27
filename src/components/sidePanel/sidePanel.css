@@ -22,10 +22,14 @@
 
 .checkbox__wrapper {
   margin: 15px 0px 0px 45px;
+  display: flex;
+  align-items: center;
 }
 
-.checkbox__wrapper > input[type="checkbox"] {
+.checkbox__wrapper > input[type="radio"] {
+  border-radius: 20px;
   margin-right: 10px;
+
   cursor: pointer;
 }
 

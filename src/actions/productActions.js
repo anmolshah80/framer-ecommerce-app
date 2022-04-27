@@ -9,11 +9,11 @@ export const getAllProducts = () => async (dispatch) => {
   await axios
     .get("/products/all-products")
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: res.data });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: "GET_PRODUCTS_FAILED", payload: err });
     });
 };
@@ -27,11 +27,11 @@ export const getProductById = (product_id) => (dispatch) => {
   axios
     .post("/products/productbyid", { product_id })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: "GET_PRODUCTBYID_SUCCESS", payload: res.data });
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       dispatch({ type: "GET_PRODUCTBYID_FAILED", payload: err });
     });
 };
@@ -47,8 +47,6 @@ export const filterProducts =
     axios
       .get("/products/all-products")
       .then(async (res) => {
-        // filteredProducts = res.data;
-
         if (searchQuery) {
           searchQuery = searchQuery.toLowerCase();
           filteredProducts = res.data.filter((product) => {
@@ -61,7 +59,7 @@ export const filterProducts =
         }
 
         if (parseInt(sortByPriceMin) > 0 && parseInt(sortByPriceMax) > 0) {
-          filteredProducts = res.data.filter((product) => {
+          filteredProducts = await res.data.filter((product) => {
             return (
               Math.floor(product.price) >= Math.floor(sortByPriceMin) &&
               Math.floor(product.price) <= Math.floor(sortByPriceMax)
@@ -70,16 +68,23 @@ export const filterProducts =
         }
 
         if (sortByCategory !== "all") {
-          sortByCategory = sortByCategory.toLowerCase();
-          filteredProducts = res.data.filter((product) => {
-            return product.category.toLowerCase().includes(sortByCategory);
+          filteredProducts = await res.data.filter((product) => {
+            return product.category
+              .toLowerCase()
+              .includes(sortByCategory.toLowerCase());
           });
+        } else {
+          filteredProducts = res.data;
         }
 
         if (sortByBrand !== "all") {
-          filteredProducts = res.data.filter((product) => {
-            return product.brand.toLowerCase().includes(sortByBrand);
+          filteredProducts = await res.data.filter((product) => {
+            return product.brand
+              .toLowerCase()
+              .includes(sortByBrand.toLowerCase());
           });
+        } else {
+          filteredProducts = res.data;
         }
 
         // setTimeout(() => {
@@ -104,12 +109,25 @@ export const addProductReview = (review, product_id) => (dispatch) => {
   axios
     .post("/products/add-review", { review, product_id, currentUser })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch({ type: "ADD_PRODUCTREVIEW_SUCCESS" });
-      alert("Your review has been submitted successfully!");
-      window.location.reload();
     })
     .catch((err) => {
       dispatch({ type: "ADD_PRODUCTREVIEW_FAILED" });
+    });
+};
+
+// user action to allow users delete the own reviews added
+// in several products based on productId
+export const deleteProductReview = (productId, userId) => (dispatch) => {
+  dispatch({ type: "DELETE_PRODUCTREVIEW_REQUEST" });
+
+  axios
+    .post("/products/delete-review", { productId, userId })
+    .then((res) => {
+      dispatch({ type: "DELETE_PRODUCTREVIEW_SUCCESS", payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: "DELETE_PRODUCTREVIEW_FAILED", payload: err });
     });
 };

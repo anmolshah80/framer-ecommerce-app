@@ -2,7 +2,7 @@ import "./App.css";
 import Home from "./pages/home/Home";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
-import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+// import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import ProductDescription from "./pages/productDescription/ProductDescription";
 import OrderSummary from "./pages/cart/Cart";
 import UserProfile from "./pages/userProfile/UserProfile";
@@ -15,15 +15,19 @@ import PaymentCanceled from "./pages/paymentCanceled/PaymentCanceled";
 import Orders from "./pages/orders/Orders";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
 import Reviews from "./components/reviews/Reviews";
+import DeleteReview from "./pages/deleteReview/DeleteReview";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const currentUserState = useSelector((state) => state.loginUserReducer);
+
+  const { currentUser } = currentUserState;
 
   return (
     <Router>
@@ -35,24 +39,77 @@ function App() {
 
         <Route
           path="/register"
-          element={user ? <Navigate to="/" /> : <Register />}
+          element={currentUser !== null ? <Navigate to="/" /> : <Register />}
         />
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        {user && (
-          <>
-            {/* <Route path="/order-summary" element={<OrderSummary />} /> */}
-            <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/edit-profile/:userId" element={<EditProfile />} />
-            <Route path="/change-password" element={<ChangePassword />} />
-            <Route path="/delete-account" element={<DeleteAccount />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/order-summary" element={<OrderSummary />} />
-            <Route path="/payment-canceled" element={<PaymentCanceled />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/order-details/:order_id" element={<OrderDetails />} />
-          </>
-        )}
+        <Route
+          path="/login"
+          element={currentUser !== null ? <Navigate to="/" /> : <Login />}
+        />
+        {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
+
+        {/* <Route path="/order-summary" element={<OrderSummary />} /> */}
+        <Route
+          path="/user-profile"
+          element={
+            currentUser !== null ? <UserProfile /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/edit-profile/:userId"
+          element={
+            currentUser !== null ? <EditProfile /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/change-password"
+          element={
+            currentUser !== null ? <ChangePassword /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/delete-account"
+          element={
+            currentUser !== null ? <DeleteAccount /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            currentUser !== null ? <Checkout /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/order-summary"
+          element={
+            currentUser !== null ? <OrderSummary /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/payment-canceled"
+          element={
+            currentUser !== null ? (
+              <PaymentCanceled />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/orders"
+          element={currentUser !== null ? <Orders /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/order-details/:order_id"
+          element={
+            currentUser !== null ? <OrderDetails /> : <Navigate to="/login" />
+          }
+        />
+        <Route
+          path="/delete-review/:productId"
+          element={
+            currentUser !== null ? <DeleteReview /> : <Navigate to="/login" />
+          }
+        />
       </Routes>
     </Router>
   );

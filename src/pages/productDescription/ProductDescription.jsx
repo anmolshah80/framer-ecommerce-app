@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./productDescription.css";
 import Topbar from "../../components/topbar/Topbar";
-// import RatingsBar from "../../components/ratingsBar/RatingsBar";
-// import Rating from "react-rating";
-// import ReactStars from "react-rating-stars-component";
 import Rating from "@mui/material/Rating";
-// import OrderSummary from "../orderSummary/OrderSummary";
-// import StaticData from "../../StaticData";
 import {
   ArrowBackIosNew,
   Info,
@@ -16,7 +11,6 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductById } from "../../actions/productActions";
-// import { getOrdersByUserID } from "../../actions/orderActions";
 import { addToCart } from "../../actions/cartActions";
 import Skeleton from "../../components/skeleton/Skeleton";
 import Reviews from "../../components/reviews/Reviews";
@@ -24,6 +18,12 @@ import AddReview from "../../components/reviews/AddReview";
 import useCollapse from "react-collapsed";
 
 export default function ProductDescription() {
+  const categoriesWithInclude = ["smartphone", "phone", "tablet", "tablets"];
+
+  const currentUserState = useSelector((state) => state.loginUserReducer);
+
+  const { currentUser } = currentUserState;
+
   function CollapsibleSection(props) {
     const config = {
       defaultExpanded: props.defaultExpanded || false,
@@ -51,8 +51,6 @@ export default function ProductDescription() {
   }
 
   const product_id = useParams();
-
-  // const product = StaticData.find((product) => product.id == product_id.id);
 
   const desc_regex = /[.]+/;
 
@@ -149,15 +147,21 @@ export default function ProductDescription() {
                 </div>
               </div>
 
-              <div className="color__desc">
-                <span>Color: Space Gray</span>
-                <span>Size: 32 GB</span>
-              </div>
+              {categoriesWithInclude.includes(
+                product.category?.toLowerCase()
+              ) && (
+                <React.Fragment>
+                  <div className="color__desc">
+                    <span>Color: Space Gray</span>
+                    <span>Size: 32 GB</span>
+                  </div>
 
-              <div className="available__variants">
-                <h4>32 GB</h4>
-                <h4>64 GB</h4>
-              </div>
+                  <div className="available__variants">
+                    <h4>32 GB</h4>
+                    <h4>64 GB</h4>
+                  </div>
+                </React.Fragment>
+              )}
 
               <div className="product__details">
                 <h3>Product Details </h3>
@@ -269,10 +273,8 @@ export default function ProductDescription() {
               </div>
             </div>
           </div>
-          {localStorage.getItem("user") !== "null" && (
-            <AddReview product={product} />
-          )}
-          <Reviews product={product} key={1} />
+          {currentUser !== null && <AddReview product={product} />}
+          <Reviews product={product} />
         </>
       )}
     </React.Fragment>

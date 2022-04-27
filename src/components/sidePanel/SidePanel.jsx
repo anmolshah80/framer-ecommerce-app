@@ -4,129 +4,45 @@ import { Minimize, PlayArrow } from "@mui/icons-material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { filterProducts } from "../../actions/productActions";
-import { getAllProducts } from "../../actions/productActions";
 
 export default function SidePanel() {
-  const [sortByCategory, setSortByCategory] = useState("all");
-  const [sortByBrand, setSortByBrand] = useState("all");
+  const [sortByCategory, setSortByCategory] = useState("");
+  const [sortByBrand, setSortByBrand] = useState("");
   const [sortByPriceMin, setSortByPriceMin] = useState("");
   const [sortByPriceMax, setSortByPriceMax] = useState("");
 
-  const [checkedStateCategory, setCheckedStateCategory] = useState(
-    new Array(4).fill(false)
-  );
-
-  const [checkedStateBrand, setCheckedStateBrand] = useState(
-    new Array(3).fill(false)
-  );
-
   const dispatch = useDispatch();
 
-  const handleFilterByCategory = (filterByCategory, position) => {
-    setSortByCategory(filterByCategory);
+  // const handleFilterByPrice = (e) => {
+  //   e.preventDefault();
 
-    const updatedCheckedState = checkedStateCategory.map((item, index) =>
-      index === position ? !item : item
-    );
+  //   dispatch(
+  //     filterProducts(
+  //       "",
+  //       sortByCategory,
+  //       sortByBrand,
+  //       sortByPriceMin,
+  //       sortByPriceMax
+  //     )
+  //   );
+  // };
 
-    setCheckedStateCategory(updatedCheckedState);
+  // const handleFilter = (e) => {
+  //   e.preventDefault();
 
-    // updatedCheckedState.reduce((sum, currentState, index) => {
-    //   if (currentState === true) {
-    //     return dispatch(
-    //       filterProducts(
-    //         "",
-    //         sortByCategory,
-    //         sortByBrand,
-    //         sortByPriceMin,
-    //         sortByPriceMax
-    //       )
-    //     );
-    //   }
-    //   return dispatch(getAllProducts());
-    // });
+  //   dispatch(
+  //     filterProducts(
+  //       "",
+  //       sortByCategory,
+  //       sortByBrand,
+  //       sortByPriceMin,
+  //       sortByPriceMax
+  //     )
+  //   );
 
-    if (updatedCheckedState.includes(true)) {
-      console.log("re-rendered again");
-      console.log("updatedCheckedState: ", updatedCheckedState);
-      dispatch(
-        filterProducts(
-          "",
-          sortByCategory,
-          sortByBrand,
-          sortByPriceMin,
-          sortByPriceMax
-        )
-      );
-    } else {
-      console.log("re-rendered else elements");
-      console.log("updatedCheckedState in else: ", updatedCheckedState);
-      dispatch(getAllProducts());
-    }
-
-    // if (checkedState[position] === true) {
-    //   dispatch(
-    //     filterProducts(
-    //       "",
-    //       sortByCategory,
-    //       sortByBrand,
-    //       sortByPriceMin,
-    //       sortByPriceMax
-    //     )
-    //   );
-    // }
-  };
-
-  const handleFilterByBrand = async (filterByBrand, position) => {
-    setSortByBrand(filterByBrand);
-    setSortByCategory("all");
-    setSortByPriceMin(0);
-    setSortByPriceMax(100);
-    const sortByQuery = "";
-
-    const updatedCheckedState = checkedStateBrand.map((item, index) =>
-      index === position ? !item : item
-    );
-
-    setCheckedStateBrand(updatedCheckedState);
-
-    if (updatedCheckedState.includes(true)) {
-      console.log("re-rendered again brand");
-      console.log("updatedCheckedState brand: ", updatedCheckedState);
-
-      dispatch(
-        filterProducts(
-          sortByQuery,
-          sortByCategory,
-          sortByBrand,
-          sortByPriceMin,
-          sortByPriceMax
-        )
-      );
-
-      // setTimeout(() => {
-      //   console.log("timeout started!");
-      // }, 3000);
-    } else {
-      console.log("re-rendered else elements brand");
-      console.log("updatedCheckedState in else brand: ", updatedCheckedState);
-      dispatch(getAllProducts());
-    }
-  };
-
-  const handleFilterByPrice = (e) => {
-    e.preventDefault();
-
-    dispatch(
-      filterProducts(
-        "",
-        sortByCategory,
-        sortByBrand,
-        sortByPriceMin,
-        sortByPriceMax
-      )
-    );
-  };
+  //   console.log("sortByCategory: ", sortByCategory);
+  //   console.log("sortByBrand: ", sortByBrand);
+  // };
 
   return (
     <div className="side__panel">
@@ -134,112 +50,102 @@ export default function SidePanel() {
       <div className="categories__wrapper">
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
-            id="tablets"
-            name="tablets"
+            type="radio"
+            id="all"
+            name="category"
             value={sortByCategory}
-            checked={checkedStateCategory[0]}
-            onChange={() => handleFilterByCategory("tablets", 0)}
+            onChange={() => setSortByCategory("all")}
+          />
+          <label htmlFor="all">All</label>
+        </div>
+        <div className="checkbox__wrapper">
+          <input
+            type="radio"
+            id="tablets"
+            name="category"
+            value={sortByCategory}
+            onChange={() => setSortByCategory("Tablets")}
           />
           <label htmlFor="tablets">Tablets</label>
         </div>
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
+            type="radio"
             id="smartphone"
-            name="smartphone"
+            name="category"
             value={sortByCategory}
-            checked={checkedStateCategory[1]}
-            onChange={() => handleFilterByCategory("smartphone", 1)}
+            onChange={() => setSortByCategory("Phone")}
           />
           <label htmlFor="smartphone">Smartphone</label>
         </div>
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
+            type="radio"
             id="pc"
-            name="pc"
+            name="category"
             value={sortByCategory}
-            checked={checkedStateCategory[2]}
-            onChange={() => handleFilterByCategory("pc", 2)}
+            onChange={() => setSortByCategory("Laptop")}
           />
           <label htmlFor="pc">Personal Computer</label>
         </div>
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
+            type="radio"
             id="smarttv"
-            name="tv"
+            name="category"
             value={sortByCategory}
-            checked={checkedStateCategory[3]}
-            onChange={() => handleFilterByCategory("tv", 3)}
+            onChange={() => setSortByCategory("Smart TV")}
           />
-          <label htmlFor="tv">Smart TV</label>
+          <label htmlFor="smarttv">Smart TV</label>
         </div>
       </div>
       <h3>Brands</h3>
       <div className="categories__wrapper">
+        {/* <div className="checkbox__wrapper">
+          <input
+            type="radio"
+            id="all"
+            name="category"
+            value={sortByBrand}
+            onChange={() => setSortByBrand("all")}
+          />
+          <label htmlFor="all">All</label>
+        </div> */}
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
+            type="radio"
             id="samsung"
-            name="samsung"
+            name="category"
             value={sortByBrand}
-            checked={checkedStateBrand[0]}
-            onChange={() => handleFilterByBrand("samsung", 0)}
-            // onClick={() => {
-            //   dispatch(
-            //     filterProducts(
-            //       "",
-            //       sortByCategoryOrBrand,
-            //       sortByBrand,
-            //       sortByPriceMin,
-            //       sortByPriceMax
-            //     )
-            //   );
-            // }}
+            onChange={() => setSortByBrand("samsung")}
           />
           <label htmlFor="samsung">Samsung</label>
         </div>
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
+            type="radio"
             id="apple"
-            name="apple"
+            name="category"
             value={sortByBrand}
-            checked={checkedStateBrand[1]}
-            onChange={() => handleFilterByBrand("apple", 1)}
-            // onClick={() => {
-            //   dispatch(
-            //     filterProducts(
-            //       "",
-            //       sortByCategory,
-            //       sortByBrand,
-            //       sortByPriceMin,
-            //       sortByPriceMax
-            //     )
-            //   );
-            // }}
+            onChange={() => setSortByBrand("apple")}
           />
           <label htmlFor="apple">Apple</label>
         </div>
         <div className="checkbox__wrapper">
           <input
-            type="checkbox"
+            type="radio"
             id="oneplus"
-            name="oneplus"
+            name="category"
             value={sortByBrand}
-            checked={checkedStateBrand[3]}
-            onChange={() => handleFilterByBrand("oneplus", 3)}
+            onChange={() => setSortByBrand("oneplus")}
           />
           <label htmlFor="oneplus">OnePlus</label>
         </div>
       </div>
-      <h3>Price</h3>
+      <h3>Price ($)</h3>
       <form className="sort__byPriceRange">
         <div className="input__box">
           <input
-            required
             type="text"
             min="0"
             placeholder="Min"
@@ -250,7 +156,6 @@ export default function SidePanel() {
           />
           <Minimize className="price__rangeIcon" />
           <input
-            required
             type="text"
             min="100"
             placeholder="Max"
@@ -260,8 +165,30 @@ export default function SidePanel() {
             }}
           />
         </div>
-        <button className="submit__button" onClick={handleFilterByPrice}>
-          <PlayArrow className="submit__icon" />
+        <button
+          className="submit__button"
+          // onClick={handleFilterByPrice}
+          onClick={(e) => {
+            e.preventDefault();
+
+            console.log("sortByCategory: ", sortByCategory);
+            console.log("sortByBrand: ", sortByBrand);
+
+            dispatch(
+              filterProducts(
+                "",
+                sortByCategory,
+                sortByBrand,
+                sortByPriceMin,
+                sortByPriceMax
+              )
+            );
+          }}
+        >
+          <PlayArrow
+            className="submit__icon"
+            // onClick={(e) => handleFilter(e)}
+          />
         </button>
       </form>
     </div>
