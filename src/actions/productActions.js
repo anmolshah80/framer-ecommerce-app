@@ -36,6 +36,32 @@ export const getProductById = (product_id) => (dispatch) => {
     });
 };
 
+// filter products based on search query that include product title, brand or category
+export const filterOnSearchQuery = (searchQuery) => (dispatch) => {
+  let filteredProducts;
+
+  const keys = ["title", "brand", "category"];
+
+  dispatch({
+    type: "GET_PRODUCTS_REQUEST",
+  });
+
+  axios
+    .get("/products/all-products")
+    .then(async (res) => {
+      filteredProducts = res.data.filter((item) =>
+        keys.some((key) => item[key].toLowerCase().includes(searchQuery))
+      );
+      await dispatch({
+        type: "GET_PRODUCTS_SUCCESS",
+        payload: filteredProducts,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: "GET_PRODUCTS_FAILED" });
+    });
+};
+
 // filter and sort products in home page based on categories, brands and price
 export const filterProducts =
   (searchQuery, sortByCategory, sortByBrand, sortByPriceMin, sortByPriceMax) =>

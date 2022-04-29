@@ -13,10 +13,10 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser, getUserProfileById } from "../../actions/userActions";
 import Skeleton from "../skeleton/Skeleton";
-import { filterProducts } from "../../actions/productActions";
+import { filterOnSearchQuery } from "../../actions/productActions";
 import avatar from "../../avatar";
 
-export default function Topbar() {
+export default function Topbar({ queryPlaceholder }) {
   const cartReducer = useSelector((state) => state.cartReducer);
 
   const { cartItems } = cartReducer;
@@ -30,7 +30,7 @@ export default function Topbar() {
 
   const handleSearchQuery = () => {
     if (searchQuery !== "") {
-      dispatch(filterProducts(searchQuery, "", "", 0, 0));
+      dispatch(filterOnSearchQuery(searchQuery));
     }
   };
 
@@ -63,6 +63,7 @@ export default function Topbar() {
           <input
             type="text"
             className="topbarSearchInput"
+            placeholder={queryPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

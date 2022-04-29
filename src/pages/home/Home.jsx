@@ -41,7 +41,10 @@ function Home() {
 
   return (
     <React.Fragment>
-      <Topbar loading={loading} />
+      <Topbar
+        loading={loading}
+        queryPlaceholder={"Search by product title, category or brand..."}
+      />
       <div className="home">
         <SidePanel className="side__panel" />
         <div className="product__containerWrapper product__container">
@@ -55,10 +58,12 @@ function Home() {
               type="custom_effect"
               message="Something went wrong. Please try again."
             />
-          ) : (
+          ) : products?.length > 0 ? (
             selectedProducts?.map((product) => {
               return <Product product={product} key={product._id} />;
             })
+          ) : (
+            <h1>No product found!</h1>
           )}
           {products?.length > 6 && (
             <Stack spacing={2} className="pagination__stack">
