@@ -18,13 +18,36 @@ export default function EditProfile() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
-  // const [profileAvatar, setProfileAvatar] = useState("");
+  const [profileAvatar, setProfileAvatar] = useState("");
 
   const [open, setOpen] = useState(true);
 
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [fileInputState, setFileInputState] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const [previewSource, setPreviewSource] = useState("");
+
+  let uploadedImageURL;
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setSelectedFile(file);
+    setFileInputState(e.target.value);
+  };
+
+  // to preview the profile image to be uploaded
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    // convert the image to a base64EncodedImage url
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
 
   const userProfileState = useSelector(
     (state) => state.getUserProfileByIdReducer
@@ -47,7 +70,7 @@ export default function EditProfile() {
         setAddress(user_profile.profileDetails.address);
         setCity(user_profile.profileDetails.city);
         setCountry(user_profile.profileDetails.country);
-        // setProfileAvatar(user_profile.profileDetails.profileAvatar);
+        setProfileAvatar(user_profile.profileAvatar);
       } else {
         dispatch(getUserProfileById(params.userId));
       }
@@ -56,8 +79,39 @@ export default function EditProfile() {
     }
   }, [dispatch, user_profile]);
 
-  const updateUserProfile = (e) => {
+  // upload the new selected profile image in the cloudinary database
+  const uploadImage = async (base64EncodedImage) => {
+    // console.log("base64EncodedImage: ", base64EncodedImage);
+
+    try {
+      await fetch("/upload", {
+        method: "POST",
+        body: JSON.stringify({ data: base64EncodedImage }),
+        headers: { "Content-type": "application/json" },
+      })
+        .then((res) => {
+          if (res.ok) return res.json();
+          return res.json().then((e) => Promise.reject(e));
+        })
+        .then(({ imageURL, message }) => {
+          uploadedImageURL = imageURL;
+        })
+        .catch((e) => {
+          console.error(e.error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateUserProfile = async (e) => {
     e.preventDefault();
+
+    if (selectedFile) {
+      await new Promise((resolve) => {
+        resolve(uploadImage(previewSource));
+      });
+    }
 
     const updatedProfile = {
       fullName: fullName,
@@ -65,15 +119,17 @@ export default function EditProfile() {
       address: address,
       city: city,
       country: country,
+      profileAvatar: uploadedImageURL,
     };
 
     dispatch(updateProfile(params.userId, updatedProfile));
+  };
 
+  updateProfileSuccess &&
     setTimeout(() => {
       navigate("/user-profile");
       window.location.reload();
-    }, 5000);
-  };
+    }, 3000);
 
   return (
     <React.Fragment>
@@ -153,92 +209,101 @@ export default function EditProfile() {
               />
             ) : (
               user_profile && (
-                <form
-                  className="edit__profileForm"
-                  onSubmit={updateUserProfile}
-                >
-                  <label htmlFor="full_name" className="form__label">
-                    Full Name
-                  </label>
-                  <input
-                    className="form__input"
-                    type="text"
-                    name="full_name"
-                    id="full_name"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required
-                  />
-                  <label htmlFor="phone" className="form__label">
-                    Phone
-                  </label>
-                  <input
-                    className="form__input"
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                  <label htmlFor="address" className="form__label">
-                    Address
-                  </label>
-                  <input
-                    className="form__input"
-                    type="text"
-                    name="address"
-                    id="address"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-                  <label htmlFor="city" className="form__label">
-                    City
-                  </label>
-                  <input
-                    className="form__input"
-                    type="text"
-                    name="city"
-                    id="city"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                  />
-                  <label htmlFor="country" className="form__label">
-                    Country
-                  </label>
-                  <input
-                    className="form__input"
-                    type="text"
-                    name="country"
-                    id="country"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                  />
-                  {/* <label htmlFor="upload_avatar" className="form__label">
-                  Upload a photo...
-                </label>
-                <input
-                  className="form__input input__typeFile"
-                  type="file"
-                  name="upload_avatar"
-                  id="upload_avatar"
-                  value={profileAvatar}
-                  onChange={(e) => {
-                    setProfileAvatar(e.target.value);
-                  }}
-                /> */}
-                  <button
-                    className="edit__profileButton"
-                    type="submit"
-                    disabled={
-                      updateProfileSuccess &&
-                      setTimeout(() => {
-                        console.log("update button is disabled");
-                      }, 5000)
-                    }
+                <div className="form__imagePreviewPane">
+                  <form
+                    className="edit__profileForm"
+                    onSubmit={updateUserProfile}
                   >
-                    Update
-                  </button>
-                </form>
+                    <label htmlFor="full_name" className="form__label">
+                      Full Name
+                    </label>
+                    <input
+                      className="form__input"
+                      type="text"
+                      name="full_name"
+                      id="full_name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="phone" className="form__label">
+                      Phone
+                    </label>
+                    <input
+                      className="form__input"
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <label htmlFor="address" className="form__label">
+                      Address
+                    </label>
+                    <input
+                      className="form__input"
+                      type="text"
+                      name="address"
+                      id="address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                    <label htmlFor="city" className="form__label">
+                      City
+                    </label>
+                    <input
+                      className="form__input"
+                      type="text"
+                      name="city"
+                      id="city"
+                      value={city}
+                      onChange={(e) => setCity(e.target.value)}
+                    />
+                    <label htmlFor="country" className="form__label">
+                      Country
+                    </label>
+                    <input
+                      className="form__input"
+                      type="text"
+                      name="country"
+                      id="country"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                    />
+                    <label className="form__label">Upload a photo...</label>
+                    <input
+                      className="form__input"
+                      id="files"
+                      type="file"
+                      name="image"
+                      onChange={handleFileInputChange}
+                      value={fileInputState}
+                    />
+                    <button
+                      className="edit__profileButton"
+                      type="submit"
+                      disabled={
+                        updateProfileSuccess &&
+                        setTimeout(() => {
+                          console.log("update button is disabled");
+                        }, 3000)
+                      }
+                    >
+                      Update
+                    </button>
+                  </form>
+                  {(previewSource || profileAvatar) && (
+                    <div className="preview__imageContainer">
+                      <h3 className="preview__imageText">Preview Image:</h3>
+                      <img
+                        className="preview__image"
+                        src={previewSource ? previewSource : profileAvatar}
+                        alt="upload profile avatar"
+                        style={{ height: "200px", width: "270px" }}
+                      />
+                    </div>
+                  )}
+                </div>
               )
             )}
           </div>

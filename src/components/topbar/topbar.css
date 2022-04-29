@@ -67,8 +67,9 @@
 
 .topbarSearch > .topbarSearchInput:focus,
 .topbarSearch > .topbarSearchInput:active {
-  /* border: 2px solid #07f !important; */
-  border: none !important;
+  border: 2px solid #07f !important;
+  border-right: none !important;
+  outline: none;
 }
 
 .topbarSearchIcon {
@@ -146,6 +147,7 @@
   border-radius: 50%;
   cursor: pointer;
   object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.035);
   transition: filter 300ms;
 }
 

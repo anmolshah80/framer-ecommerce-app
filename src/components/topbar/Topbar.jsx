@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./topbar.css";
 import {
   ArrowDropDownCircle,
@@ -11,16 +11,18 @@ import {
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../actions/userActions";
+import { logoutUser, getUserProfileById } from "../../actions/userActions";
 import Skeleton from "../skeleton/Skeleton";
 import { filterProducts } from "../../actions/productActions";
+import avatar from "../../avatar";
 
-export default function Topbar({ loading }) {
+export default function Topbar() {
   const cartReducer = useSelector((state) => state.cartReducer);
 
   const { cartItems } = cartReducer;
 
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const currentUserState = useSelector((state) => state.loginUserReducer);
+  const { currentUser } = currentUserState;
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,6 +33,16 @@ export default function Topbar({ loading }) {
       dispatch(filterProducts(searchQuery, "", "", 0, 0));
     }
   };
+
+  const userProfileState = useSelector(
+    (state) => state.getUserProfileByIdReducer
+  );
+
+  const { user_profile, loading, error } = userProfileState;
+
+  useEffect(() => {
+    dispatch(getUserProfileById(currentUser._id));
+  }, []);
 
   return (
     <div className="topbar">
@@ -59,6 +71,8 @@ export default function Topbar({ loading }) {
 
         {loading ? (
           <Skeleton type="topbar" />
+        ) : error ? (
+          <Skeleton type="custom_effect" message="error" />
         ) : (
           <div className="topRight">
             <Link to="/cart">
@@ -67,15 +81,14 @@ export default function Topbar({ loading }) {
                 <span className="items__inCart">{cartItems.length}</span>
               </div>
             </Link>
-            {currentUser && (
-              <Link to="/user-profile">
-                <img
-                  src={currentUser.profileAvatar}
-                  alt="Avatar profile"
-                  className="topAvatar"
-                />
-              </Link>
-            )}
+
+            <Link to="/user-profile">
+              <img
+                src={user_profile?.profileAvatar || avatar}
+                alt="Avatar profile"
+                className="topAvatar"
+              />
+            </Link>
 
             {/* dropdown icon for logout */}
             <Navbar>
@@ -113,19 +126,19 @@ function DropdownMenu() {
     );
   }
 
-  // logout
+  // logout request for a customer account
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logoutUser());
-    window.location.reload();
   };
 
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const currentUserState = useSelector((state) => state.loginSellerUserReducer);
+  const { currentUser } = currentUserState;
 
   return (
     <div className="dropdown">
-      {currentUser ? (
+      {currentUser !== null ? (
         <React.Fragment>
           <DropdownItem
             leftIcon={<ShoppingCartCheckout />}

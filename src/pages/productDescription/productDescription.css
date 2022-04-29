@@ -15,8 +15,9 @@ span {
   margin: 20px;
   height: 100vh;
   padding-bottom: 20px;
-  /* margin-bottom: 250px; */
+  /* padding-bottom: 250px; */
   border-bottom: 2px solid lightgray;
+  overflow: hidden;
 }
 
 .product__descLeft {

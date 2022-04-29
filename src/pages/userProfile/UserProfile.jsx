@@ -9,7 +9,8 @@ import { getUserProfileById } from "../../actions/userActions";
 import Skeleton from "../../components/skeleton/Skeleton";
 
 export default function UserProfile() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const currentUserState = useSelector((state) => state.loginUserReducer);
+  const { currentUser } = currentUserState;
 
   const dispatch = useDispatch();
 
@@ -20,7 +21,7 @@ export default function UserProfile() {
   const { user_profile, loading, error } = userProfileState;
 
   useEffect(() => {
-    dispatch(getUserProfileById(user._id));
+    dispatch(getUserProfileById(currentUser._id));
   }, []);
 
   return (
@@ -35,7 +36,7 @@ export default function UserProfile() {
           <span>Profile</span>
         </div>
         <div className="profile__actionButtons">
-          <Link to={`/edit-profile/${user._id}`}>
+          <Link to={`/edit-profile/${currentUser._id}`}>
             <button className="action__buttons">Edit Profile</button>
           </Link>
           <Link to="/delete-account">
@@ -52,21 +53,21 @@ export default function UserProfile() {
         ) : error ? (
           <Skeleton
             type="custom_effect"
-            message="Something went wrong while fetching your profile detials."
+            message="Something went wrong while fetching your profile details."
           />
         ) : (
           user_profile?.profileDetails && (
             <div className="profile">
               <img
-                src={user.profileAvatar}
-                alt={`${user.username} profile avatar`}
+                src={user_profile.profileAvatar}
+                alt={`${user_profile.username} profile avatar`}
                 className="user__avatar"
               />
 
               <div className="user__info">
                 <div className="user__shortInfo">
-                  <h3>{user.username}</h3>
-                  <span>{user.email}</span>
+                  <h3>{user_profile.username}</h3>
+                  <span>{user_profile.email}</span>
                 </div>
                 <span>Personal Details</span>
                 <div className="user__information">

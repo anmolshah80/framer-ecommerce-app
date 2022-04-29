@@ -55,11 +55,13 @@
 .edit__profileForm {
   display: flex;
   flex-direction: column;
+  flex: 3;
   justify-content: flex-start;
   align-items: flex-start;
   border: 2px solid lightgray;
   border-radius: 4px;
   padding: 20px;
+  margin-left: 400px;
 }
 
 .edit__profileForm > .form__label {
@@ -79,12 +81,8 @@
 
 .form__input:focus,
 .form__input:active {
-  border: none !important;
-}
-
-.edit__profileForm > .input__typeFile {
-  border: none;
-  cursor: pointer;
+  outline: none;
+  border: 2px solid #07f !important;
 }
 
 .edit__profileButton {
@@ -102,4 +100,31 @@
 
 .edit__profileButton:hover {
   background-color: var(--navy-blue);
+}
+
+.form__imagePreviewPane {
+  display: flex;
+  flex-direction: row;
+  flex: 4;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.preview__imageContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 150px;
+  margin-right: 0px !important;
+}
+
+.preview__imageText {
+  color: var(--navy-blue);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.preview__image {
+  object-fit: contain;
+  margin-right: 0px !important;
 }

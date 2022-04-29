@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./productDescription.css";
 import Topbar from "../../components/topbar/Topbar";
 import Rating from "@mui/material/Rating";
@@ -16,6 +16,7 @@ import Skeleton from "../../components/skeleton/Skeleton";
 import Reviews from "../../components/reviews/Reviews";
 import AddReview from "../../components/reviews/AddReview";
 import useCollapse from "react-collapsed";
+import { useState, useEffect, useLayoutEffect } from "react";
 
 export default function ProductDescription() {
   const categoriesWithInclude = ["smartphone", "phone", "tablet", "tablets"];
@@ -23,6 +24,14 @@ export default function ProductDescription() {
   const currentUserState = useSelector((state) => state.loginUserReducer);
 
   const { currentUser } = currentUserState;
+
+  // each line product description in li tag accomodates around 70 characters
+  // similarly, two lines of product description in li tag accomodates around 140 characters
+  // and so on for three lines and so forth
+  let countLinesLesserThan70 = 0;
+  let countLinesGreaterThan70 = 0;
+
+  const [paddingBottom, setPaddingBottom] = useState("40px");
 
   function CollapsibleSection(props) {
     const config = {
@@ -32,6 +41,34 @@ export default function ProductDescription() {
 
     const { getCollapseProps, getToggleProps, isExpanded } =
       useCollapse(config);
+
+    useEffect(() => {
+      // get the lines length greater than 50 characters
+      String(product.description)
+        .split(desc_regex)
+        .map((line) => {
+          if (line.length >= 70) {
+            countLinesGreaterThan70 += 1;
+          } else {
+            countLinesLesserThan70 += 1;
+          }
+        });
+
+      // console.log("countLinesGreaterThan70: ", countLinesGreaterThan70);
+
+      if (countLinesGreaterThan70 < 8 || countLinesLesserThan70 < 10) {
+        setOpen(true);
+      } else if (
+        (countLinesGreaterThan70 >= 8 && countLinesGreaterThan70 <= 12) ||
+        (countLinesLesserThan70 >= 10 && countLinesLesserThan70 <= 14)
+      ) {
+        setOpen(true);
+        setPaddingBottom("200px");
+      } else {
+        setOpen(true);
+        setPaddingBottom("280px");
+      }
+    }, []);
 
     return (
       <div className="collapsible">
@@ -57,6 +94,8 @@ export default function ProductDescription() {
   const dispatch = useDispatch();
 
   const [quantity, setQuantity] = useState(1);
+
+  const [open, setOpen] = useState(false);
 
   const addToCartHandler = () => {
     dispatch(addToCart(product, quantity));
@@ -114,7 +153,12 @@ export default function ProductDescription() {
         />
       ) : (
         <>
-          <div className="product__description">
+          <div
+            className="product__description"
+            style={{
+              paddingBottom: open && paddingBottom,
+            }}
+          >
             <div className="product__descLeft">
               <Link to="/">
                 <div className="previous__page">
@@ -187,30 +231,32 @@ export default function ProductDescription() {
                     })}
                 </ul>
 
-                <CollapsibleSection>
-                  <ul className="product__descListContainer">
-                    {String(product.description)
-                      .substring(511)
-                      .split(desc_regex)
-                      .map((str, index) => {
-                        return (
-                          <li
-                            // className="product__descListInCollapsible"
-                            style={{
-                              marginLeft: "-20px",
-                              listStyleType: "circle",
-                              marginBottom: "10px",
-                              fontSize: "15px",
-                              fontWeight: "500",
-                            }}
-                            key={index}
-                          >
-                            {str.trim()}
-                          </li>
-                        );
-                      })}
-                  </ul>
-                </CollapsibleSection>
+                {String(product.description).length > 510 && (
+                  <CollapsibleSection>
+                    <ul className="product__descListContainer">
+                      {String(product.description)
+                        .substring(511)
+                        .split(desc_regex)
+                        .map((str, index) => {
+                          return (
+                            <li
+                              // className="product__descListInCollapsible"
+                              style={{
+                                marginLeft: "-20px",
+                                listStyleType: "circle",
+                                marginBottom: "10px",
+                                fontSize: "15px",
+                                fontWeight: "500",
+                              }}
+                              key={index}
+                            >
+                              {str.trim()}
+                            </li>
+                          );
+                        })}
+                    </ul>
+                  </CollapsibleSection>
+                )}
               </div>
             </div>
 
