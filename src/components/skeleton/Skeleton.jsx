@@ -2,7 +2,7 @@ import React from "react";
 import "./skeleton.css";
 import { CircularProgress } from "@mui/material";
 
-export default function Skeleton({ type, message }) {
+export default function Skeleton({ type, message, renderCount }) {
   const counter = 6;
 
   const ProductCardSkeleton = () => (
@@ -48,7 +48,9 @@ export default function Skeleton({ type, message }) {
   );
 
   if (type === "product_card")
-    return Array(counter).fill(<ProductCardSkeleton />);
+    return Array(renderCount ? renderCount : counter).fill(
+      <ProductCardSkeleton />
+    );
 
   if (type === "topbar") return <TopbarSkeleton />;
 

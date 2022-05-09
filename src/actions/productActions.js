@@ -10,7 +10,10 @@ export const getAllProducts = () => async (dispatch) => {
     .get("/products/all-products")
     .then((res) => {
       // console.log(res);
-      dispatch({ type: "GET_PRODUCTS_SUCCESS", payload: res.data });
+      dispatch({
+        type: "GET_PRODUCTS_SUCCESS",
+        payload: res.data.sort().reverse(),
+      });
     })
     .catch((err) => {
       // console.log(err);
@@ -62,10 +65,69 @@ export const filterOnSearchQuery = (searchQuery) => (dispatch) => {
     });
 };
 
+// filter products based on search query that include product title, brand or category
+export const filterOnCategoriesAndBrands =
+  (categoryValue, brandValue) => (dispatch) => {
+    let filteredProducts;
+
+    const keys = ["brand", "category"];
+
+    dispatch({
+      type: "GET_PRODUCTS_REQUEST",
+    });
+
+    axios
+      .get("/products/all-products")
+      .then(async (res) => {
+        filteredProducts = res.data.filter(
+          (item) =>
+            keys.some((key) =>
+              item[key].toLowerCase().includes(categoryValue)
+            ) &&
+            keys.some((key) => item[key].toLowerCase().includes(brandValue))
+        );
+        await dispatch({
+          type: "GET_PRODUCTS_SUCCESS",
+          payload: filteredProducts,
+        });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_PRODUCTS_FAILED" });
+      });
+  };
+
+export const filterChecks = (categoryList, brandList) => (dispatch) => {
+  let filteredProducts;
+
+  dispatch({
+    type: "GET_PRODUCTS_REQUEST",
+  });
+
+  axios
+    .get("/products/all-products")
+    .then(async (res) => {
+      filteredProducts = res.data.filter((item) => {
+        if (categoryList.length > 0) {
+          categoryList.includes(item.category.toLowerCase());
+        }
+
+        if (brandList.length > 0) {
+          brandList.includes(item.brand.toLowerCase());
+        }
+      });
+      await dispatch({
+        type: "GET_PRODUCTS_SUCCESS",
+        payload: filteredProducts,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: "GET_PRODUCTS_FAILED" });
+    });
+};
+
 // filter and sort products in home page based on categories, brands and price
 export const filterProducts =
-  (searchQuery, sortByCategory, sortByBrand, sortByPriceMin, sortByPriceMax) =>
-  (dispatch) => {
+  (sortByCategory, sortByBrand, sortByPrice) => (dispatch) => {
     let filteredProducts;
 
     dispatch({ type: "GET_PRODUCTS_REQUEST" });
@@ -73,49 +135,59 @@ export const filterProducts =
     axios
       .get("/products/all-products")
       .then(async (res) => {
-        if (searchQuery) {
-          searchQuery = searchQuery.toLowerCase();
-          filteredProducts = res.data.filter((product) => {
+        if (sortByPrice !== "") {
+          if (sortByPrice === "htl") {
+            filteredProducts = await res.data.sort((a, b) => {
+              return -a.price + b.price;
+            });
+          } else {
+            filteredProducts = await res.data.sort((a, b) => {
+              return a.price - b.price;
+            });
+          }
+        }
+
+        if (sortByCategory !== "" || sortByBrand !== "") {
+          filteredProducts = await res.data.filter((product) => {
             return (
-              product.title.toLowerCase().includes(searchQuery) ||
-              product.category.toLowerCase().includes(searchQuery) ||
-              product.brand.toLowerCase().includes(searchQuery)
+              product.category.toLowerCase().includes(sortByCategory) &&
+              product.brand.toLowerCase().includes(sortByBrand)
             );
           });
         }
 
-        if (parseInt(sortByPriceMin) > 0 && parseInt(sortByPriceMax) > 0) {
+        console.log("filteredProducts: ", filteredProducts);
+
+        await dispatch({
+          type: "GET_PRODUCTS_SUCCESS",
+          payload: filteredProducts,
+        });
+      })
+      .catch((err) => {
+        dispatch({ type: "GET_PRODUCTS_FAILED" });
+      });
+  };
+
+// filter and sort products in home page based on categories, brands and price
+export const filterSimilarItems =
+  (sortByCategory, sortByBrand) => (dispatch) => {
+    let filteredProducts;
+
+    dispatch({ type: "GET_PRODUCTS_REQUEST" });
+
+    axios
+      .get("/products/all-products")
+      .then(async (res) => {
+        if (sortByCategory !== "" || sortByBrand !== "") {
           filteredProducts = await res.data.filter((product) => {
             return (
-              Math.floor(product.price) >= Math.floor(sortByPriceMin) &&
-              Math.floor(product.price) <= Math.floor(sortByPriceMax)
+              product.category.toLowerCase().includes(sortByCategory) &&
+              product.brand.toLowerCase().includes(sortByBrand)
             );
           });
         }
 
-        if (sortByCategory !== "all") {
-          filteredProducts = await res.data.filter((product) => {
-            return product.category
-              .toLowerCase()
-              .includes(sortByCategory.toLowerCase());
-          });
-        } else {
-          filteredProducts = res.data;
-        }
-
-        if (sortByBrand !== "all") {
-          filteredProducts = await res.data.filter((product) => {
-            return product.brand
-              .toLowerCase()
-              .includes(sortByBrand.toLowerCase());
-          });
-        } else {
-          filteredProducts = res.data;
-        }
-
-        // setTimeout(() => {
-        //   console.log("timeout started in backend");
-        // }, 3000);
+        console.log("filteredProducts: ", filteredProducts);
 
         await dispatch({
           type: "GET_PRODUCTS_SUCCESS",

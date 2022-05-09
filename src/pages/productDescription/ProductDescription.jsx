@@ -10,13 +10,15 @@ import {
 } from "@mui/icons-material";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductById } from "../../actions/productActions";
+import { getProductById, getAllProducts } from "../../actions/productActions";
+import { getAllOrders } from "../../actions/orderActions";
 import { addToCart } from "../../actions/cartActions";
 import Skeleton from "../../components/skeleton/Skeleton";
 import Reviews from "../../components/reviews/Reviews";
 import AddReview from "../../components/reviews/AddReview";
+import SimilarItems from "../../components/similarItems/SimilarItems";
 import useCollapse from "react-collapsed";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProductDescription() {
   const categoriesWithInclude = ["smartphone", "phone", "tablet", "tablets"];
@@ -107,8 +109,14 @@ export default function ProductDescription() {
 
   const { product, loading, error } = getProductByIdState;
 
+  const orderState = useSelector((state) => state.getAllOrdersReducer);
+
+  const { orders } = orderState;
+
   useEffect(() => {
     dispatch(getProductById(product_id.id));
+    dispatch(getAllOrders());
+    dispatch(getAllProducts());
   }, []);
 
   // check if the user has purchased the product (induces performance issues)
@@ -319,8 +327,9 @@ export default function ProductDescription() {
               </div>
             </div>
           </div>
+          <SimilarItems currentProduct={product} />
           {currentUser !== null && <AddReview product={product} />}
-          <Reviews product={product} />
+          <Reviews product={product} orders={orders} />
         </>
       )}
     </React.Fragment>

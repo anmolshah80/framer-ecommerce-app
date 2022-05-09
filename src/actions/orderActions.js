@@ -72,15 +72,16 @@ export const placeOrder = (token, subTotal) => (dispatch, getState) => {
 //   };
 
 // fetch all the orders placed by a user
-export const getOrdersByUserID = () => (dispatch, getState) => {
-  const userID = JSON.parse(localStorage.getItem("user"))._id;
-
+export const getOrdersByUserID = (userId) => (dispatch) => {
   dispatch({ type: "GET_ORDERSBYUSERID_REQUEST" });
 
   axios
-    .post("/orders/ordersbyuserid", { userID: userID })
+    .post("/orders/ordersbyuserid", { userID: userId })
     .then((res) => {
-      dispatch({ type: "GET_ORDERSBYUSERID_SUCCESS", payload: res.data });
+      dispatch({
+        type: "GET_ORDERSBYUSERID_SUCCESS",
+        payload: res.data.sort().reverse(),
+      });
       // console.log(res.data);
     })
     .catch((err) => {
@@ -100,5 +101,23 @@ export const getOrderDescByID = (orderID) => (dispatch, getState) => {
     })
     .catch((err) => {
       dispatch({ type: "GET_ORDERDESCBYID_FAILED", payload: err });
+    });
+};
+
+// fetch all orders data from database
+export const getAllOrders = () => async (dispatch) => {
+  dispatch({
+    type: "GET_ORDERS_REQUEST",
+  });
+
+  await axios
+    .get("/orders/all-orders")
+    .then((res) => {
+      console.log(res);
+      dispatch({ type: "GET_ORDERS_SUCCESS", payload: res.data });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({ type: "GET_ORDERS_FAILED", payload: err });
     });
 };

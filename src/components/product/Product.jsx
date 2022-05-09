@@ -1,6 +1,7 @@
 import React from "react";
 import "./product.css";
 import { Link } from "react-router-dom";
+import avatar from "../../avatar";
 
 export default function Product({ product }) {
   return (
@@ -9,7 +10,7 @@ export default function Product({ product }) {
         <div className="product">
           <img
             className="product__image skeleton"
-            src={product.image}
+            src={product.image ? product.image : avatar}
             alt={product.title}
           />
           <div className="product__info">

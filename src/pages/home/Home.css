@@ -1,12 +1,19 @@
 .home {
   display: flex;
+  flex: 4;
   justify-content: flex-start;
   flex-direction: row;
   align-items: flex-start;
 }
 
+.side__panel {
+  display: flex;
+  flex: 1;
+}
+
 .product__containerWrapper {
   display: flex;
+  flex: 3;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;

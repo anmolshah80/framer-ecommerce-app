@@ -23,6 +23,7 @@ import {
   placeOrderReducer,
   getOrdersByUserIDReducer,
   getOrderDescByIDReducer,
+  getAllOrdersReducer,
 } from "./reducers/orderReducer";
 import { userProfileUpdateReducer } from "./reducers/userProfileReducer";
 
@@ -42,6 +43,7 @@ const finalReducer = combineReducers({
   placeOrderReducer: placeOrderReducer,
   getOrdersByUserIDReducer: getOrdersByUserIDReducer,
   getOrderDescByIDReducer: getOrderDescByIDReducer,
+  getAllOrdersReducer: getAllOrdersReducer,
   addProductReviewReducer: addProductReviewReducer,
   deleteProductReviewReducer: deleteProductReviewReducer,
   userProfileUpdateReducer: userProfileUpdateReducer,

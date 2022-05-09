@@ -51,7 +51,7 @@ export const getOrdersByUserIDReducer = (state = {}, action) => {
 
     default:
       return {
-        state,
+        ...state,
       };
   }
 };
@@ -80,7 +80,31 @@ export const getOrderDescByIDReducer = (state = {}, action) => {
 
     default:
       return {
-        state,
+        ...state,
       };
+  }
+};
+
+export const getAllOrdersReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case "GET_ORDERS_REQUEST":
+      return {
+        loading: true,
+      };
+
+    case "GET_ORDERS_SUCCESS":
+      return {
+        orders: action.payload,
+        loading: false,
+      };
+
+    case "GET_ORDERS_FAILED":
+      return {
+        error: action.payload,
+        loading: false,
+      };
+
+    default:
+      return state;
   }
 };

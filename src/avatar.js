@@ -80,5 +80,6 @@ function generateAvatar() {
   return image.src;
 }
 
+// returns a base64Encoded image url
 let avatar = generateAvatar();
 export default avatar;

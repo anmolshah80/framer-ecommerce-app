@@ -1,0 +1,17 @@
+.similar__items {
+  margin: 20px 30px 20px;
+  border-bottom: 2px solid lightgray;
+}
+
+.similar__itemsWordWrap {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.similar__productContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}

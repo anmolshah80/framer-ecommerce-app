@@ -110,6 +110,9 @@ function App() {
             currentUser !== null ? <DeleteReview /> : <Navigate to="/login" />
           }
         />
+
+        {/* redirect the user to home page when a path specified does not exist */}
+        <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </Router>
   );

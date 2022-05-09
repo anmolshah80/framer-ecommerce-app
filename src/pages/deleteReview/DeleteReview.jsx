@@ -53,7 +53,7 @@ export default function DeleteReview() {
           "?
         </h3>
         <div className="delete__actionsContainer">
-          <Link to="/products">
+          <Link to={`/product/${params.productId}`}>
             <button className="delete__actionCancel">Cancel</button>
           </Link>
           <button className="delete__actionDelete" onClick={handleDelete}>

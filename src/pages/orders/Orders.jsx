@@ -50,8 +50,11 @@ export default function Orders() {
     return <button className={"status " + type}>{type}</button>;
   };
 
-  const orderState = useSelector((state) => state.getOrdersByUserIDReducer);
+  // const currentUserState = useSelector((state) => state.loginUserReducer);
 
+  // const { currentUser } = currentUserState;
+
+  const orderState = useSelector((state) => state.getOrdersByUserIDReducer);
   const { orders, error, loading } = orderState;
 
   const navigate = useNavigate();
@@ -59,31 +62,23 @@ export default function Orders() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      dispatch(getOrdersByUserID());
-    } else {
-      navigate("/login");
-    }
-  }, [dispatch]);
-
-  // const handleOrderDetails = (order_id) => {
-  //   navigate(`/order-details/${order_id}`);
-  // };
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+    dispatch(getOrdersByUserID(currentUser._id));
+  }, []);
 
   return (
     <React.Fragment>
       <Topbar />
       <div className="orders">
         <h1 className="heading__wrapper">Find your order</h1>
-        {error && (
+        {error ? (
           <Skeleton
             type="custom_effect"
             message="Something went wrong. Please try again later."
           />
-        )}
-        {loading ? (
+        ) : loading ? (
           <Skeleton type="circular_effect" />
-        ) : (
+        ) : orders?.length > 0 ? (
           <Paper className="paper__container">
             <TableContainer
               className="table__container"
@@ -105,49 +100,58 @@ export default function Orders() {
                 </TableHead>
 
                 <TableBody>
-                  {orders &&
-                    orders.map((order, index) => {
-                      return (
-                        // <Link to="/order-details:order_id">
-                        <TableRow
-                          className="table__row"
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          onClick={() =>
-                            navigate(`/order-details/${order["_id"]}`)
-                          }
-                          key={order._id}
-                        >
-                          {columns.slice(0, 4).map((column) => {
-                            return (
-                              <TableCell
-                                align={column.align}
-                                key={order[column.id]}
-                              >
-                                {column.format
-                                  ? column.format(order[column.id])
-                                  : order[column.id]}
-                              </TableCell>
-                            );
-                          })}
+                  {orders?.map((order, index) => {
+                    return (
+                      // <Link to="/order-details:order_id">
+                      <TableRow
+                        className="table__row"
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        onClick={() =>
+                          navigate(`/order-details/${order["_id"]}`)
+                        }
+                        key={order._id}
+                      >
+                        {columns.slice(0, 4).map((column) => {
+                          return (
+                            <TableCell
+                              align={column.align}
+                              key={order[column.id]}
+                            >
+                              {column.format
+                                ? column.format(order[column.id])
+                                : order[column.id]}
+                            </TableCell>
+                          );
+                        })}
 
-                          <TableCell align="center" key={index}>
-                            {order.orderStatus === "delivered" ? (
-                              <Button type="Delivered" />
-                            ) : order.orderStatus === "processing" ? (
-                              <Button type="Processing" />
-                            ) : (
-                              <Button type="Canceled" />
-                            )}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
+                        <TableCell align="center" key={index}>
+                          {order.orderStatus === "delivered" ? (
+                            <Button type="Delivered" />
+                          ) : order.orderStatus === "processing" ? (
+                            <Button type="Processing" />
+                          ) : (
+                            <Button type="Canceled" />
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>
           </Paper>
+        ) : (
+          <h1
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}
+          >
+            No orders found!
+          </h1>
         )}
       </div>
     </React.Fragment>

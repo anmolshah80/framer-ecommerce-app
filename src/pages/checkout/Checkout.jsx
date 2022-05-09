@@ -4,6 +4,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useDispatch, useSelector } from "react-redux";
 import { placeOrder } from "../../actions/orderActions";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Checkout({ subTotal }) {
   const STRIPE_PUBLISHABLE_KEY =
@@ -34,6 +35,14 @@ export default function Checkout({ subTotal }) {
       }, 3000);
     }
   };
+
+  // useEffect(() => {
+  //   if (currentUser === null) {
+  //     window.location.href = "/login";
+  //   } else {
+  //     window.location.href = "/cart";
+  //   }
+  // }, [currentUser])
 
   const validateLoginStatus = () => {
     if (currentUser === null) {

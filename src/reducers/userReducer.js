@@ -57,6 +57,7 @@ export const logoutUserReducer = (state = {}, action) => {
     case "USER_LOGOUT_SUCCESS":
       return {
         ...state,
+        logoutSuccess: true,
       };
 
     default:

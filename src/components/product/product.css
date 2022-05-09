@@ -11,11 +11,12 @@
   /* min-height: 380px; */
   height: 380px;
   /* width: 40vw; */
-  width: 21vw;
+  width: 20vw;
   background: white;
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
+  padding: 10px;
 }
 
 .product:hover {
@@ -65,6 +66,7 @@
 
 .product__info {
   height: 50px !important;
+  text-align: center;
 }
 
 .product__info > .product__title {

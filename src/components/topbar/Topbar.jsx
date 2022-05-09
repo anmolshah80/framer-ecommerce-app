@@ -41,8 +41,17 @@ export default function Topbar({ queryPlaceholder }) {
   const { user_profile, loading, error } = userProfileState;
 
   useEffect(() => {
-    dispatch(getUserProfileById(currentUser._id));
+    currentUser !== null && dispatch(getUserProfileById(currentUser._id));
   }, []);
+
+  const logoutState = useSelector((state) => state.logoutUserReducer);
+
+  const { logoutSuccess } = logoutState;
+
+  logoutSuccess &&
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
 
   return (
     <div className="topbar">
@@ -83,13 +92,15 @@ export default function Topbar({ queryPlaceholder }) {
               </div>
             </Link>
 
-            <Link to="/user-profile">
-              <img
-                src={user_profile?.profileAvatar || avatar}
-                alt="Avatar profile"
-                className="topAvatar"
-              />
-            </Link>
+            {currentUser !== null && (
+              <Link to="/user-profile">
+                <img
+                  src={user_profile?.profileAvatar || avatar}
+                  alt="Avatar profile"
+                  className="topAvatar"
+                />
+              </Link>
+            )}
 
             {/* dropdown icon for logout */}
             <Navbar>
@@ -134,7 +145,7 @@ function DropdownMenu() {
     dispatch(logoutUser());
   };
 
-  const currentUserState = useSelector((state) => state.loginSellerUserReducer);
+  const currentUserState = useSelector((state) => state.loginUserReducer);
   const { currentUser } = currentUserState;
 
   return (

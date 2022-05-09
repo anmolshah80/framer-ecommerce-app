@@ -11,8 +11,6 @@ export default function Reviews({ product }) {
 
   const { currentUser } = currentUserState;
 
-  const handleReviewDeletion = () => {};
-
   const formatRating = (rating) => {
     return `${Number(rating).toFixed(1)}`;
   };
@@ -27,10 +25,11 @@ export default function Reviews({ product }) {
 
   const formatReviewDate = (date) => {
     const slicedDate = date.slice(0, 10).toString();
+
     let formattedDate = new Date(slicedDate);
     formattedDate = formattedDate.toString();
     formattedDate =
-      formattedDate.substring(4, 9) + "," + formattedDate.substring(10, 15);
+      formattedDate.substring(4, 10) + "," + formattedDate.substring(10, 15);
     return `${formattedDate}`;
   };
 
@@ -121,15 +120,6 @@ export default function Reviews({ product }) {
       <div className="customer__reviewContainer">
         <h2 className="customer__reviewsText">Customer reviews</h2>
         <div className="ratings__info">
-          {/* <Rating
-          className="customer__rating"
-          name="simple-controlled"
-          value={value}
-          size="large"
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        /> */}
           <Rating
             className="customer__rating"
             name="half-rating-read"
@@ -204,49 +194,56 @@ export default function Reviews({ product }) {
       <div className="reviews__container">
         <h3 className="review__wordWrap">All reviews and ratings</h3>
 
-        {product.reviews?.map((review, index) => {
-          return (
-            <React.Fragment>
-              {review.review != "" && (
-                <>
-                  <div className="user__ratings">
-                    <h4 className="review__username">{review.username}</h4>
-                    <Rating
-                      className="rating__username"
-                      name="half-rating-read"
-                      defaultValue={review.rating}
-                      precision={0.5}
-                      readOnly
-                    />
-                  </div>
-                  <div className="review__dateContainer">
-                    <span className="review__date">
-                      Reviewed on {formatReviewDate(review.createdAt)}
-                    </span>
-                    <div className="verified__badge">
-                      <Bookmark className="verified__icon" />
-                      <span className="verified__purchaseText">
-                        Verified purchase
-                      </span>
+        {product.reviews?.length > 0 ? (
+          product.reviews?.map((review, index) => {
+            return (
+              <React.Fragment>
+                {review.review != "" && (
+                  <>
+                    <div className="user__ratings">
+                      <h4 className="review__username">{review.username}</h4>
+                      <Rating
+                        className="rating__username"
+                        name="half-rating-read"
+                        defaultValue={review.rating}
+                        precision={0.5}
+                        readOnly
+                      />
                     </div>
-                  </div>
-                  <p className="user__reviews" key={index}>
-                    {review.review}
-                  </p>
+                    <div className="review__dateContainer">
+                      <span className="review__date">
+                        Reviewed on {formatReviewDate(review.createdAt)}
+                      </span>
 
-                  {currentUser !== null && currentUser._id == review.userid && (
-                    <Link to={`/delete-review/${product._id}`}>
-                      <div className="review__deleteContainer">
-                        <Delete className="delete__icon" />
-                        <span className="review__delete">Delete</span>
+                      <div className="verified__badge">
+                        <Bookmark className="verified__icon" />
+                        <span className="verified__purchaseText">
+                          Verified purchase
+                        </span>
                       </div>
-                    </Link>
-                  )}
-                </>
-              )}
-            </React.Fragment>
-          );
-        })}
+                    </div>
+                    <p className="user__reviews" key={index}>
+                      {review.review}
+                    </p>
+
+                    {currentUser !== null && currentUser._id == review.userid && (
+                      <Link to={`/delete-review/${product._id}`}>
+                        <div className="review__deleteContainer">
+                          <Delete className="delete__icon" />
+                          <span className="review__delete">Delete</span>
+                        </div>
+                      </Link>
+                    )}
+                  </>
+                )}
+              </React.Fragment>
+            );
+          })
+        ) : (
+          <h3 style={{ fontWeight: "500", marginTop: "20px" }}>
+            No reviews yet. Be the first to add a review.
+          </h3>
+        )}
       </div>
     </div>
   );
